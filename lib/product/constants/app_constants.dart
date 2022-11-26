@@ -15,7 +15,7 @@ class AppConstants {
   static const IOS_Version = "1.0.0";
   static const ANDROID_Version = "1.0.0";
 
-  static const APP_API = "http://api.goldenerp.com/api/";
+  static const APP_API = "https://api.koyevidogal.com:444/api/";
 
   static String APP_TOKEN = "";
 }
