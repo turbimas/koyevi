@@ -1,0 +1,263 @@
+{
+    "menu_search_icon":{
+        "path":"assets/icons/svg/menu_search_icon.svg",
+        "size":25
+    },
+    "menu_favorite_icon":{
+        "path":"assets/icons/svg/menu_favorite_icon.svg",
+        "size":25
+    },
+    "menu_home_icon": {
+        "path":"assets/icons/svg/menu_home_icon.svg",
+        "size": 25
+    },
+    "menu_basket_icon": {
+        "path":"assets/icons/svg/menu_basket_icon.svg",
+        "size": 25
+    },
+    "menu_profile_icon": {
+        "path":"assets/icons/svg/menu_profile_icon.svg",
+        "size": 25
+    },
+    "cancel_icon__medium": {
+        "path":"assets/icons/svg/cancel_icon.svg",
+        "size": 25
+    },
+    "cancel_icon__large": {
+        "path":"assets/icons/svg/cancel_icon.svg",
+        "size": 35
+    },
+    "check_icon":{
+        "path":"assets/icons/svg/check_icon.svg",
+        "size": 25
+    },
+    "favorite_circle_icon":{
+        "path":"assets/icons/svg/favorite_circle_icon.svg",
+        "size": 35
+    },
+    "non_favorite_circle_icon": {
+        "path":"assets/icons/svg/non_favorite_circle_icon.svg",
+        "size": 35
+    },
+    "add_icon": {
+        "path":"assets/icons/svg/add_icon.svg",
+        "size": 30
+    },
+    "minus_icon": {
+        "path":"assets/icons/svg/minus_icon.svg",
+        "size": 30
+    },
+    "add_basket_outlined_icon": {
+        "path":"assets/icons/svg/add_basket_outlined_icon.svg",
+        "size": 30
+    },
+    "add_basket_icon": {
+        "path":"assets/icons/svg/add_basket_icon.svg",
+        "size": 26
+    },
+    "edit_icon__small": {
+        "path":"assets/icons/svg/edit_icon.svg",
+        "size": 10
+    },
+    "edit_icon__medium": {
+        "path":"assets/icons/svg/edit_icon.svg",
+        "size": 25
+    },
+    "back_icon_light": {
+        "path":"assets/icons/svg/back_icon_light.svg",
+        "width": 10,
+        "height": 20
+    },
+    "forward_icon_light": {
+        "path":"assets/icons/svg/forward_icon_light.svg",
+        "width": 10,
+        "height": 20
+    },
+    "back_icon_dark": {
+        "path":"assets/icons/svg/back_icon_dark.svg",
+        "width":10,
+        "height":20
+    },
+    "forward_icon_dark": {
+        "path":"assets/icons/svg/forward_icon_dark.svg",
+        "width":10,
+        "height":20
+    },
+    "radio_checked_light_icon": {
+        "path":"assets/icons/svg/radio_checked_light_icon.svg",
+        "size": 30
+    },
+    "radio_unchecked_light_icon": {
+        "path":"assets/icons/svg/radio_unchecked_light_icon.svg",
+        "size": 30
+    },
+    "radio_checked_dark_icon": {
+        "path":"assets/icons/svg/radio_checked_dark_icon.svg",
+        "size": 30
+    },
+    "radio_unchecked_dark_icon": {
+        "path":"assets/icons/svg/radio_unchecked_dark_icon.svg",
+        "size": 30
+    },
+    "checkbox_checked_icon": {
+        "path":"assets/icons/svg/checkbox_checked_icon.svg",
+        "size": 30
+    },
+    "checkbox_unchecked_icon": {
+        "path":"assets/icons/svg/checkbox_unchecked_icon.svg",
+        "size": 30
+    },
+    "add_radiused_icon": {
+        "path":"assets/icons/svg/add_radiused_icon.svg",
+        "size": 25
+    },
+    "enter_icon": {
+            "path":"assets/icons/svg/enter_icon.svg",
+            "size": 35
+        },
+    "credit_card_icon_dark": {
+        "path":"assets/icons/svg/credit_card_icon_dark.svg",
+        "width": 32,
+        "height":22
+    },
+    "credit_card_icon_light": {
+        "path":"assets/icons/svg/credit_card_icon_light.svg",
+        "width": 32,
+        "height":22
+    },
+   
+    "search_icon": {
+        "path":"assets/icons/svg/search_icon.svg",
+        "size": 20
+    },
+    "field_profile_icon": {
+        "path":"assets/icons/svg/field_profile_icon.svg",
+        "size": 35
+    },
+    "field_phone_icon": {
+        "path":"assets/icons/svg/field_phone_icon.svg",
+        "size": 35
+    },
+    "field_mail_icon": {
+        "path":"assets/icons/svg/field_mail_icon.svg",
+        "size": 35
+    },
+    "field_password_icon": {
+        "path":"assets/icons/svg/field_password_icon.svg",
+        "size": 35
+    },
+    "field_hide_password":{
+        "path":"assets/icons/svg/field_hide_password.svg",
+        "size": 20
+    },
+    "arrow_right_circle_icon": {
+        "path":"assets/icons/svg/arrow_right_circle_icon.svg",
+        "size": 15
+    },
+    "answer_icon": {
+        "path":"assets/icons/svg/answer_icon.svg",
+        "size": 22
+    },
+    "success_icon_big": {
+        "path":"assets/icons/svg/success_icon_big.svg",
+        "width": 60,
+        "height": 40
+    },
+    "questions_icon": {
+        "path":"assets/icons/svg/questions_icon.svg",
+        "width": 25,
+        "height": 27
+    },
+    "clipboard_icon": {
+        "path":"assets/icons/svg/clipboard_icon.svg",
+        "width": 18,
+        "height": 20
+    },
+    "profile_delivery": {
+        "path":"assets/icons/svg/profile_delivery.svg",
+        "size":40
+    },
+    "profile_payment": {
+        "path":"assets/icons/svg/profile_payment.svg",
+        "size":40
+    },
+    "profile_gift": {
+        "path":"assets/icons/svg/profile_gift.svg",
+        "size":40
+    },
+    "profile_address": {
+        "path":"assets/icons/svg/profile_address.svg",
+        "size":40
+    },
+    "profile_cards": {
+        "path":"assets/icons/svg/profile_cards.svg",
+        "size":40
+    },
+    "profile_ratings": {
+        "path":"assets/icons/svg/profile_ratings.svg",
+        "size":40
+    },
+    "profile_questions": {
+        "path":"assets/icons/svg/profile_questions.svg",
+        "size":40
+    },
+    "profile_logout": {
+        "path":"assets/icons/svg/profile_logout.svg",
+        "size":40
+    },
+    "notification_icon": {
+        "path":"assets/icons/svg/notification_icon.svg",
+        "size":20
+    },
+    "evaluations": {
+        "path":"assets/icons/svg/evaluations.svg",
+        "size":30
+    },
+    "questions": {
+        "path":"assets/icons/svg/questions.svg",
+        "size":30
+    },
+    "star_selected": {
+        "path":"assets/icons/svg/star_selected.svg",
+        "size":30
+    },
+    "start_unselected": {
+        "path":"assets/icons/svg/start_unselected.svg",
+        "size":30
+    },
+    "star_white": {
+        "path":"assets/icons/svg/star_white.svg",
+        "size":30
+    },
+    "order_icon": {
+        "path":"assets/icons/svg/order_icon.svg",
+        "size":20
+    },
+    "filter_icon": {
+        "path":"assets/icons/svg/filter_icon.svg",
+        "size":20
+    },
+    "categories_icon": {
+        "path":"assets/icons/svg/categories_icon.svg",
+        "size":20
+    },
+    "order_done_icon": {
+        "path":"assets/icons/svg/order_done_icon.svg",
+        "size":30
+    },
+    "star_chip_icon": {
+        "path":"assets/icons/svg/star_chip_icon.svg",
+        "size":12
+    },
+    "garbage_icon_dark": {
+        "path":"assets/icons/svg/garbage_icon_dark.svg",
+        "width":15,
+        "height":20
+    },
+    "garbage_icon_light": {
+        "path":"assets/icons/svg/garbage_icon_light.svg",
+        "width":15,
+        "height":20
+    }
+
+}

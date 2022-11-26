@@ -1,0 +1,89 @@
+{
+    "basket_empty" : {
+        "type":"pixel",
+        "path": "assets/images/png/basket_empty.png",
+        "width": 360,
+        "height": 260
+    },
+    "forgot_password" : {
+        "type":"pixel",
+        "path": "assets/images/png/forgot_password.png",
+        "width": 250,
+        "height": 250
+    },
+    "validation_image" : {
+        "type":"pixel",
+        "path": "assets/images/png/validation_image.png",
+        "width": 250,
+        "height": 250
+    },
+    "login" : {
+        "type":"pixel",
+        "path": "assets/images/png/login.png",
+        "width": 220,
+        "height": 220
+    },
+    "register" : {
+        "type":"pixel",
+        "path": "assets/images/png/register.png",
+        "width": 220,
+        "height": 150
+    },
+    "splash" : {
+        "type":"pixel",
+        "path": "assets/images/png/splash.png",
+        "width": 250,
+        "height": 108
+    },
+    "basket_done" : {
+        "type":"pixel",
+        "path": "assets/images/png/basket_done.png",
+        "width": 320,
+        "height": 250
+    },
+    "return_done" : {
+        "type":"pixel",
+        "path": "assets/images/png/return_done.png",
+        "width": 320,
+        "height": 250
+    },
+    "cancel_done" : {
+        "type":"pixel",
+        "path": "assets/images/png/cancel_done.png",
+        "width": 320,
+        "height": 250
+    },
+    "tr_flag": {
+        "type":"pixel",
+        "path": "assets/images/png/tr_flag.png",
+        "width": 30,
+        "height": 30
+    },
+    "en_flag": {
+        "type":"pixel",
+        "path": "assets/images/png/en_flag.png",
+        "width": 30,
+        "height": 30
+    },
+    "ar_flag": {
+        "type":"pixel",
+        "path": "assets/images/png/ar_flag.png",
+        "width": 30,
+        "height": 30
+    },
+    "image_not_found": {
+        "type":"vector",
+        "path":"assets/images/svg/image_not_found.svg",
+        "width": 500,
+        "height": 500
+    },
+    "loading" : {
+        "type":"gif",
+        "path": "assets/images/gif/loading.gif",
+        "width": 800,
+        "height": 600,
+        "frame_count": 44,
+        "duration_ms": 1200
+    }
+
+}
