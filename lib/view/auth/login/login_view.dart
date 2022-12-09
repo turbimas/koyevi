@@ -25,6 +25,8 @@ class LoginView extends ConsumerStatefulWidget {
 }
 
 class _LoginViewState extends ConsumerState<LoginView> {
+  late final ScrollController _scrollController;
+  late final FocusNode _passwordFocusNode;
   late final ChangeNotifierProvider<LoginViewModel> provider;
   late final TextEditingController _loginInfo;
   late final TextEditingController _password;
@@ -33,20 +35,39 @@ class _LoginViewState extends ConsumerState<LoginView> {
 
   @override
   void initState() {
+    _scrollController = ScrollController();
+    _passwordFocusNode = FocusNode();
+    _passwordFocusNode.addListener(() {
+      if (_passwordFocusNode.hasFocus) {
+        _scrollController.animateTo(
+          200,
+          duration: CustomThemeData.animationDurationMedium,
+          curve: Curves.easeOut,
+        );
+      }
+    });
     provider =
         ChangeNotifierProvider((context) => LoginViewModel(formKey: _formKey));
-    _loginInfo = TextEditingController();
+    _loginInfo = TextEditingController(text: "90");
     _password = TextEditingController();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    _passwordFocusNode.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return CustomSafeArea(
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: CustomAppBar.inactiveBack(LocaleKeys.Login_appbar_title.tr()),
+        resizeToAvoidBottomInset: true,
+        appBar: CustomAppBar.activeBack(LocaleKeys.Login_appbar_title.tr()),
         body: SingleChildScrollView(
+          controller: _scrollController,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -193,7 +214,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                 padding: EdgeInsets.only(
                     left: 20.smw, top: 8.smh, bottom: 7.smh, right: 20.smw),
                 child: TextFormField(
-                  keyboardType: TextInputType.emailAddress,
+                  keyboardType: TextInputType.phone,
                   controller: _loginInfo,
                   textInputAction: TextInputAction.next,
                   textAlignVertical: TextAlignVertical.center,
@@ -221,6 +242,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                   padding: EdgeInsets.only(
                       left: 20.smw, top: 8.smh, bottom: 7.smh, right: 20.smw),
                   child: TextFormField(
+                    focusNode: _passwordFocusNode,
                     obscureText: ref.watch(provider).isHiding,
                     controller: _password,
                     onFieldSubmitted: (value) {

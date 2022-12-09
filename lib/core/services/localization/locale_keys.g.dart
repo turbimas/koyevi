@@ -363,4 +363,6 @@ abstract class LocaleKeys {
   static const ProductOverView = 'ProductOverView';
   static const ERROR = 'ERROR';
   static const NETWORK_ERROR = 'NETWORK_ERROR';
+  static const ERROR_DUE_TO_SERVER = 'ERROR_DUE_TO_SERVER';
+  static const TRY_AGAIN = 'TRY_AGAIN';
 }

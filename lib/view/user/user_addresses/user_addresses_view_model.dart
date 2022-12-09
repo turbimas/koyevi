@@ -19,8 +19,8 @@ class UserAddressesViewModel extends ChangeNotifier {
   Future<void> getAddresses() async {
     try {
       isLoading = true;
-      ResponseModel response = await NetworkService.get(
-          "users/adresses/${AuthService.currentUser!.id}");
+      ResponseModel response =
+          await NetworkService.get("users/adresses/${AuthService.id}");
       if (response.success) {
         addresses = (response.data as List)
             .map((e) => AddressModel.fromJson(e))

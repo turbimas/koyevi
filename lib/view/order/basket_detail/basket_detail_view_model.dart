@@ -117,7 +117,7 @@ class BasketDetailViewModel extends ChangeNotifier {
 
       ResponseModel response =
           await NetworkService.post("orders/createorder", body: {
-        "CariID": AuthService.currentUser!.id,
+        "CariID": AuthService.id,
         "DeliveryAdressID": selectedDeliveryAddress.id,
         "InvoiceAdressID": deliveryTaxSame
             ? selectedDeliveryAddress.id
@@ -155,8 +155,8 @@ class BasketDetailViewModel extends ChangeNotifier {
         "lat": selectedDeliveryAddress.lat,
         "lng": selectedDeliveryAddress.lng,
       });
-      ResponseModel addressResponse = await NetworkService.get(
-          "users/adresses/${AuthService.currentUser!.id}");
+      ResponseModel addressResponse =
+          await NetworkService.get("users/adresses/${AuthService.id}");
       if (timeResponse.success && addressResponse.success) {
         isLoading = false;
         times = timeResponse.data

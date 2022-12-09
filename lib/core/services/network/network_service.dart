@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:koyevi/core/services/localization/locale_keys.g.dart';
 import 'package:koyevi/core/services/navigation/navigation_service.dart';
 import 'package:koyevi/core/services/network/response_model.dart';
 import 'package:koyevi/core/utils/helpers/popup_helper.dart';
@@ -16,32 +17,35 @@ abstract class NetworkService {
 
   static Future<void> init() async {
     try {
-      Dio _tempDio = Dio();
-      (_tempDio.httpClientAdapter as DefaultHttpClientAdapter)
+      Dio tempDio = Dio(BaseOptions(
+          sendTimeout: 5000, connectTimeout: 5000, receiveTimeout: 5000));
+      (tempDio.httpClientAdapter as DefaultHttpClientAdapter)
           .onHttpClientCreate = (HttpClient client) {
         client.badCertificateCallback =
             (X509Certificate cert, String host, int port) => true;
+        return null;
       };
-      Response<Map<String, dynamic>> response = await _tempDio
-          .post<Map<String, dynamic>>(
-              AppConstants.APP_API +
-                  
-                  "/app/gettoken",
+      Response<Map<String, dynamic>> response = await tempDio
+          .post<Map<String, dynamic>>("${AppConstants.APP_API}/app/gettoken",
               data: {
             "grant_type": "password",
             "username": "admin",
-            "password": "\$inFtecH1100\%",
+            "password": "\$inFtecH1100%",
           });
       AppConstants.APP_TOKEN = response.data!["data"];
       notInited = false;
     } catch (e) {
-      await Future.delayed(const Duration(seconds: 1), () {
-        PopupHelper.showErrorToast("İnit: " + e.toString());
-      });
+      await PopupHelper.showErrorDialog(
+          errorMessage: LocaleKeys.NETWORK_ERROR.tr(),
+          actions: {
+            LocaleKeys.TRY_AGAIN.tr(): () {
+              NavigationService.back();
+            }
+          });
     }
 
     String token = AppConstants.APP_TOKEN;
-    Map<String, dynamic> headers = Map<String, dynamic>();
+    Map<String, dynamic> headers = <String, dynamic>{};
     headers["Authorization"] = "Bearer $token";
 
     _dio = Dio(BaseOptions(
@@ -55,6 +59,7 @@ abstract class NetworkService {
         (HttpClient client) {
       client.badCertificateCallback =
           (X509Certificate cert, String host, int port) => true;
+      return null;
     };
   }
 
@@ -63,7 +68,7 @@ abstract class NetworkService {
     while (notInited) {
       await init();
     }
-    String fullUrl = "$url";
+    String fullUrl = url;
     try {
       if (debug) {
         log("GET : $fullUrl");
@@ -79,10 +84,21 @@ abstract class NetworkService {
       }
       return ResponseModel<T>.fromJson(data.data!);
     } catch (e) {
-      if ((e as DioError).response!.statusCode == 401) {
+      int? statusCode = (e as DioError).response!.statusCode;
+      if (statusCode == 401) {
         notInited = true;
       }
-      return ResponseModel<T>.networkError();
+      await PopupHelper.showErrorDialog(
+          errorMessage: statusCode == 500
+              ? LocaleKeys.ERROR_DUE_TO_SERVER.tr()
+              : LocaleKeys.NETWORK_ERROR.tr(),
+          actions: {
+            LocaleKeys.TRY_AGAIN.tr(): () {
+              NavigationService.back();
+            }
+          });
+      return await get<T>(url, queryParameters: queryParameters);
+      // return ResponseModel<T>.networkError();
     }
   }
 
@@ -92,7 +108,7 @@ abstract class NetworkService {
       await init();
     }
 
-    String fullUrl = "$url";
+    String fullUrl = url;
     try {
       if (debug) {
         log("POST: $fullUrl");
@@ -111,10 +127,21 @@ abstract class NetworkService {
       return ResponseModel<T>.fromJson(response.data!);
     } catch (e) {
       // token expired
-      if ((e as DioError).response!.statusCode == 401) {
+      int? statusCode = (e as DioError).response!.statusCode;
+      if (statusCode == 401) {
         notInited = true;
       }
-      return ResponseModel.networkError();
+      await PopupHelper.showErrorDialog(
+          errorMessage: statusCode == 500
+              ? LocaleKeys.ERROR_DUE_TO_SERVER.tr()
+              : LocaleKeys.NETWORK_ERROR.tr(),
+          actions: {
+            LocaleKeys.TRY_AGAIN.tr(): () {
+              NavigationService.back();
+            }
+          });
+      return await post<T>(url, queryParameters: queryParameters, body: body);
+      // return ResponseModel.networkError();
     }
   }
 }

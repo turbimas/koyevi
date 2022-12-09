@@ -12,11 +12,11 @@ import 'package:koyevi/core/utils/extensions/ui_extensions.dart';
 import 'package:koyevi/product/constants/app_constants.dart';
 import 'package:koyevi/product/widgets/custom_appbar.dart';
 import 'package:koyevi/product/widgets/custom_text.dart';
+import 'package:koyevi/product/widgets/login_page_widget.dart';
 import 'package:koyevi/view/auth/login/login_view.dart';
 import 'package:koyevi/view/user/user_addresses/user_addresses_view.dart';
 import 'package:koyevi/view/user/user_orders/user_orders_view.dart';
 import 'package:koyevi/view/user/user_profile/user_profile_view.dart';
-import 'package:koyevi/view/user/user_promotions/promotions_view.dart';
 import 'package:koyevi/view/user/user_questions/user_questions_view.dart';
 import 'package:koyevi/view/user/user_ratings/user_ratings_view.dart';
 
@@ -29,26 +29,28 @@ class ProfileView extends ConsumerStatefulWidget {
 
 class _ProfileViewState extends ConsumerState<ProfileView> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar.inactiveBack(LocaleKeys.Profile_appbar_title.tr()),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            _notificationRow(),
-            _profilePhoto(),
-            _greeting(),
-            _options(),
-            SizedBox(height: 85.smh)
-          ],
-        ),
+      body: _body(),
+    );
+  }
+
+  Widget _body() {
+    if (!AuthService.isLoggedIn) {
+      return const LoginPageWidget();
+    }
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          _notificationRow(),
+          _profilePhoto(),
+          _greeting(),
+          _options(),
+          SizedBox(height: 85.smh)
+        ],
       ),
     );
   }
@@ -90,19 +92,6 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
               ),
             ),
           ),
-          // Container(
-          //   constraints: BoxConstraints(minWidth: 80.smw, minHeight: 40.smh),
-          //   decoration: BoxDecoration(
-          //       borderRadius: BorderRadius.circular(10),
-          //       color: CustomColors.secondary),
-          //   child: Row(
-          //       mainAxisAlignment: MainAxisAlignment.spaceAround,
-          //       children: [
-          //         CustomText("0",
-          //             style: CustomFonts.bodyText2(CustomColors.secondaryText)),
-          //         CustomIcons.notification_icon
-          //       ]),
-          // )
         ],
       ),
     );
@@ -116,7 +105,9 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
     return InkWell(
       onTap: () {
         if (noBack) {
-          AuthService.logout();
+          setState(() {
+            AuthService.logout(showSuccessMessage: true);
+          });
         } else {
           NavigationService.navigateToPage(page);
         }

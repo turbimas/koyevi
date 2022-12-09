@@ -63,7 +63,7 @@ class UserProfileViewModel extends ChangeNotifier {
           isUpdate: true,
         ));
       } else {
-        formData["ID"] = AuthService.currentUser!.id;
+        formData["ID"] = AuthService.id;
         ResponseModel response =
             await NetworkService.post("users/user_edit", body: formData);
         if (response.success) {
@@ -74,7 +74,7 @@ class UserProfileViewModel extends ChangeNotifier {
             UserModel user = UserModel.fromJson(response.data);
             AuthService.login(user);
           } else {
-            AuthService.logout();
+            AuthService.logout(showSuccessMessage: true);
           }
         } else {
           PopupHelper.showErrorDialog(errorMessage: response.errorMessage!);

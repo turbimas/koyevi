@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,7 +13,6 @@ import 'package:koyevi/core/services/theme/custom_icons.dart';
 import 'package:koyevi/core/services/theme/custom_images.dart';
 import 'package:koyevi/core/services/theme/custom_theme_data.dart';
 import 'package:koyevi/core/utils/extensions/ui_extensions.dart';
-import 'package:koyevi/core/utils/helpers/popup_helper.dart';
 import 'package:koyevi/product/constants/app_constants.dart';
 import 'package:koyevi/product/models/category_model.dart';
 import 'package:koyevi/product/models/home_banner_model.dart';
@@ -59,8 +56,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
   Widget _body() {
     if (ref.watch(provider).homeLoading) {
       return _loading();
-    } else if (ref.watch(provider).categories != null &&
-        ref.watch(provider).banners != null) {
+    } else if (ref.watch(provider).banners != null) {
       return _content();
     } else {
       return TryAgain(callBack: ref.read(provider).getHomeData);
@@ -74,58 +70,81 @@ class _HomeViewState extends ConsumerState<HomeView> {
   }
 
   Widget _content() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        //_addressBar(),
-        _searchBar(),
-        _bannersContent(),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          AuthService.isLoggedIn ? _addressBar() : Container(height: 0),
+          _searchBar(),
+          AuthService.isLoggedIn ? _orders() : Container(height: 0),
+          _bannersContent(),
+        ],
+      ),
     );
   }
 
   Widget _addressBar() {
-    AddressModel? address = ref.watch(provider).address;
-    if (address == null) {
-      return Container();
-    }
+    AddressModel? address = ref.watch(provider).defaultAddress;
     return Container(
       padding: EdgeInsets.symmetric(vertical: 10.smh),
       decoration: BoxDecoration(
           borderRadius: CustomThemeData.bottomInfiniteRounded,
           color: CustomColors.secondary),
       child: Padding(
-        padding: const EdgeInsets.only(left: 20),
+        padding: EdgeInsets.symmetric(horizontal: 20.smw),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.home),
-            Padding(
-              padding: EdgeInsets.only(left: 30),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    ref.watch(provider).address!.addressHeader.toString(),
-                    style: CustomFonts.bodyText4(CustomColors.cardInner),
-                    overflow: TextOverflow.fade,
-                    softWrap: false,
-                    maxLines: 1,
-                  ),
-                  Text(
-                    ref.watch(provider).address!.address.toString(),
-                    style: CustomFonts.bodyText4(CustomColors.cardInner),
-                    overflow: TextOverflow.fade,
-                    softWrap: false,
-                    maxLines: 1,
-                  ),
-                ],
+            CustomIcons.location_icon,
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.smw),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CustomText(
+                        address != null
+                            ? address.addressHeader.toString()
+                            : "-",
+                        style: CustomFonts.bodyText4(CustomColors.cardInner),
+                        maxLines: 1),
+                    CustomText(
+                        address != null ? address.address.toString() : "-",
+                        style: CustomFonts.bodyText4(CustomColors.cardInner),
+                        maxLines: 1),
+                  ],
+                ),
               ),
             ),
-            Icon(Icons.arrow_drop_down)
+            InkWell(onTap: _addressesDialog, child: CustomIcons.order_icon)
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _orders() {
+    return Container(
+      margin: EdgeInsets.only(top: 10.smh),
+      child: ListView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: 2,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.smw),
+            child: Container(
+              margin: EdgeInsets.only(bottom: 10.smh),
+              decoration: BoxDecoration(
+                  border: Border.all(color: CustomColors.primary),
+                  borderRadius: CustomThemeData.fullRounded),
+              height: 70.smh,
+              width: 330.smw,
+              child: Row(),
+            ),
+          );
+        },
       ),
     );
   }
@@ -145,18 +164,17 @@ class _HomeViewState extends ConsumerState<HomeView> {
 
   Widget _bannersContent() {
     List<Widget> banners = _banners();
-    return SizedBox(
-      height: 650.smh,
-      child: ListView.builder(
-        itemCount: banners.length + 1,
-        itemBuilder: (context, index) {
-          if (index == 0) {
-            return _fastCategories();
-          } else {
-            return banners[index - 1];
-          }
-        },
-      ),
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: banners.length + 1,
+      itemBuilder: (context, index) {
+        if (index == 0) {
+          return _fastCategories();
+        } else {
+          return banners[index - 1];
+        }
+      },
     );
   }
 
@@ -172,9 +190,9 @@ class _HomeViewState extends ConsumerState<HomeView> {
         radius: CustomThemeData.fullInfiniteRounded.topLeft,
         child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: ref.watch(provider).categories!.length,
+            itemCount: ref.watch(provider).categories.length,
             itemBuilder: (context, index) {
-              CategoryModel category = ref.watch(provider).categories![index];
+              CategoryModel category = ref.watch(provider).categories[index];
               return InkWell(
                 onTap: () => NavigationService.navigateToPage(SubCategoriesView(
                     masterCategory: category,
@@ -182,7 +200,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
                 child: Container(
                   margin: EdgeInsets.only(
                       left: 10.smw,
-                      right: index == ref.watch(provider).categories!.length - 1
+                      right: index == ref.watch(provider).categories.length - 1
                           ? 0
                           : 10.smw),
                   width: 60.smw,
@@ -218,7 +236,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
   }
 
   List<Widget> _banners() {
-    List<HomeBannerModel> banners = ref.watch(provider).banners!;
+    List<HomeBannerModel> banners = ref.watch(provider).banners;
     return List.generate(banners.length, (index) {
       HomeBannerModel banner = banners[index];
       if (banner.type == 2) {
@@ -232,20 +250,18 @@ class _HomeViewState extends ConsumerState<HomeView> {
   Widget _imageBanner(HomeBannerModel model) {
     return InkWell(
       onTap: () async {
-        var _products = null;
-        ResponseModel response =
-            await NetworkService.post("products/ProductfromBarcodes", body: {
-          "CariID": AuthService.currentUser!.id,
-          "BarcodeArrays": model.barcodes
-        });
+        List<ProductOverViewModel> products = [];
+        ResponseModel response = await NetworkService.post(
+            "products/ProductfromBarcodes",
+            body: {"CariID": AuthService.id, "BarcodeArrays": model.barcodes});
 
         if (response.success) {
-          _products = (response.data as List)
+          products = (response.data as List)
               .map((e) => ProductOverViewModel.fromJson(e))
               .toList();
         }
         NavigationService.navigateToPage(
-            SearchResultView(products: _products, isSearch: false));
+            SearchResultView(products: products, isSearch: false));
       },
       child: Container(
           margin: EdgeInsets.only(bottom: 10.smh),
@@ -339,5 +355,82 @@ class _HomeViewState extends ConsumerState<HomeView> {
         ],
       ),
     );
+  }
+
+  Future<void> _addressesDialog() async {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Dialog(
+              insetPadding:
+                  EdgeInsets.symmetric(horizontal: 20.smw, vertical: 0),
+              backgroundColor: CustomColors.secondary,
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: ref.watch(provider).addresses.length + 1,
+                itemBuilder: (context, index) {
+                  if (index == ref.watch(provider).addresses.length) {
+                    return Container(
+                        margin: EdgeInsets.symmetric(vertical: 10.smh),
+                        child: const SizedBox()
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.center,
+                        //   children: [
+                        //     CustomIcons.add_icon,
+                        //     SizedBox(width: 5.smw),
+                        //     CustomTextLocale(LocaleKeys.UserAddresses_add_address,
+                        //         style: CustomFonts.bodyText1(
+                        //             CustomColors.secondaryText)),
+                        //   ],
+                        // ),
+                        );
+                  } else {
+                    return InkWell(
+                      onTap: () {
+                        ref
+                            .read(provider)
+                            .setDefaultAddress(
+                                ref.watch(provider).addresses[index].id)
+                            .then((value) {
+                          Navigator.pop(context);
+                        });
+                      },
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 10.smw),
+                        margin: EdgeInsets.only(top: 10.smh),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    CustomText(
+                                        ref
+                                            .watch(provider)
+                                            .addresses[index]
+                                            .addressHeader,
+                                        style: CustomFonts.bodyText3(
+                                            CustomColors.secondaryText)),
+                                    CustomText(
+                                        ref
+                                            .watch(provider)
+                                            .addresses[index]
+                                            .address,
+                                        style: CustomFonts.bodyText4(
+                                            CustomColors.secondaryText)),
+                                  ]),
+                            ),
+                            ref.watch(provider).addresses[index] ==
+                                    ref.watch(provider).defaultAddress
+                                ? CustomIcons.radio_checked_light_icon
+                                : CustomIcons.radio_unchecked_light_icon,
+                          ],
+                        ),
+                      ),
+                    );
+                  }
+                },
+              ));
+        });
   }
 }

@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:koyevi/core/services/localization/locale_keys.g.dart';
 import 'package:koyevi/core/services/navigation/navigation_service.dart';
@@ -28,28 +27,25 @@ class RegisterView extends ConsumerStatefulWidget {
 class _RegisterViewState extends ConsumerState<RegisterView> {
   late ChangeNotifierProvider<RegisterViewModel> provider;
 
-  late FocusScopeNode _focusScopeNode1;
-  late FocusScopeNode _focusScopeNode2;
-  late FocusScopeNode _focusScopeNode3;
-  late FocusScopeNode _focusScopeNode4;
+  late final FocusNode _nameSurnameFocusNode;
+  late final FocusNode _phoneFocusNode;
+  late final FocusNode _passwordFocusNode;
 
   @override
   void initState() {
     provider =
         ChangeNotifierProvider<RegisterViewModel>((ref) => RegisterViewModel());
-    _focusScopeNode1 = FocusScopeNode();
-    _focusScopeNode2 = FocusScopeNode();
-    _focusScopeNode3 = FocusScopeNode();
-    _focusScopeNode4 = FocusScopeNode();
+    _nameSurnameFocusNode = FocusNode();
+    _phoneFocusNode = FocusNode();
+    _passwordFocusNode = FocusNode();
     super.initState();
   }
 
   @override
   void dispose() {
-    _focusScopeNode1.dispose();
-    _focusScopeNode2.dispose();
-    _focusScopeNode3.dispose();
-    _focusScopeNode4.dispose();
+    _nameSurnameFocusNode.dispose();
+    _phoneFocusNode.dispose();
+    _passwordFocusNode.dispose();
     super.dispose();
   }
 
@@ -57,10 +53,13 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
   Widget build(BuildContext context) {
     return CustomSafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: true,
         appBar: CustomAppBar.activeBack(LocaleKeys.Register_appbar_title.tr()),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [_image(), _form(), _agreement(), _registerButton()],
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [_image(), _form(), _agreement(), _registerButton()],
+          ),
         ),
       ),
     );
@@ -130,30 +129,23 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
         child: Column(
           children: [
             _customTextField(
-                focusScopeNode: _focusScopeNode1,
-                nextFocusScopeNode: _focusScopeNode2,
+                // focusNode: _nameSurnameFocusNode,
+                // nextFocusNode: _phoneFocusNode,
                 key: "Name",
                 validator: Validators.instance.fullNameValidator,
                 hint: LocaleKeys.Register_full_name_hint.tr(),
                 icon: CustomIcons.field_profile_icon),
             _customTextField(
-                focusScopeNode: _focusScopeNode2,
-                nextFocusScopeNode: _focusScopeNode3,
+                // focusNode: _phoneFocusNode,
+                // nextFocusNode: _passwordFocusNode,
                 key: "MobilePhone",
                 validator: Validators.instance.phoneValidator,
+                initialValue: "90",
                 keyboardType: TextInputType.phone,
                 hint: LocaleKeys.Register_phone_hint.tr(),
                 icon: CustomIcons.field_phone_icon),
-            /* _customTextField(
-                focusScopeNode: _focusScopeNode3,
-                nextFocusScopeNode: _focusScopeNode4,
-                key: "Email",
-                validator: Validators.instance.emailValidator,
-                keyboardType: TextInputType.emailAddress,
-                hint: LocaleKeys.Register_email_hint.tr(),
-                icon: CustomIcons.field_mail_icon),*/
             _customTextField(
-                focusScopeNode: _focusScopeNode4,
+                // focusNode: _passwordFocusNode,
                 key: "Password",
                 validator: Validators.instance.passwordValidator,
                 keyboardType: TextInputType.visiblePassword,
@@ -173,11 +165,12 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
 
   Widget _customTextField(
       {required String key,
+      String initialValue = "",
       required String hint,
       required Widget icon,
       String? Function(String?)? validator,
-      required FocusScopeNode focusScopeNode,
-      FocusScopeNode? nextFocusScopeNode,
+      // required FocusNode focusNode,
+      // FocusNode? nextFocusNode,
       Widget? suffixIcon,
       TextInputType keyboardType = TextInputType.text}) {
     return Container(
@@ -193,15 +186,19 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
           icon,
           Expanded(
               child: TextFormField(
+            initialValue: initialValue,
+            scrollPadding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
             validator: validator ?? Validators.instance.notEmpty,
-            focusNode: focusScopeNode,
+            // focusNode: focusNode,
             keyboardType: keyboardType,
+            textInputAction: TextInputAction.next,
             onEditingComplete: () {
-              if (nextFocusScopeNode != null) {
-                FocusScope.of(context).requestFocus(nextFocusScopeNode);
-              } else {
-                FocusScope.of(context).unfocus();
-              }
+              // if (nextFocusNode != null) {
+              //   Focus.of(context).requestFocus(nextFocusNode);
+              // } else {
+              //   Focus.of(context).unfocus();
+              // }
             },
             onSaved: (newValue) {
               ref.watch(provider).registerData[key] = newValue;

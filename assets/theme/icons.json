@@ -258,6 +258,10 @@
         "path":"assets/icons/svg/garbage_icon_light.svg",
         "width":15,
         "height":20
+    },
+    "location_icon": {
+        "path":"assets/icons/png/location_icon.png",
+        "size":30
     }
 
 }

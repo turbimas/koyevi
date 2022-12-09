@@ -21,8 +21,8 @@ class FavoritesViewModel extends ChangeNotifier {
   Future<void> getFavorites() async {
     try {
       isLoading = true;
-      ResponseModel response = await NetworkService.get(
-          "users/favorites/${AuthService.currentUser!.id}");
+      ResponseModel response =
+          await NetworkService.get("users/favorites/${AuthService.id}");
       if (response.success) {
         products = (response.data as List)
             .map((e) => ProductOverViewModel.fromJson(e))

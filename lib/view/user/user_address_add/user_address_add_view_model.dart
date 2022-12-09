@@ -105,7 +105,7 @@ class UserAddressAddViewModel extends ChangeNotifier {
 
   Future<void> addAddress() async {
     try {
-      formData["CariID"] = AuthService.currentUser!.id;
+      formData["CariID"] = AuthService.id;
       googleAddressModel!.country = countryController.text;
       googleAddressModel!.city = cityController.text;
       googleAddressModel!.district = districtController.text;

@@ -2,6 +2,7 @@ import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:koyevi/core/services/auth/authservice.dart';
 import 'package:koyevi/core/services/localization/locale_keys.g.dart';
 import 'package:koyevi/core/services/theme/custom_colors.dart';
 import 'package:koyevi/core/services/theme/custom_fonts.dart';
@@ -11,6 +12,7 @@ import 'package:koyevi/product/widgets/custom_appbar.dart';
 import 'package:koyevi/product/widgets/custom_safearea.dart';
 import 'package:koyevi/product/widgets/custom_searchbar_view.dart';
 import 'package:koyevi/product/widgets/custom_text.dart';
+import 'package:koyevi/product/widgets/login_page_widget.dart';
 import 'package:koyevi/product/widgets/product_overview_view.dart';
 import 'package:koyevi/product/widgets/try_again_widget.dart';
 import 'package:koyevi/view/main/favorites/favorites_view_model.dart';
@@ -29,9 +31,11 @@ class _FavoritesViewState extends ConsumerState<FavoritesView> {
   void initState() {
     provider = ChangeNotifierProvider<FavoritesViewModel>(
         (ref) => FavoritesViewModel());
-    Future.delayed(Duration.zero, () {
-      ref.read(provider).getFavorites();
-    });
+    if (AuthService.isLoggedIn) {
+      Future.delayed(Duration.zero, () {
+        ref.read(provider).getFavorites();
+      });
+    }
     super.initState();
   }
 
@@ -47,20 +51,22 @@ class _FavoritesViewState extends ConsumerState<FavoritesView> {
   }
 
   Widget _body() {
-    return ref.watch(provider).isLoading
-        ? _loading()
-        : ref.watch(provider).products == null
-            ? TryAgain(callBack: ref.read(provider).getFavorites)
-            : ref.watch(provider).products!.isEmpty
-                ? _empty()
-                : _content();
+    if (!AuthService.isLoggedIn) {
+      return const LoginPageWidget();
+    }
+    if (ref.watch(provider).isLoading) {
+      return _loading();
+    }
+    if (ref.watch(provider).products == null) {
+      return TryAgain(callBack: ref.read(provider).getFavorites);
+    }
+    if (ref.watch(provider).products!.isEmpty) {
+      return _empty();
+    }
+    return _content();
   }
 
-  Widget _loading() {
-    return Center(
-      child: CustomImages.loading,
-    );
-  }
+  Widget _loading() => Center(child: CustomImages.loading);
 
   Widget _empty() {
     return Center(

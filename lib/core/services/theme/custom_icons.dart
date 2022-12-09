@@ -67,6 +67,7 @@ abstract class CustomIcons {
   static late final Widget star_chip_icon;
   static late final Widget garbage_icon_dark;
   static late final Widget garbage_icon_light;
+  static late final Widget location_icon;
 
   static void loadIcons() {
     menu_search_icon = _svgPicture("menu_search_icon");
@@ -130,14 +131,13 @@ abstract class CustomIcons {
     star_chip_icon = _svgPicture("star_chip_icon");
     garbage_icon_dark = _svgPicture("garbage_icon_dark");
     garbage_icon_light = _svgPicture("garbage_icon_light");
+    location_icon = _pngPicture("location_icon");
   }
 
   // static SvgPicture? _;
   // static Widget get _ => _ ??= _svgPicture("");
 
-  static Widget _svgPicture(
-    String assetName,
-  ) {
+  static Widget _svgPicture(String assetName) {
     Map<String, dynamic> iconData = AppTheme.iconData[assetName];
     int? size = iconData['size'];
     int? width = iconData['width'];
@@ -161,7 +161,29 @@ abstract class CustomIcons {
               child:
                   SvgPicture.asset(path, height: size.smh, width: size.smh)));
     } else {
-      throw Exception("Wrong size info");
+      throw Exception("Wrong size info for photo of $assetName");
+    }
+  }
+
+  static Widget _pngPicture(String assetName) {
+    Map<String, dynamic> iconData = AppTheme.iconData[assetName];
+    int? size = iconData['size'];
+    int? width = iconData['width'];
+    int? height = iconData['height'];
+    String path = iconData['path'];
+
+    if (size == null && height != null && width != null) {
+      return SizedBox(
+          height: height.smh,
+          width: width.smw,
+          child: Image.asset(path, height: height.smh, width: width.smw));
+    } else if (size != null) {
+      return SizedBox(
+          height: size.smh,
+          width: size.smh,
+          child: Image.asset(path, height: size.smh, width: size.smh));
+    } else {
+      throw Exception("Wrong size info for photo of $assetName");
     }
   }
 }

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +12,7 @@ import 'package:koyevi/core/services/navigation/navigation_service.dart';
 import 'package:koyevi/product/constants/app_constants.dart';
 import 'package:koyevi/product/cubits/home_index_cubit/home_index_cubit.dart';
 import 'package:koyevi/view/auth/splash/splash_view.dart';
-
-// import 'package:uni_links/uni_links.dart';
+import 'package:uni_links/uni_links.dart';
 
 void main(List<String> args) async {
   initSync();
@@ -23,9 +23,9 @@ void main(List<String> args) async {
   //   log(status.toString());
   //   Geolocator.openAppSettings();
   // });
-  // linkStream.listen((String? uri) {
-  //   log("geldi: $uri");
-  // }, onError: (err) {});
+  linkStream.listen((String? uri) {
+    log("açılan link: $uri");
+  }, onError: (err) {});
 
   runApp(EasyLocalization(
       supportedLocales: const [AppConstants.EN_LOCALE, AppConstants.TR_LOCALE],

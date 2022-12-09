@@ -3,8 +3,8 @@ class UserModel {
   late String nameSurname;
   late String email;
   late String phone;
-  var password;
-  var gender;
+  late String password;
+  late bool gender;
   DateTime? birthDate;
   String? imageUrl;
 

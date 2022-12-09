@@ -1,21 +1,18 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pin_code_fields/flutter_pin_code_fields.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:koyevi/core/services/localization/locale_keys.g.dart';
 import 'package:koyevi/core/services/navigation/navigation_service.dart';
 import 'package:koyevi/core/services/theme/custom_colors.dart';
 import 'package:koyevi/core/services/theme/custom_fonts.dart';
 import 'package:koyevi/core/services/theme/custom_images.dart';
-import 'package:koyevi/core/services/theme/custom_theme_data.dart';
 import 'package:koyevi/core/utils/extensions/ui_extensions.dart';
-import 'package:koyevi/core/utils/validators/validators.dart';
 import 'package:koyevi/product/widgets/custom_safearea.dart';
 import 'package:koyevi/product/widgets/custom_text.dart';
 import 'package:koyevi/product/widgets/ok_cancel_prompt.dart';
 import 'package:koyevi/view/auth/validation/validation_view_model.dart';
-import 'package:flutter_pin_code_fields/flutter_pin_code_fields.dart';
 
 class ValidationView extends ConsumerStatefulWidget {
   Map<String, dynamic> registerData;
@@ -93,7 +90,7 @@ class _ValidationViewState extends ConsumerState<ValidationView> {
     return PinCodeFields(
       fieldBorderStyle: FieldBorderStyle.square,
       responsive: true,
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       borderWidth: 3.0,
       activeBorderColor: CustomColors.secondary,
       activeBackgroundColor: CustomColors.secondary,
@@ -102,7 +99,7 @@ class _ValidationViewState extends ConsumerState<ValidationView> {
       autoHideKeyboard: true,
       fieldBackgroundColor: CustomColors.card,
       borderColor: CustomColors.cardInner,
-      textStyle: TextStyle(
+      textStyle: const TextStyle(
         fontSize: 20.0,
         fontWeight: FontWeight.bold,
       ),

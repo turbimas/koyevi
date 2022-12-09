@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:koyevi/core/services/auth/authservice.dart';
 import 'package:koyevi/core/services/localization/locale_keys.g.dart';
@@ -49,7 +48,7 @@ class ProductDetailViewModel extends ChangeNotifier {
       isLoading = true;
       ResponseModelMap<String, dynamic> responseModel =
           await NetworkService.get<Map<String, dynamic>>(
-              "products/productdetail/${AuthService.currentUser!.id}/$barcode");
+              "products/productdetail/${AuthService.id}/$barcode");
       if (responseModel.success) {
         productDetail = ProductDetailModel.fromJson(responseModel.data!);
         statusMessage = LocaleKeys.ProductDetail_add_to_basket;
@@ -75,7 +74,7 @@ class ProductDetailViewModel extends ChangeNotifier {
       notifyListeners();
       ResponseModel response =
           await NetworkService.post("orders/addbasket", body: {
-        "CariID": AuthService.currentUser!.id,
+        "CariID": AuthService.id,
         "Barcode": productDetail!.barcode,
         "Quantity": productDetail!.basketFactor
       });
@@ -99,7 +98,7 @@ class ProductDetailViewModel extends ChangeNotifier {
       notifyListeners();
       ResponseModel response =
           await NetworkService.post("orders/updatebasket", body: {
-        "CariID": AuthService.currentUser!.id,
+        "CariID": AuthService.id,
         "Barcode": productDetail!.barcode,
         "Quantity": productDetail!.basketQuantity ?? 0
       });
@@ -118,7 +117,7 @@ class ProductDetailViewModel extends ChangeNotifier {
   Future<void> favoriteUpdate() async {
     try {
       ResponseModel response = await NetworkService.get(
-          "products/favoriteupdate/${AuthService.currentUser!.id}/${productDetail!.barcode}");
+          "products/favoriteupdate/${AuthService.id}/${productDetail!.barcode}");
       if (response.success) {
         productDetail!.isFavorite = !productDetail!.isFavorite;
         PopupHelper.showSuccessToast(productDetail!.isFavorite

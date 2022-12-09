@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:koyevi/core/services/auth/authservice.dart';
 import 'package:koyevi/core/services/network/network_service.dart';
@@ -17,9 +15,10 @@ class HomeViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<CategoryModel>? categories;
-  List<HomeBannerModel>? banners;
-  AddressModel? address;
+  List<CategoryModel> categories = [];
+  List<HomeBannerModel> banners = [];
+  List<AddressModel> addresses = [];
+  AddressModel? defaultAddress;
   HomeViewModel();
 
   Future<void> getHomeData() async {
@@ -28,28 +27,31 @@ class HomeViewModel extends ChangeNotifier {
       ResponseModelList categoriesResponse =
           await NetworkService.get<List>("categories/getcategories/0");
 
-      ResponseModelList bannersResponse = await NetworkService.get(
-          "main/homeviews/${AuthService.currentUser!.id}");
+      ResponseModelList bannersResponse =
+          await NetworkService.get("main/homeviews/${AuthService.id}");
 
-      ResponseModel addressesResponse = await NetworkService.get(
-          "users/adresses/${AuthService.currentUser!.id}");
+      ResponseModelList addressesResponse =
+          await NetworkService.get("users/adresses/${AuthService.id}");
 
       // TODO : UserOrders çekilip ana ekrana eklenicek
 
       if (categoriesResponse.success &&
           bannersResponse.success &&
           addressesResponse.success) {
-        categories = (categoriesResponse.data)!
+        categories.clear();
+        banners.clear();
+        addresses.clear();
+        categories.addAll((categoriesResponse.data)!
             .map((e) => CategoryModel.fromJson(e))
-            .toList();
-        banners = (bannersResponse.data!)
+            .toList());
+        banners.addAll((bannersResponse.data!)
             .map((e) => HomeBannerModel.fromJson(e))
-            .toList();
-        Map<String, dynamic>? addressData = (addressesResponse.data as List)
-            .firstWhere((element) => element["isDefault"] == true,
-                orElse: () => null);
-        if (addressData != null) {
-          address = AddressModel.fromJson(addressData);
+            .toList());
+        addresses.addAll((addressesResponse.data!)
+            .map((e) => AddressModel.fromJson(e))
+            .toList());
+        if (addresses.isNotEmpty) {
+          defaultAddress = addresses.firstWhere((element) => element.isDefault);
         }
       } else {
         PopupHelper.showErrorDialog(
@@ -59,6 +61,22 @@ class HomeViewModel extends ChangeNotifier {
       PopupHelper.showErrorDialogWithCode(e);
     } finally {
       homeLoading = false;
+    }
+  }
+
+  Future<void> setDefaultAddress(int id) async {
+    try {
+      ResponseModel response =
+          await NetworkService.get("users/AdressSetDefault/$id");
+      if (response.success) {
+        defaultAddress = addresses.firstWhere((element) => element.id == id);
+      } else {
+        PopupHelper.showErrorToast(response.errorMessage!);
+      }
+    } catch (e) {
+      PopupHelper.showErrorDialogWithCode(e);
+    } finally {
+      notifyListeners();
     }
   }
 }

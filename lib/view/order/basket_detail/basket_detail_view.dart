@@ -680,7 +680,7 @@ class _BasketDetailState extends ConsumerState<BasketDetailView> {
 
   Future<void> _mesafeliSatisSozlesmesiFunction() async {
     NavigationService.navigateToPage(MesafeliSatisSozlesmesi(
-      cariId: AuthService.currentUser!.id,
+      cariId: AuthService.id,
       deliveryAdressId: ref.watch(provider).selectedDeliveryAddress.id,
       invoiceAdressId: ref.watch(provider).selectedTaxAddress.id,
     ));
@@ -688,7 +688,7 @@ class _BasketDetailState extends ConsumerState<BasketDetailView> {
 
   Future<void> _onBilgilendirmeFormuFunction() async {
     NavigationService.navigateToPage(OnBilgilendirmeFormuView(
-      cariId: AuthService.currentUser!.id,
+      cariId: AuthService.id,
       deliveryAdressId: ref.watch(provider).selectedDeliveryAddress.id,
       invoiceAdressId: ref.watch(provider).selectedTaxAddress.id,
     ));

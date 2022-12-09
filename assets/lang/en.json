@@ -359,5 +359,7 @@
     "not_in_sale": "Not in sale"
   },
   "ERROR": "An unknown error occurred",
-  "NETWORK_ERROR": "Connection error"
+  "NETWORK_ERROR": "Connection error",
+  "ERROR_DUE_TO_SERVER":"An error occurred due to server, please try again later",
+  "TRY_AGAIN":"Try again"
 }

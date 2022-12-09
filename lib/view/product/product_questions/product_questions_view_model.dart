@@ -26,7 +26,7 @@ class ProductQuestionsViewModel extends ChangeNotifier {
     try {
       isLoading = true;
       ResponseModel response = await NetworkService.get(
-          "products/questions/${AuthService.currentUser!.id}/${product.barcode}");
+          "products/questions/${AuthService.id}/${product.barcode}");
       if (response.success) {
         questions = response.data
             .where((element) => element["Answer"] != null)
@@ -70,7 +70,7 @@ class ProductQuestionsViewModel extends ChangeNotifier {
             ResponseModel response =
                 await NetworkService.post("products/questionadd", body: {
               "Barcode": product.barcode,
-              "CariID": AuthService.currentUser!.id,
+              "CariID": AuthService.id,
               "ContentValue": value
             });
             if (response.success) {

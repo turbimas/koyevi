@@ -33,11 +33,11 @@ class UserRatingsViewModel extends ChangeNotifier {
   Future<void> getData() async {
     try {
       isLoading = true;
-      ResponseModel evaluatedResponse = await NetworkService.get(
-          "users/evaluated/${AuthService.currentUser!.id}");
+      ResponseModel evaluatedResponse =
+          await NetworkService.get("users/evaluated/${AuthService.id}");
 
-      ResponseModel nonEvaluatedResponse = await NetworkService.get(
-          "users/non_evaluated/${AuthService.currentUser!.id}");
+      ResponseModel nonEvaluatedResponse =
+          await NetworkService.get("users/non_evaluated/${AuthService.id}");
 
       if (evaluatedResponse.success && nonEvaluatedResponse.success) {
         rated = (evaluatedResponse.data as List)
@@ -72,7 +72,7 @@ class UserRatingsViewModel extends ChangeNotifier {
       isLoading = true;
       Map<String, dynamic> data = {
         "Barcode": barcode,
-        "CariID": AuthService.currentUser!.id,
+        "CariID": AuthService.id,
         "RatingValue": rating
       };
       if (comment.isNotEmpty) {

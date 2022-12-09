@@ -1,8 +1,11 @@
+import 'dart:developer';
 import 'dart:io' show Platform;
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:koyevi/core/services/auth/authservice.dart';
+import 'package:koyevi/core/services/localization/locale_keys.g.dart';
 import 'package:koyevi/core/services/navigation/navigation_service.dart';
 import 'package:koyevi/core/services/network/network_service.dart';
 import 'package:koyevi/core/services/network/response_model.dart';
@@ -12,7 +15,7 @@ import 'package:koyevi/core/services/theme/custom_images.dart';
 import 'package:koyevi/core/utils/helpers/popup_helper.dart';
 import 'package:koyevi/product/constants/app_constants.dart';
 import 'package:koyevi/product/models/user_model.dart';
-import 'package:koyevi/view/auth/login/login_view.dart';
+import 'package:koyevi/product/widgets/main/main_view.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class SplashView extends ConsumerStatefulWidget {
@@ -28,7 +31,8 @@ class _SplashViewState extends ConsumerState<SplashView>
   @override
   void initState() {
     super.initState();
-    _load();
+    log("splash");
+    _loadApp();
   }
 
   @override
@@ -43,68 +47,64 @@ class _SplashViewState extends ConsumerState<SplashView>
     );
   }
 
-  _load() {
-    try {
-      CustomColors.loadColors();
-      CustomIcons.loadIcons();
-      CustomImages.loadImages();
-    } catch (e) {}
-    // AuthService.currentUser = null;
-    // CacheManager.instance.remove(CacheConstants.userId);
-    // CacheManager.instance.remove(CacheConstants.userEmail);
-    // if (false) {
-    NetworkService.post("app/checkversion", body: {
+  void _loadAssets() {
+    CustomColors.loadColors();
+    CustomIcons.loadIcons();
+    CustomImages.loadImages();
+  }
+
+  Future<void> _loadApp() async {
+    // asset
+    _loadAssets();
+
+    // update
+    ResponseModel versionData =
+        await NetworkService.post("app/checkversion", body: {
       "IOS_Version": AppConstants.IOS_Version,
       "ANDROID_Version": AppConstants.ANDROID_Version
-    }).then((value) {
-      String? updateLink = "";
-      if (value.success) {
-        if (Platform.isAndroid) {
-          updateLink = value.data["ANDROID_Version"];
-        } else if (Platform.isIOS) {
-          updateLink = value.data["IOS_Version"];
-        }
-      } else {
-        PopupHelper.showErrorDialog(
-            errorMessage: "İnternet bağlantınızdan emin olun ve tekrar deneyin",
-            actions: {
-              "Tekrar dene": () {
-                Navigator.pop(context);
-                _load();
-              }
-            });
+    });
+    if (versionData.success) {
+      String? updateLink;
+      if (Platform.isAndroid) {
+        updateLink = versionData.data["ANDROID_Version"];
+      } else if (Platform.isIOS) {
+        updateLink = versionData.data["IOS_Version"];
       }
       if (updateLink != null) {
-        if (updateLink.isNotEmpty) {
-          _showUpdateDialog(updateLink);
-        }
-        return;
+        _showUpdateDialog(updateLink);
       }
-      if (AuthService.isLoggedIn) {
-        try {
-          NetworkService.get(
-                  "users/user_info/${AuthService.email == "" ? AuthService.phone : AuthService.email}")
-              .then((ResponseModel value) {
-            if (value.success) {
-              AuthService.login(UserModel.fromJson(value.data));
-            } else {
-              AuthService.logout();
-              PopupHelper.showErrorDialog(errorMessage: value.errorMessage!);
+    } else {
+      await PopupHelper.showErrorDialog(
+          errorMessage: LocaleKeys.ERROR.tr(),
+          actions: {
+            LocaleKeys.TRY_AGAIN.tr(): () {
+              NavigationService.back();
             }
-          }).onError((error, stackTrace) {
-            AuthService.logout();
-            PopupHelper.showErrorDialogWithCode(error!);
           });
-        } catch (e) {
-          PopupHelper.showErrorDialogWithCode(e);
-          AuthService.logout();
+      // güncelleme bilgisi gelmediyse, kurulumu tekrar çağırır ve fonksiyonun kalanını sonlandırır
+      _loadApp();
+      return;
+    }
+    if (AuthService.isLoggedIn) {
+      ResponseModel userData =
+          await NetworkService.get("users/user_info/${AuthService.cachePhone}");
+      if (userData.success) {
+        UserModel user = UserModel.fromJson(userData.data);
+        if (AuthService.cachePassword == user.password) {
+          AuthService.login(user);
+        } else {
+          PopupHelper.showErrorToast("Şifreniz değiştirilmiş");
+          AuthService.logout(showSuccessMessage: false);
+          // Todo: localization eklenicek
         }
       } else {
-        Future.delayed(Duration.zero, () {
-          NavigationService.navigateToPageReplace(const LoginView());
-        });
+        PopupHelper.showErrorToast(
+            "Kullanıcı bilgileri alınamadığı için hesabınızdan çıkış yapıldı");
+        AuthService.logout(showSuccessMessage: false);
       }
-    });
+    }
+
+    NavigationService.navigateToPage(const MainView());
   }
 
   _showUpdateDialog(String updateLink) {

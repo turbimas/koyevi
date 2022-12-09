@@ -103,7 +103,7 @@ class ValidationViewModel extends ChangeNotifier {
       late ResponseModel response;
       if (isUpdate) {
         response = await NetworkService.post("users/user_edit", body: {
-          "ID": AuthService.currentUser!.id,
+          "ID": AuthService.id,
           "Name": registerData["Name"],
           "BornDate": registerData["BornDate"],
           "MobilePhone": registerData["MobilePhone"],

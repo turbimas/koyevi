@@ -35,9 +35,9 @@ class SearchViewModel extends ChangeNotifier {
   Future<void> getLastData() async {
     try {
       ResponseModelList lastSearches = await NetworkService.get<List>(
-          "users/last_search_keywords/${AuthService.currentUser!.id}/$lastSearchCount");
+          "users/last_search_keywords/${AuthService.id}/$lastSearchCount");
       ResponseModelList lastVieweds = await NetworkService.get<List>(
-          "users/lastviewed/${AuthService.currentUser!.id}/$lastViewedCount");
+          "users/lastviewed/${AuthService.id}/$lastViewedCount");
       if (lastSearches.success && lastVieweds.success) {
         lastSearched = lastSearches.data!
             .map((e) => LastSearchedModel.fromJson(e))
@@ -96,7 +96,7 @@ class SearchViewModel extends ChangeNotifier {
   Future<void> search(String searchKey) async {
     try {
       ResponseModel searchResults = await NetworkService.get(
-          "products/productsearch/${AuthService.currentUser!.id}/$searchKey");
+          "products/productsearch/${AuthService.id}/$searchKey");
 
       if (searchResults.success) {
         var list = searchResults.data

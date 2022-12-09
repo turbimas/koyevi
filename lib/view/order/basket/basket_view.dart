@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:koyevi/core/services/auth/authservice.dart';
 import 'package:koyevi/core/services/localization/locale_keys.g.dart';
 import 'package:koyevi/core/services/theme/custom_colors.dart';
 import 'package:koyevi/core/services/theme/custom_fonts.dart';
@@ -17,6 +18,7 @@ import 'package:koyevi/product/constants/app_constants.dart';
 import 'package:koyevi/product/cubits/home_index_cubit/home_index_cubit.dart';
 import 'package:koyevi/product/widgets/custom_appbar.dart';
 import 'package:koyevi/product/widgets/custom_text.dart';
+import 'package:koyevi/product/widgets/login_page_widget.dart';
 import 'package:koyevi/product/widgets/product_overview_view.dart';
 import 'package:koyevi/view/order/basket/basket_view_model.dart';
 
@@ -49,9 +51,11 @@ class _BasketViewState extends ConsumerState<BasketView>
     });
     provider = ChangeNotifierProvider((ref) => BasketViewModel());
     super.initState();
-    Future.delayed(Duration.zero, () {
-      ref.read(provider).getBasket();
-    });
+    if (AuthService.isLoggedIn) {
+      Future.delayed(Duration.zero, () {
+        ref.read(provider).getBasket();
+      });
+    }
   }
 
   @override
@@ -64,6 +68,9 @@ class _BasketViewState extends ConsumerState<BasketView>
   }
 
   Widget _body() {
+    if (!AuthService.isLoggedIn) {
+      return const LoginPageWidget();
+    }
     return ref.watch(provider).retrieving ? _loading() : _content();
   }
 

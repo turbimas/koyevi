@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:koyevi/core/services/auth/authservice.dart';
 import 'package:koyevi/core/services/navigation/navigation_service.dart';
@@ -97,7 +95,7 @@ class SubCategoriesViewModel extends ChangeNotifier {
     try {
       retrieving = true;
       ResponseModelList responseModel = await NetworkService.get<List>(
-          "categories/getCategoryMembers/${AuthService.currentUser!.id}/${selectedCategories.last.id}");
+          "categories/getCategoryMembers/${AuthService.id}/${selectedCategories.last.id}");
       if (responseModel.success) {
         List<ProductOverViewModel> products = responseModel.data!.map((e) {
           return ProductOverViewModel.fromJson(e["Product"]);

@@ -23,8 +23,8 @@ class UserOrdersViewModel extends ChangeNotifier {
   Future<void> getOrders() async {
     try {
       isLoading = true;
-      ResponseModel response = await NetworkService.get(
-          "users/orders/${AuthService.currentUser!.id}");
+      ResponseModel response =
+          await NetworkService.get("users/orders/${AuthService.id}");
       if (response.success) {
         orders = (response.data as List)
             .map((e) => UserOrdersModel.fromJson(e))

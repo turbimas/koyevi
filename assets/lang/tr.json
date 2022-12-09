@@ -1,7 +1,7 @@
 {
     "ForgotPassword": {
-        "prompt_message": "Lütfen aşşağıdaki alana mail adresinizi girin. Size göndereceğimiz mail ile giriş bilgilerinizi hatırlatacağız.",
-        "email_hint":"Mail adresinizi girin"
+        "prompt_message": "Lütfen aşşağıdaki alana numaranızı girin. Size göndereceğimiz sms ile giriş bilgilerinizi hatırlatacağız.",
+        "number_hint":"Numaranızı girin"
     },
     "Login": {
         "appbar_title": "Giriş Yap",
@@ -373,5 +373,7 @@
         "not_in_sale":"Satışta değil"
     },
     "ERROR": "Bilinmeyen bir hata oluştu",
-    "NETWORK_ERROR":"Bağlantı hatası"
+    "NETWORK_ERROR":"Bağlantı hatası",
+    "ERROR_DUE_TO_SERVER":"Sunucu kaynaklı hata, lütfen daha sonra tekrar deneyiniz.",
+    "TRY_AGAIN":"Tekrar dene"
 }

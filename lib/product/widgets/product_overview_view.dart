@@ -230,7 +230,7 @@ class _ProductOverviewViewVerticalState
     try {
       ResponseModel response =
           await NetworkService.post("orders/addbasket", body: {
-        "CariID": AuthService.currentUser!.id,
+        "CariID": AuthService.id,
         "Barcode": widget.product.barcode,
         "Quantity": widget.product.basketFactor,
       });
@@ -272,7 +272,7 @@ class _ProductOverviewViewVerticalState
     try {
       ResponseModel response =
           await NetworkService.post("orders/updatebasket", body: {
-        "CariID": AuthService.currentUser!.id,
+        "CariID": AuthService.id,
         "Barcode": widget.product.barcode,
         "Quantity": widget.product.basketQuantity != null
             ? (widget.product.basketQuantity! - widget.product.basketFactor)
@@ -334,6 +334,11 @@ class _ProductOverviewViewVerticalState
   }
 
   Future<void> _favorite() async {
+    if (!AuthService.isLoggedIn) {
+      // TODO: localization ekle
+      PopupHelper.showErrorToast("Bu özelliği kullanabilmek için giriş yapmalısınız")
+      return;
+    }
     setState(() {
       if (widget.product.isFavorite) {
         widget.product.favoriteId = 0;
@@ -343,7 +348,7 @@ class _ProductOverviewViewVerticalState
     });
     try {
       ResponseModel response = await NetworkService.get(
-          "products/favoriteupdate/${AuthService.currentUser!.id}/${widget.product.barcode}");
+          "products/favoriteupdate/${AuthService.id}/${widget.product.barcode}");
       if (!response.success) {
         setState(() {
           if (widget.product.isFavorite) {

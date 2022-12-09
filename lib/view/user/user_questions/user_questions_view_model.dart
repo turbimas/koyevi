@@ -22,8 +22,8 @@ class UserQuestionsViewModel extends ChangeNotifier {
 
   Future<void> getQuestions() async {
     try {
-      ResponseModel response = await NetworkService.get(
-          "users/questions/${AuthService.currentUser!.id}");
+      ResponseModel response =
+          await NetworkService.get("users/questions/${AuthService.id}");
 
       if (response.success) {
         List<UserQuestionModel> questions = response.data!

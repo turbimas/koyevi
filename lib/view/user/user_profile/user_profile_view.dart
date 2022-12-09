@@ -35,11 +35,6 @@ class _UserProfileViewState extends ConsumerState<UserProfileView> {
   }
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return CustomSafeArea(
         child: Scaffold(
@@ -96,8 +91,7 @@ class _UserProfileViewState extends ConsumerState<UserProfileView> {
                 _customTextField(
                     hintText: LocaleKeys.UserProfile_phone,
                     formKey: "MobilePhone",
-                    initialValue:
-                        (AuthService.currentUser!.phone ?? "").toString()),
+                    initialValue: AuthService.currentUser!.phone.toString()),
                 _customTextField(
                     hintText: LocaleKeys.UserProfile_email,
                     formKey: "Email",

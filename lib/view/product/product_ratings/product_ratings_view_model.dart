@@ -100,7 +100,7 @@ class ProductRatingsViewModel extends ChangeNotifier {
       ratings = null;
       isLoading = true;
       ResponseModel response = await NetworkService.get(
-          "products/evaluations/${AuthService.currentUser!.id}/${product.barcode}");
+          "products/evaluations/${AuthService.id}/${product.barcode}");
 
       if (response.success) {
         ratings = response.data

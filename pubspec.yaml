@@ -78,6 +78,7 @@ flutter:
     - assets/images/png/
     - assets/images/gif/
     - assets/icons/svg/
+    - assets/icons/png/
     - assets/lang/
     - assets/theme/
 

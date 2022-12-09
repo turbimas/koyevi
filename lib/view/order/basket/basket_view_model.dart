@@ -35,10 +35,10 @@ class BasketViewModel extends ChangeNotifier {
     retrieving = true;
     filteredProducts.clear();
     try {
-      ResponseModelList basketResponse = await NetworkService.get<List>(
-          "orders/getbasket/${AuthService.currentUser!.id}");
-      ResponseModel totalResponse = await NetworkService.get(
-          "orders/calculatetotals/${AuthService.currentUser!.id}");
+      ResponseModelList basketResponse =
+          await NetworkService.get<List>("orders/getbasket/${AuthService.id}");
+      ResponseModel totalResponse =
+          await NetworkService.get("orders/calculatetotals/${AuthService.id}");
 
       if (basketResponse.success && totalResponse.success) {
         products = basketResponse.data!
@@ -69,8 +69,8 @@ class BasketViewModel extends ChangeNotifier {
 
   Future<void> goBasketDetail() async {
     try {
-      ResponseModel response = await NetworkService.get(
-          "users/adresses/${AuthService.currentUser!.id}");
+      ResponseModel response =
+          await NetworkService.get("users/adresses/${AuthService.id}");
       if (response.success) {
         List<AddressModel> addresses = (response.data as List)
             .map((e) => AddressModel.fromJson(e))
@@ -141,8 +141,8 @@ class BasketViewModel extends ChangeNotifier {
       if (value == true) {
         retrieving = true;
         try {
-          ResponseModel response = await NetworkService.get(
-              "orders/clearbasket/${AuthService.currentUser!.id}");
+          ResponseModel response =
+              await NetworkService.get("orders/clearbasket/${AuthService.id}");
           if (response.success) {
             products.clear();
             filteredProducts.clear();
