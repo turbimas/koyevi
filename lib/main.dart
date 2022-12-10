@@ -23,8 +23,9 @@ void main(List<String> args) async {
   //   log(status.toString());
   //   Geolocator.openAppSettings();
   // });
+
   linkStream.listen((String? uri) {
-    log("açılan link: $uri");
+    log("Açılan link: $uri");
   }, onError: (err) {});
 
   runApp(EasyLocalization(

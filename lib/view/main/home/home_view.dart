@@ -12,12 +12,14 @@ import 'package:koyevi/core/services/theme/custom_fonts.dart';
 import 'package:koyevi/core/services/theme/custom_icons.dart';
 import 'package:koyevi/core/services/theme/custom_images.dart';
 import 'package:koyevi/core/services/theme/custom_theme_data.dart';
+import 'package:koyevi/core/utils/extensions/datetime_extensions.dart';
 import 'package:koyevi/core/utils/extensions/ui_extensions.dart';
 import 'package:koyevi/product/constants/app_constants.dart';
 import 'package:koyevi/product/models/category_model.dart';
 import 'package:koyevi/product/models/home_banner_model.dart';
 import 'package:koyevi/product/models/product_over_view_model.dart';
 import 'package:koyevi/product/models/user/address_model.dart';
+import 'package:koyevi/product/models/user/user_orders_model.dart';
 import 'package:koyevi/product/widgets/custom_searchbar_view.dart';
 import 'package:koyevi/product/widgets/custom_text.dart';
 import 'package:koyevi/product/widgets/product_overview_view.dart';
@@ -56,7 +58,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
   Widget _body() {
     if (ref.watch(provider).homeLoading) {
       return _loading();
-    } else if (ref.watch(provider).banners != null) {
+    } else if (ref.watch(provider).banners.isNotEmpty) {
       return _content();
     } else {
       return TryAgain(callBack: ref.read(provider).getHomeData);
@@ -126,23 +128,15 @@ class _HomeViewState extends ConsumerState<HomeView> {
 
   Widget _orders() {
     return Container(
-      margin: EdgeInsets.only(top: 10.smh),
       child: ListView.builder(
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        itemCount: 2,
+        itemCount: ref.watch(provider).orders.length,
         itemBuilder: (context, index) {
+          UserOrdersModel order = ref.watch(provider).orders[index];
           return Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.smw),
-            child: Container(
-              margin: EdgeInsets.only(bottom: 10.smh),
-              decoration: BoxDecoration(
-                  border: Border.all(color: CustomColors.primary),
-                  borderRadius: CustomThemeData.fullRounded),
-              height: 70.smh,
-              width: 330.smw,
-              child: Row(),
-            ),
+            padding: EdgeInsets.symmetric(horizontal: 15.smw),
+            child: _orderCard(order),
           );
         },
       ),
@@ -432,5 +426,62 @@ class _HomeViewState extends ConsumerState<HomeView> {
                 },
               ));
         });
+  }
+
+  Widget _orderCard(UserOrdersModel orderModel) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 10.smh),
+      padding: EdgeInsets.symmetric(horizontal: 5.smw, vertical: 5.smh),
+      decoration: BoxDecoration(
+          color: CustomColors.card2,
+          border: Border.all(color: CustomColors.primary, width: 1),
+          borderRadius: CustomThemeData.fullRounded),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          CustomIcons.profile_delivery,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CustomText("Devam eden siparişiniz",
+                  style: CustomFonts.bodyText3(CustomColors.card2TextPale)),
+              SizedBox(height: 5.smh),
+              CustomText("Sipariş tarihi: ${orderModel.orderDate}",
+                  style: CustomFonts.bodyText5(CustomColors.card2TextPale)),
+              CustomText(
+                  "Tahmini Teslimat Tarihi: ${orderModel.deliveryAddressDetail!.deliveryDate!.toFormattedString()}",
+                  style: CustomFonts.bodyText5(CustomColors.card2Text)),
+              CustomText("Durumu: ${orderModel.statusName}",
+                  style: CustomFonts.bodyText5(CustomColors.card2Text))
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CustomText("Sipariş no",
+                  style: CustomFonts.bodyText5(CustomColors.card2Text)),
+              CustomText(orderModel.orderId.toString(),
+                  style: CustomFonts.bodyText5(CustomColors.card2Text)),
+              Container(
+                  decoration: BoxDecoration(
+                      color: CustomColors.primary,
+                      borderRadius: CustomThemeData.fullInfiniteRounded),
+                  width: 80.smw,
+                  height: 35.smh,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      CustomText("Detaylar",
+                          style:
+                              CustomFonts.bodyText4(CustomColors.primaryText)),
+                      CustomIcons.forward_icon_light
+                    ],
+                  ))
+            ],
+          )
+        ],
+      ),
+    );
   }
 }

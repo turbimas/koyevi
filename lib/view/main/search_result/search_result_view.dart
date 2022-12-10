@@ -214,27 +214,22 @@ class _SearchResultViewState extends ConsumerState<SearchResultView> {
               insetPadding: EdgeInsets.symmetric(horizontal: 0.smw),
               backgroundColor: Colors.transparent,
               child: Container(
-                width: 330.smw,
-                height: 500.smh,
-                decoration: BoxDecoration(
-                    borderRadius: CustomThemeData.fullRounded,
-                    color: CustomColors.primary),
-                child: Column(
-                  children: [
+                  width: 330.smw,
+                  height: 500.smh,
+                  decoration: BoxDecoration(
+                      borderRadius: CustomThemeData.fullRounded,
+                      color: CustomColors.primary),
+                  child: Column(children: [
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 10.smh),
-                      padding: EdgeInsets.symmetric(horizontal: 30.smw),
-                      child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: CustomTextLocale(
-                            LocaleKeys.SearchResult_filter,
-                            style:
-                                CustomFonts.bodyText1(CustomColors.primaryText),
-                          )),
-                    )
-                  ],
-                ),
-              ),
+                        margin: EdgeInsets.symmetric(vertical: 10.smh),
+                        padding: EdgeInsets.symmetric(horizontal: 30.smw),
+                        child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: CustomTextLocale(
+                                LocaleKeys.SearchResult_filter,
+                                style: CustomFonts.bodyText1(
+                                    CustomColors.primaryText)))),
+                  ])),
             );
           });
         });

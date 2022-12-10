@@ -6,6 +6,7 @@ import 'package:koyevi/core/utils/helpers/popup_helper.dart';
 import 'package:koyevi/product/models/category_model.dart';
 import 'package:koyevi/product/models/home_banner_model.dart';
 import 'package:koyevi/product/models/user/address_model.dart';
+import 'package:koyevi/product/models/user/user_orders_model.dart';
 
 class HomeViewModel extends ChangeNotifier {
   bool _homeLoading = true;
@@ -18,6 +19,7 @@ class HomeViewModel extends ChangeNotifier {
   List<CategoryModel> categories = [];
   List<HomeBannerModel> banners = [];
   List<AddressModel> addresses = [];
+  List<UserOrdersModel> orders = [];
   AddressModel? defaultAddress;
   HomeViewModel();
 
@@ -33,7 +35,20 @@ class HomeViewModel extends ChangeNotifier {
       ResponseModelList addressesResponse =
           await NetworkService.get("users/adresses/${AuthService.id}");
 
-      // TODO : UserOrders çekilip ana ekrana eklenicek
+      if (AuthService.isLoggedIn) {
+        ResponseModelList continuingOrders =
+            await NetworkService.get("main/ContinuingOrders/${AuthService.id}");
+        if (continuingOrders.success) {
+          if (continuingOrders.data!.isNotEmpty) {
+            orders.clear();
+            orders.addAll((continuingOrders.data!)
+                .map((e) => UserOrdersModel.fromJson(e))
+                .toList());
+          }
+        } else {
+          PopupHelper.showErrorDialogWithCode(continuingOrders.errorMessage!);
+        }
+      }
 
       if (categoriesResponse.success &&
           bannersResponse.success &&
@@ -54,6 +69,7 @@ class HomeViewModel extends ChangeNotifier {
           defaultAddress = addresses.firstWhere((element) => element.isDefault);
         }
       } else {
+        // TODO: add localization
         PopupHelper.showErrorDialog(
             errorMessage: "İnternet bağlatınızı kontrol ediniz.");
       }

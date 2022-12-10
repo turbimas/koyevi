@@ -114,8 +114,8 @@ class ProductPropertyModel {
         forValue = json['ForValue'];
 }
 
-extension doubleExtention on double {
+extension DoubleExtension on double {
   double toPrecision(int fractionDigits) {
-    return double.parse(this.toStringAsPrecision(fractionDigits));
+    return double.parse(toStringAsPrecision(fractionDigits));
   }
 }
