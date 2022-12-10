@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:koyevi/core/services/localization/locale_keys.g.dart';
 import 'package:koyevi/core/services/navigation/navigation_service.dart';
 import 'package:koyevi/core/services/theme/custom_colors.dart';
 import 'package:koyevi/core/services/theme/custom_theme_data.dart';
@@ -28,8 +29,8 @@ class LoginPageWidget extends StatelessWidget {
                   borderRadius: CustomThemeData.fullInfiniteRounded,
                   border: Border.all(color: CustomColors.primary),
                 ),
-                // TODO: localization ekle
-                child: CustomText("Giriş yapmak için tıklayınız"),
+                child:
+                    CustomTextLocale(LocaleKeys.LoginPageWidget_click_to_login),
               ),
             ))),
         Container(height: 85.smh)

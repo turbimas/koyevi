@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:koyevi/core/services/cache/cache_manager.dart';
+import 'package:koyevi/core/services/localization/locale_keys.g.dart';
 import 'package:koyevi/core/services/navigation/navigation_service.dart';
 import 'package:koyevi/core/utils/helpers/popup_helper.dart';
 import 'package:koyevi/product/constants/cache_constants.dart';
@@ -34,9 +36,9 @@ class AuthService {
     NavigationService.context.read<HomeIndexCubit>().set(2);
     currentUser = null;
     if (showSuccessMessage) {
-      PopupHelper.showSuccessToast("Çıkış yapıldı");
+      PopupHelper.showSuccessToast(
+          LocaleKeys.AuthService_logout_successful.tr());
     }
-    // TODO: Localize eklenicek
   }
 
   static void update(UserModel user) {

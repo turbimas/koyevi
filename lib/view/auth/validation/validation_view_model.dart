@@ -122,7 +122,7 @@ class ValidationViewModel extends ChangeNotifier {
 
       if (response.success) {
         ResponseModel userInfo = await NetworkService.get(
-            "users/user_info/${registerData["Email"] == null ? registerData["MobilePhone"] : registerData["Email"]}");
+            "users/user_info/${registerData["Email"] ?? registerData["MobilePhone"]}");
         if (userInfo.success) {
           // formKey.currentState?.dispose();
           await AuthService.login(UserModel.fromJson(userInfo.data));

@@ -33,7 +33,14 @@
   },
   "Home": {
     "search_hint": "Search product, category",
-    "all": "All"
+    "all": "All",
+    "continuing_order": "Continuing Order",
+    "order_date": "Order date: {}",
+    "estimated_order_date": "Estimated delivery date: {}",
+    "order_status": "Order status: {}",
+    "order_id": "Order number:",
+    "check_network_connection": "Check your internet connection",
+    "order_details": "Details"
   },
   "Favorites": {
     "appbar_title": "My favorite products",
@@ -66,7 +73,8 @@
     "name_a_z": "Order by name (A-Z)",
     "name_z_a": "Order by name (Z-A)",
     "price_low_high": "Price (From low to hight)",
-    "price_high_low": "Price (From hight to low)"
+    "price_high_low": "Price (From hight to low)",
+    "soon":"This feature will be available soon"
   },
   "BasketEmpty": {
     "appbar_title": "Basket",
@@ -356,10 +364,17 @@
     "product_removed_favorites": "Removed from your product favorites",
     "add_to_basket": "Add to Basket",
     "cant_shipped": "Can't shipped",
-    "not_in_sale": "Not in sale"
+    "not_in_sale": "Not in sale",
+    "login_to_use":"You have to be logged in to use this feature"
+  },
+  "LoginPageWidget": {
+    "click_to_login": "Click to login"
   },
   "ERROR": "An unknown error occurred",
   "NETWORK_ERROR": "Connection error",
-  "ERROR_DUE_TO_SERVER":"An error occurred due to server, please try again later",
-  "TRY_AGAIN":"Try again"
+  "ERROR_DUE_TO_SERVER": "An error occurred due to server, please try again later",
+  "TRY_AGAIN": "Try again",
+  "AuthService": {
+    "logout_successful": "Logout successful"
+  }
 }

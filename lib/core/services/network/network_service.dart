@@ -32,7 +32,7 @@ abstract class NetworkService {
             "username": "admin",
             "password": "\$inFtecH1100%",
           });
-      AppConstants.APP_TOKEN = response.data!["data"];
+      AppConstants.appToken = response.data!["data"];
       notInited = false;
     } catch (e) {
       await PopupHelper.showErrorDialog(
@@ -44,7 +44,7 @@ abstract class NetworkService {
           });
     }
 
-    String token = AppConstants.APP_TOKEN;
+    String token = AppConstants.appToken;
     Map<String, dynamic> headers = <String, dynamic>{};
     headers["Authorization"] = "Bearer $token";
 

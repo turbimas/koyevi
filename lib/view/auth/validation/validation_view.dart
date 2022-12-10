@@ -1,5 +1,7 @@
 // ignore_for_file: must_be_immutable
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_pin_code_fields/flutter_pin_code_fields.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -109,7 +111,7 @@ class _ValidationViewState extends ConsumerState<ValidationView> {
       onComplete: (result) {
         ref.read(provider).approvedValidationCode = result;
         ref.read(provider).approve;
-        print(result);
+        log(result);
       },
     );
   }

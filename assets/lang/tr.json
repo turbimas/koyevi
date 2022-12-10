@@ -34,7 +34,14 @@
     },
     "Home": {
         "search_hint":"Ürün veya kategori ara",
-        "all":"Tümü"
+        "all":"Tümü",
+        "continuing_order":"Devam eden siparişiniz",
+        "order_date":"Sipariş tarihi: {}",
+        "estimated_order_date":"Tahmini teslim tarihi: {}",
+        "order_status":"Sipariş durumu: {}",
+        "order_id":"Sipariş numarası:",
+        "check_network_connection":"İnternet bağlantınızı kontrol edin",
+        "order_details":"Detaylar"
     },
     "Favorites": {
         "appbar_title": "Favorileri ürünlerim",
@@ -67,7 +74,8 @@
         "name_a_z":"İsme göre A-Z",
         "name_z_a":"İsme göre Z-A",
         "price_low_high":"Fiyat (Küçükten büyüğe)",
-        "price_high_low":"Fiyat (Büyükten küçüğe)"
+        "price_high_low":"Fiyat (Büyükten küçüğe)",
+        "soon":"Bu özellik çok yakında aktif olacak"
     },
     "BasketEmpty":{
         "appbar_title":"Sepetim",
@@ -370,10 +378,17 @@
         "product_removed_favorites":"Ürün favorilerinizden kaldırıldı",
         "add_to_basket":"Sepete Ekle",
         "cant_shipped":"Kargolanamaz",
-        "not_in_sale":"Satışta değil"
+        "not_in_sale":"Satışta değil",
+        "login_to_use":"Bu özelliği kullanabilmek için giriş yapmalısınız"
+    },
+    "LoginPageWidget": {
+        "click_to_login":"Giriş yapmak için tıklayınız"
     },
     "ERROR": "Bilinmeyen bir hata oluştu",
     "NETWORK_ERROR":"Bağlantı hatası",
     "ERROR_DUE_TO_SERVER":"Sunucu kaynaklı hata, lütfen daha sonra tekrar deneyiniz.",
-    "TRY_AGAIN":"Tekrar dene"
+    "TRY_AGAIN":"Tekrar dene",
+    "AuthService": {
+        "logout_successful": "Logout successful"
+      }
 }

@@ -335,9 +335,7 @@ class _ProductOverviewViewVerticalState
 
   Future<void> _favorite() async {
     if (!AuthService.isLoggedIn) {
-      // TODO: localization ekle
-      PopupHelper.showErrorToast(
-          "Bu özelliği kullanabilmek için giriş yapmalısınız");
+      PopupHelper.showErrorToast(LocaleKeys.ProductOverView_login_to_use.tr());
       return;
     }
     setState(() {

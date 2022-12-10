@@ -33,6 +33,13 @@ abstract class LocaleKeys {
   static const Validation = 'Validation';
   static const Home_search_hint = 'Home.search_hint';
   static const Home_all = 'Home.all';
+  static const Home_continuing_order = 'Home.continuing_order';
+  static const Home_order_date = 'Home.order_date';
+  static const Home_estimated_order_date = 'Home.estimated_order_date';
+  static const Home_order_status = 'Home.order_status';
+  static const Home_order_id = 'Home.order_id';
+  static const Home_check_network_connection = 'Home.check_network_connection';
+  static const Home_order_details = 'Home.order_details';
   static const Home = 'Home';
   static const Favorites_appbar_title = 'Favorites.appbar_title';
   static const Favorites_search_hint = 'Favorites.search_hint';
@@ -61,6 +68,7 @@ abstract class LocaleKeys {
   static const SearchResult_name_z_a = 'SearchResult.name_z_a';
   static const SearchResult_price_low_high = 'SearchResult.price_low_high';
   static const SearchResult_price_high_low = 'SearchResult.price_high_low';
+  static const SearchResult_soon = 'SearchResult.soon';
   static const SearchResult = 'SearchResult';
   static const BasketEmpty_appbar_title = 'BasketEmpty.appbar_title';
   static const BasketEmpty_basket_empty = 'BasketEmpty.basket_empty';
@@ -360,9 +368,15 @@ abstract class LocaleKeys {
   static const ProductOverView_add_to_basket = 'ProductOverView.add_to_basket';
   static const ProductOverView_cant_shipped = 'ProductOverView.cant_shipped';
   static const ProductOverView_not_in_sale = 'ProductOverView.not_in_sale';
+  static const ProductOverView_login_to_use = 'ProductOverView.login_to_use';
   static const ProductOverView = 'ProductOverView';
+  static const LoginPageWidget_click_to_login =
+      'LoginPageWidget.click_to_login';
+  static const LoginPageWidget = 'LoginPageWidget';
   static const ERROR = 'ERROR';
   static const NETWORK_ERROR = 'NETWORK_ERROR';
   static const ERROR_DUE_TO_SERVER = 'ERROR_DUE_TO_SERVER';
   static const TRY_AGAIN = 'TRY_AGAIN';
+  static const AuthService_logout_successful = 'AuthService.logout_successful';
+  static const AuthService = 'AuthService';
 }

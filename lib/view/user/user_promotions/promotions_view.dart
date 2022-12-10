@@ -43,7 +43,7 @@ class _UserPromotionsViewState extends ConsumerState<UserPromotionsView> {
   }
 
   _promotionCard(index) {
-    String promotionMessage = ref.watch(provider).promotionMessages[index];
+    // String promotionMessage = ref.watch(provider).promotionMessages[index];
     return Container(
         margin: EdgeInsets.only(bottom: 10.smh),
         width: AppConstants.designWidth.smw,

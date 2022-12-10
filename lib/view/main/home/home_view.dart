@@ -28,6 +28,7 @@ import 'package:koyevi/view/main/home/home_view_model.dart';
 import 'package:koyevi/view/main/search/search_view.dart';
 import 'package:koyevi/view/main/search_result/search_result_view.dart';
 import 'package:koyevi/view/main/sub_categories/sub_categories_view.dart';
+import 'package:koyevi/view/user/user_order_details/user_order_details_view.dart';
 
 class HomeView extends ConsumerStatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -127,19 +128,17 @@ class _HomeViewState extends ConsumerState<HomeView> {
   }
 
   Widget _orders() {
-    return Container(
-      child: ListView.builder(
-        physics: const NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        itemCount: ref.watch(provider).orders.length,
-        itemBuilder: (context, index) {
-          UserOrdersModel order = ref.watch(provider).orders[index];
-          return Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15.smw),
-            child: _orderCard(order),
-          );
-        },
-      ),
+    return ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemCount: ref.watch(provider).orders.length,
+      itemBuilder: (context, index) {
+        UserOrdersModel order = ref.watch(provider).orders[index];
+        return Padding(
+          padding: EdgeInsets.symmetric(horizontal: 15.smw),
+          child: _orderCard(order),
+        );
+      },
     );
   }
 
@@ -444,40 +443,51 @@ class _HomeViewState extends ConsumerState<HomeView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              CustomText("Devam eden siparişiniz",
+              CustomTextLocale(LocaleKeys.Home_continuing_order,
                   style: CustomFonts.bodyText3(CustomColors.card2TextPale)),
               SizedBox(height: 5.smh),
-              CustomText("Sipariş tarihi: ${orderModel.orderDate}",
+              CustomTextLocale(LocaleKeys.Home_order_date,
+                  args: [orderModel.orderDate.toFormattedString()],
                   style: CustomFonts.bodyText5(CustomColors.card2TextPale)),
-              CustomText(
-                  "Tahmini Teslimat Tarihi: ${orderModel.deliveryAddressDetail!.deliveryDate!.toFormattedString()}",
+              CustomTextLocale(LocaleKeys.Home_estimated_order_date,
+                  args: [
+                    orderModel.deliveryAddressDetail!.deliveryDate!
+                        .toFormattedString()
+                  ],
                   style: CustomFonts.bodyText5(CustomColors.card2Text)),
-              CustomText("Durumu: ${orderModel.statusName}",
+              CustomTextLocale(LocaleKeys.Home_order_status,
+                  args: [orderModel.statusName],
                   style: CustomFonts.bodyText5(CustomColors.card2Text))
             ],
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              CustomText("Sipariş no",
+              CustomTextLocale(LocaleKeys.Home_order_id,
                   style: CustomFonts.bodyText5(CustomColors.card2Text)),
               CustomText(orderModel.orderId.toString(),
                   style: CustomFonts.bodyText5(CustomColors.card2Text)),
-              Container(
-                  decoration: BoxDecoration(
-                      color: CustomColors.primary,
-                      borderRadius: CustomThemeData.fullInfiniteRounded),
-                  width: 80.smw,
-                  height: 35.smh,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      CustomText("Detaylar",
-                          style:
-                              CustomFonts.bodyText4(CustomColors.primaryText)),
-                      CustomIcons.forward_icon_light
-                    ],
-                  ))
+              InkWell(
+                onTap: () {
+                  NavigationService.navigateToPage(
+                      UserOrderDetailsView(orderTitle: orderModel));
+                },
+                child: Container(
+                    decoration: BoxDecoration(
+                        color: CustomColors.primary,
+                        borderRadius: CustomThemeData.fullInfiniteRounded),
+                    width: 80.smw,
+                    height: 35.smh,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        CustomTextLocale(LocaleKeys.Home_order_details,
+                            style: CustomFonts.bodyText4(
+                                CustomColors.primaryText)),
+                        CustomIcons.forward_icon_light
+                      ],
+                    )),
+              )
             ],
           )
         ],

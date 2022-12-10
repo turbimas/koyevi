@@ -12,6 +12,7 @@ import 'package:koyevi/core/services/theme/custom_fonts.dart';
 import 'package:koyevi/core/services/theme/custom_icons.dart';
 import 'package:koyevi/core/services/theme/custom_theme_data.dart';
 import 'package:koyevi/core/utils/extensions/ui_extensions.dart';
+import 'package:koyevi/core/utils/helpers/popup_helper.dart';
 import 'package:koyevi/product/cubits/home_index_cubit/home_index_cubit.dart';
 import 'package:koyevi/product/models/category_model.dart';
 import 'package:koyevi/product/models/product_over_view_model.dart';
@@ -206,6 +207,8 @@ class _SearchResultViewState extends ConsumerState<SearchResultView> {
   }
 
   void _showFilterPopup() {
+    PopupHelper.showErrorToast(LocaleKeys.SearchResult_soon.tr());
+    return;
     showDialog(
         context: context,
         builder: (context) {
