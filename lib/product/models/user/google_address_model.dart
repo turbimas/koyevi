@@ -1,15 +1,15 @@
 class GoogleAddressModel {
-  String buildingNo;
-  String street;
-  String district;
-  String town;
-  String region;
-  String city;
-  String country;
-  String postalCode;
-  String formatAddress;
-  late num lat;
-  late num lng;
+  final String buildingNo;
+  final String street;
+  final String district;
+  final String town;
+  final String region;
+  final String city;
+  final String country;
+  final String postalCode;
+  final String formatAddress;
+  final num lat;
+  final num lng;
 
   GoogleAddressModel.fromJson(Map<String, dynamic> json)
       : buildingNo = json["BuildingNo"],
@@ -20,9 +20,11 @@ class GoogleAddressModel {
         region = json["Region"],
         country = json["Country"],
         postalCode = json["PostalCode"],
-        formatAddress = json["format_adress"];
+        formatAddress = json["format_adress"],
+        lat = json["lat"],
+        lng = json["lng"];
 
-  toJson() {
+  Map<String, dynamic> toJson() {
     return {
       "BuildingNo": buildingNo,
       "Street": street,

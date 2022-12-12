@@ -9,6 +9,7 @@ import 'package:koyevi/core/services/network/network_service.dart';
 import 'package:koyevi/core/services/network/response_model.dart';
 import 'package:koyevi/core/utils/helpers/popup_helper.dart';
 import 'package:koyevi/product/models/user_model.dart';
+import 'package:koyevi/product/widgets/main/main_view.dart';
 
 class ValidationViewModel extends ChangeNotifier {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -126,6 +127,8 @@ class ValidationViewModel extends ChangeNotifier {
         if (userInfo.success) {
           // formKey.currentState?.dispose();
           await AuthService.login(UserModel.fromJson(userInfo.data));
+          await NavigationService.navigateToPageAndRemoveUntil(
+              const MainView());
         } else {
           PopupHelper.showErrorDialog(errorMessage: userInfo.errorMessage!);
         }

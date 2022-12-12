@@ -22,17 +22,6 @@ mixin AuthValidators {
     return null;
   }
 
-  String? emailValidator(String? value) {
-    // email regex
-    final RegExp emailRegex = RegExp(
-        r'^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$');
-    // check if email is valid
-    if (value != null && !emailRegex.hasMatch(value)) {
-      return LocaleKeys.Validators_email.tr();
-    }
-    return null;
-  }
-
   String? validationCodeValidator(String? value) {
     // validation code regex
     final RegExp validationCodeRegex = RegExp(r'^[0-9]{6}$');

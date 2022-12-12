@@ -22,7 +22,7 @@ class RegisterViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  register() {
+  void register() {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
       NavigationService.navigateToPage(

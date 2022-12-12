@@ -3,11 +3,12 @@
 // ignore_for_file: constant_identifier_names
 
 abstract class LocaleKeys {
+  static const ForgotPassword_appbar_title = 'ForgotPassword.appbar_title';
   static const ForgotPassword_prompt_message = 'ForgotPassword.prompt_message';
-  static const ForgotPassword_email_hint = 'ForgotPassword.email_hint';
+  static const ForgotPassword_number_hint = 'ForgotPassword.number_hint';
   static const ForgotPassword = 'ForgotPassword';
   static const Login_appbar_title = 'Login.appbar_title';
-  static const Login_email_phone_hint = 'Login.email_phone_hint';
+  static const Login_phone_hint = 'Login.phone_hint';
   static const Login_password_hint = 'Login.password_hint';
   static const Login_forgot_password = 'Login.forgot_password';
   static const Login_login_button = 'Login.login_button';
@@ -17,7 +18,6 @@ abstract class LocaleKeys {
   static const Register_appbar_title = 'Register.appbar_title';
   static const Register_full_name_hint = 'Register.full_name_hint';
   static const Register_phone_hint = 'Register.phone_hint';
-  static const Register_email_hint = 'Register.email_hint';
   static const Register_password_hint = 'Register.password_hint';
   static const Register_accept_agreement = 'Register.accept_agreement';
   static const Register_register_button = 'Register.register_button';
@@ -224,16 +224,11 @@ abstract class LocaleKeys {
   static const UserAddressAdd_use_current_location =
       'UserAddressAdd.use_current_location';
   static const UserAddressAdd_open_map = 'UserAddressAdd.open_map';
-  static const UserAddressAdd_country = 'UserAddressAdd.country';
-  static const UserAddressAdd_city = 'UserAddressAdd.city';
-  static const UserAddressAdd_region = 'UserAddressAdd.region';
-  static const UserAddressAdd_district = 'UserAddressAdd.district';
-  static const UserAddressAdd_town = 'UserAddressAdd.town';
-  static const UserAddressAdd_street = 'UserAddressAdd.street';
-  static const UserAddressAdd_building = 'UserAddressAdd.building';
-  static const UserAddressAdd_postal_code = 'UserAddressAdd.postal_code';
   static const UserAddressAdd_address_header = 'UserAddressAdd.address_header';
-  static const UserAddressAdd_name_surname = 'UserAddressAdd.name_surname';
+  static const UserAddressAdd_building_no = 'UserAddressAdd.building_no';
+  static const UserAddressAdd_building_name = 'UserAddressAdd.building_name';
+  static const UserAddressAdd_floor_no = 'UserAddressAdd.floor_no';
+  static const UserAddressAdd_door_no = 'UserAddressAdd.door_no';
   static const UserAddressAdd_email = 'UserAddressAdd.email';
   static const UserAddressAdd_phone = 'UserAddressAdd.phone';
   static const UserAddressAdd_note = 'UserAddressAdd.note';
@@ -242,6 +237,7 @@ abstract class LocaleKeys {
       'UserAddressAdd.location_retrieving';
   static const UserAddressAdd_person = 'UserAddressAdd.person';
   static const UserAddressAdd_corporate = 'UserAddressAdd.corporate';
+  static const UserAddressAdd_related_person = 'UserAddressAdd.related_person';
   static const UserAddressAdd_identity_no = 'UserAddressAdd.identity_no';
   static const UserAddressAdd_tax_number = 'UserAddressAdd.tax_number';
   static const UserAddressAdd_tax_office = 'UserAddressAdd.tax_office';
@@ -266,7 +262,6 @@ abstract class LocaleKeys {
   static const UserProfile_name_surname = 'UserProfile.name_surname';
   static const UserProfile_born_date = 'UserProfile.born_date';
   static const UserProfile_phone = 'UserProfile.phone';
-  static const UserProfile_email = 'UserProfile.email';
   static const UserProfile_change_password = 'UserProfile.change_password';
   static const UserProfile_old_password = 'UserProfile.old_password';
   static const UserProfile_new_password = 'UserProfile.new_password';
@@ -320,7 +315,6 @@ abstract class LocaleKeys {
   static const Validators_required = 'Validators.required';
   static const Validators_too_long_name = 'Validators.too_long_name';
   static const Validators_validation_code = 'Validators.validation_code';
-  static const Validators_email = 'Validators.email';
   static const Validators_password = 'Validators.password';
   static const Validators_password_confirm = 'Validators.password_confirm';
   static const Validators_old_password = 'Validators.old_password';

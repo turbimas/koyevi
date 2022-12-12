@@ -7,31 +7,21 @@ import 'package:koyevi/core/services/network/network_service.dart';
 import 'package:koyevi/core/services/network/response_model.dart';
 import 'package:koyevi/core/utils/helpers/popup_helper.dart';
 import 'package:koyevi/product/models/user/google_address_model.dart';
+import 'package:koyevi/product/models/user/locale_address_model.dart';
+// TODO: localizaton eklenicek
 
 class UserAddressAddViewModel extends ChangeNotifier {
-  late TextEditingController countryController;
-  late TextEditingController cityController;
-  late TextEditingController regionController;
-  late TextEditingController districtController;
-  late TextEditingController townController;
-  late TextEditingController streetController;
-  late TextEditingController buildingController;
-  late TextEditingController postalCodeController;
-
-  UserAddressAddViewModel(
-      {required this.countryController,
-      required this.cityController,
-      required this.regionController,
-      required this.districtController,
-      required this.townController,
-      required this.streetController,
-      required this.buildingController,
-      required this.postalCodeController});
+  late TextEditingController buildingNoController;
+  UserAddressAddViewModel({required this.buildingNoController});
   late GoogleMapController mapController;
+
+  LocaleAddressModel localeAddressModel = LocaleAddressModel();
+
   GoogleAddressModel? _googleAddressModel;
   GoogleAddressModel? get googleAddressModel => _googleAddressModel;
   set googleAddressModel(GoogleAddressModel? value) {
     _googleAddressModel = value;
+    buildingNoController.text = value!.buildingNo;
     notifyListeners();
   }
 
@@ -59,8 +49,6 @@ class UserAddressAddViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Map<String, dynamic> formData = {};
-
   bool _isExpanded = true;
   bool get isExpanded => _isExpanded;
   set isExpanded(bool value) {
@@ -85,16 +73,6 @@ class UserAddressAddViewModel extends ChangeNotifier {
       });
       if (response.success) {
         googleAddressModel = GoogleAddressModel.fromJson(response.data);
-        googleAddressModel!.lat = marker.position.latitude;
-        googleAddressModel!.lng = marker.position.longitude;
-        countryController.text = googleAddressModel!.country;
-        cityController.text = googleAddressModel!.city;
-        regionController.text = googleAddressModel!.region;
-        districtController.text = googleAddressModel!.district;
-        townController.text = googleAddressModel!.town;
-        streetController.text = googleAddressModel!.street;
-        buildingController.text = googleAddressModel!.buildingNo;
-        postalCodeController.text = googleAddressModel!.postalCode;
       } else {
         PopupHelper.showErrorToast(response.errorMessage!);
       }
@@ -103,28 +81,59 @@ class UserAddressAddViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> addAddress() async {
+  Future<void> addAddress({
+    required String addressHeader,
+    required String relatedPersonName,
+    required String relatedMail,
+    required String relatedPhone,
+    required String identityNo,
+    required String taxNo,
+    required String taxOffice,
+    required String buildingNo,
+    required String buildingName,
+    required String floorNo,
+    required String doorNo,
+    required String note,
+  }) async {
     try {
-      formData["CariID"] = AuthService.id;
-      googleAddressModel!.country = countryController.text;
-      googleAddressModel!.city = cityController.text;
-      googleAddressModel!.district = districtController.text;
-      googleAddressModel!.region = regionController.text;
-      googleAddressModel!.town = townController.text;
-      googleAddressModel!.street = streetController.text;
-      googleAddressModel!.buildingNo = buildingController.text;
-      googleAddressModel!.postalCode = postalCodeController.text;
-      if (formData["AdresBasligi"]
-          .toString()
-          .replaceAll("null", "")
-          .trim()
-          .isEmpty) {
-        PopupHelper.showErrorDialog(errorMessage: "Adres Başlığı Boş Olamaz");
+      if (addressHeader.isEmpty) {
+        PopupHelper.showErrorDialog(errorMessage: "Adres başlığı boş olamaz");
         return;
       }
+      localeAddressModel.cariID = AuthService.id;
+      localeAddressModel.adresBasligi = addressHeader;
+      localeAddressModel.email = relatedMail;
+      localeAddressModel.mobilePhone = relatedPhone;
+      if (_isInvoice) {
+        localeAddressModel.relatedPerson = relatedPersonName;
+        if (_isPersonal) {
+          localeAddressModel.TCKNo = identityNo;
+        } else {
+          localeAddressModel.taxOffice = taxOffice;
+          localeAddressModel.taxNumber = taxNo;
+        }
+      }
+      List<String> noteList = [];
+      if (buildingNo.isNotEmpty) {
+        noteList.add("Bina no: $buildingNo");
+      }
+      if (buildingName.isNotEmpty) {
+        noteList.add("Bina adı: $buildingName");
+      }
+      if (floorNo.isNotEmpty) {
+        noteList.add("Kat no: $floorNo");
+      }
+      if (doorNo.isNotEmpty) {
+        noteList.add("Kapı no: $doorNo");
+      }
+      if (note.isNotEmpty) {
+        noteList.add(note);
+      }
+      localeAddressModel.notes = noteList.join("\n");
+
       ResponseModel response =
           await NetworkService.post("users/adress_add", body: {
-        "localAdress": formData,
+        "localAdress": localeAddressModel.toJson(),
         "googleadress": googleAddressModel!.toJson(),
       });
 

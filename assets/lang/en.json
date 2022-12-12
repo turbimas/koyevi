@@ -1,6 +1,8 @@
 {
   "ForgotPassword": {
-    "prompt_message": "Please enter your phone number in the following area. We will remind you of your login information by SMS"
+    "appbar_title": "Forgot Password",
+    "prompt_message": "Please enter your phone number in the following area. We will remind you of your login information by SMS",
+    "number_hint": "Enter your phone number"
   },
   "Login": {
     "appbar_title": "Login",
@@ -220,23 +222,19 @@
     "appbar_title": "Add new address",
     "use_current_location": "Use current location",
     "open_map": "Open the map",
-    "country": "Country",
-    "city": "City",
-    "region": "Region",
-    "district": "District",
-    "town": "Town",
-    "street": "Street",
-    "building": "Building no",
-    "postal_code": "Postal code",
     "address_header": "Address header",
-    "name_surname": "Name surname",
-    "email":"E-mail",
+    "building_no":"Building no",
+    "building_name":"Building name",
+    "floor_no":"Flat no",
+    "door_no":"Door no",
+    "email": "Email",
     "phone": "Phone",
     "note": "Note",
     "add_tax_info": "Add invoice information",
     "location_retrieving": "Location information is obtaining...",
     "person": "Personal",
     "corporate": "Corporate",
+    "related_person":"Related person",
     "identity_no": "TCKN no",
     "tax_number": "Tax Number",
     "tax_office": "Tax Office"

@@ -92,10 +92,6 @@ class _UserProfileViewState extends ConsumerState<UserProfileView> {
                     hintText: LocaleKeys.UserProfile_phone,
                     formKey: "MobilePhone",
                     initialValue: AuthService.currentUser!.phone.toString()),
-                _customTextField(
-                    hintText: LocaleKeys.UserProfile_email,
-                    formKey: "Email",
-                    initialValue: AuthService.currentUser!.email),
                 Container(
                     margin: EdgeInsets.symmetric(vertical: 20.smh),
                     child: SwitchListTile(

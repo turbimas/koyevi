@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:koyevi/core/services/auth/authservice.dart';
 import 'package:koyevi/core/services/localization/locale_keys.g.dart';
 import 'package:koyevi/core/services/navigation/navigation_service.dart';
 import 'package:koyevi/core/services/theme/custom_colors.dart';
@@ -30,40 +29,58 @@ class _UserAddressAddViewState extends ConsumerState<UserAddressAddView> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   GlobalKey<FormState> invoiceFormKey = GlobalKey<FormState>();
 
-  TextEditingController countryController = TextEditingController();
-  TextEditingController cityController = TextEditingController();
-  TextEditingController regionController = TextEditingController();
-  TextEditingController districtController = TextEditingController();
-  TextEditingController townController = TextEditingController();
-  TextEditingController streetController = TextEditingController();
-  TextEditingController buildingController = TextEditingController();
-  TextEditingController postalCodeController = TextEditingController();
+  late final TextEditingController addressHeaderController;
+  late final TextEditingController buildingNoController;
+  late final TextEditingController buildingNameController;
+  late final TextEditingController floorNoController;
+  late final TextEditingController doorNoController;
+  late final TextEditingController relatedMailController;
+  late final TextEditingController relatedPhoneController;
+  late final TextEditingController noteController;
+
+  late final TextEditingController relatedPersonNameController;
+  late final TextEditingController identityNoController;
+  late final TextEditingController taxOfficeController;
+  late final TextEditingController taxNoController;
 
   @override
   void initState() {
-    provider = ChangeNotifierProvider((ref) => UserAddressAddViewModel(
-        countryController: countryController,
-        cityController: cityController,
-        regionController: regionController,
-        districtController: districtController,
-        townController: townController,
-        streetController: streetController,
-        buildingController: buildingController,
-        postalCodeController: postalCodeController));
+    addressHeaderController = TextEditingController();
+    buildingNoController = TextEditingController();
+    buildingNameController = TextEditingController();
+    floorNoController = TextEditingController();
+    doorNoController = TextEditingController();
+    relatedMailController = TextEditingController();
+    relatedPhoneController = TextEditingController();
+    noteController = TextEditingController();
+
+    relatedPersonNameController = TextEditingController();
+    identityNoController = TextEditingController();
+    taxOfficeController = TextEditingController();
+    taxNoController = TextEditingController();
+
+    provider = ChangeNotifierProvider((ref) =>
+        UserAddressAddViewModel(buildingNoController: buildingNoController));
     ref.read(provider).goCurrentLocation();
+
     super.initState();
   }
 
   @override
   void dispose() {
-    countryController.dispose();
-    cityController.dispose();
-    regionController.dispose();
-    districtController.dispose();
-    townController.dispose();
-    streetController.dispose();
-    buildingController.dispose();
-    postalCodeController.dispose();
+    ref.read(provider).mapController.dispose();
+    addressHeaderController.dispose();
+    buildingNameController.dispose();
+    floorNoController.dispose();
+    doorNoController.dispose();
+    relatedMailController.dispose();
+    relatedPhoneController.dispose();
+    noteController.dispose();
+
+    relatedPersonNameController.dispose();
+    identityNoController.dispose();
+    taxOfficeController.dispose();
+    taxNoController.dispose();
     super.dispose();
   }
 
@@ -215,95 +232,84 @@ class _UserAddressAddViewState extends ConsumerState<UserAddressAddView> {
           ),
         ),
         Expanded(
-          child: Container(
-            color: CustomColors.secondary,
-            child: Form(
-                key: formKey,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      _addressSummary(),
-                      _customTextField(
-                          label: LocaleKeys.UserAddressAdd_address_header,
-                          formKey: "AdresBasligi"),
-                      _customTextField(
-                          label: LocaleKeys.UserAddressAdd_country,
-                          formKey: "Country",
-                          controller: ref.read(provider).countryController),
-                      _customTextField(
-                          label: LocaleKeys.UserAddressAdd_city,
-                          formKey: "City",
-                          controller: ref.read(provider).cityController),
-                      _customTextField(
-                          label: LocaleKeys.UserAddressAdd_region,
-                          formKey: "Region",
-                          controller: ref.read(provider).regionController),
-                      _customTextField(
-                          label: LocaleKeys.UserAddressAdd_district,
-                          formKey: "District",
-                          controller: ref.read(provider).districtController),
-                      _customTextField(
-                          label: LocaleKeys.UserAddressAdd_town,
-                          formKey: "Town",
-                          controller: ref.read(provider).townController),
-                      _customTextField(
-                          label: LocaleKeys.UserAddressAdd_street,
-                          formKey: "Street",
-                          controller: ref.read(provider).streetController),
-                      _customTextField(
-                          label: LocaleKeys.UserAddressAdd_building,
-                          formKey: "BuildingNo",
-                          controller: ref.read(provider).buildingController),
-                      _customTextField(
-                          label: LocaleKeys.UserAddressAdd_postal_code,
-                          formKey: "PostalCode",
-                          keyboardType: TextInputType.number,
-                          controller: ref.read(provider).postalCodeController),
-                      _customTextField(
-                          label: LocaleKeys.UserAddressAdd_name_surname,
-                          formKey: "RelatedPerson",
-                          initialValue: AuthService.currentUser!.nameSurname),
-                      _customTextField(
-                          label: LocaleKeys.UserAddressAdd_email,
-                          formKey: "Email",
-                          initialValue: AuthService.currentUser!.email,
-                          keyboardType: TextInputType.emailAddress),
-                      _customTextField(
-                          label: LocaleKeys.UserAddressAdd_phone,
-                          formKey: "MobilePhone",
-                          initialValue: AuthService.currentUser!.phone,
-                          keyboardType: TextInputType.phone),
-                      _customTextField(
-                          label: LocaleKeys.UserAddressAdd_note,
-                          formKey: "Notes",
-                          lines: 3),
-                      CheckboxListTile(
-                          title: CustomTextLocale(
-                              LocaleKeys.UserAddressAdd_add_tax_info,
-                              style: CustomFonts.bodyText2(
-                                  CustomColors.primaryText)),
-                          value: ref.watch(provider).isInvoice,
-                          activeColor: CustomColors.primary,
-                          checkColor: CustomColors.primaryText,
-                          onChanged: (value) {
-                            ref.read(provider).isInvoice = value!;
-                          }),
-                      ref.watch(provider).isInvoice
-                          ? _invoiceInfo()
-                          : Container(),
-                      OkCancelPrompt(okCallBack: () {
-                        formKey.currentState!.save();
-                        if (ref.watch(provider).isInvoice) {
-                          invoiceFormKey.currentState!.save();
-                        }
-                        ref.read(provider).addAddress();
-                      }, cancelCallBack: () {
-                        NavigationService.back();
-                      })
-                    ],
-                  ),
-                )),
-          ),
+          child: Form(
+              key: formKey,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    _addressSummary(),
+                    _customTextField(
+                        label: LocaleKeys.UserAddressAdd_address_header,
+                        controller: addressHeaderController),
+                    _customTextField(
+                      label: LocaleKeys.UserAddressAdd_building_no,
+                      controller: buildingNoController,
+                    ),
+                    _customTextField(
+                      label: LocaleKeys.UserAddressAdd_building_name,
+                      controller: buildingNameController,
+                    ),
+                    _customTextField(
+                      label: LocaleKeys.UserAddressAdd_floor_no,
+                      controller: floorNoController,
+                    ),
+                    _customTextField(
+                      label: LocaleKeys.UserAddressAdd_door_no,
+                      controller: doorNoController,
+                    ),
+                    _customTextField(
+                      label: LocaleKeys.UserAddressAdd_email,
+                      controller: relatedMailController,
+                      keyboardType: TextInputType.emailAddress,
+                    ),
+                    _customTextField(
+                      label: LocaleKeys.UserAddressAdd_phone,
+                      controller: relatedPhoneController,
+                      keyboardType: TextInputType.phone,
+                    ),
+                    _customTextField(
+                        label: LocaleKeys.UserAddressAdd_note,
+                        controller: noteController,
+                        lines: 3),
+                    CheckboxListTile(
+                        title: CustomTextLocale(
+                            LocaleKeys.UserAddressAdd_add_tax_info,
+                            style: CustomFonts.bodyText2(
+                                CustomColors.backgroundText)),
+                        value: ref.watch(provider).isInvoice,
+                        activeColor: CustomColors.primary,
+                        checkColor: CustomColors.primaryText,
+                        onChanged: (value) {
+                          ref.read(provider).isInvoice = value!;
+                        }),
+                    ref.watch(provider).isInvoice
+                        ? _invoiceInfo()
+                        : Container(),
+                    OkCancelPrompt(okCallBack: () {
+                      formKey.currentState!.save();
+                      if (ref.watch(provider).isInvoice) {
+                        invoiceFormKey.currentState!.save();
+                      }
+                      ref.read(provider).addAddress(
+                            addressHeader: addressHeaderController.text,
+                            buildingNo: buildingNoController.text,
+                            buildingName: buildingNameController.text,
+                            floorNo: floorNoController.text,
+                            doorNo: doorNoController.text,
+                            relatedMail: relatedMailController.text,
+                            relatedPhone: relatedPhoneController.text,
+                            note: noteController.text,
+                            identityNo: identityNoController.text,
+                            relatedPersonName: relatedPersonNameController.text,
+                            taxNo: taxNoController.text,
+                            taxOffice: taxOfficeController.text,
+                          );
+                    }, cancelCallBack: () {
+                      NavigationService.back();
+                    })
+                  ],
+                ),
+              )),
         ),
       ],
     );
@@ -317,7 +323,7 @@ class _UserAddressAddViewState extends ConsumerState<UserAddressAddView> {
         ref.watch(provider).googleAddressModel != null
             ? ref.watch(provider).googleAddressModel!.formatAddress
             : LocaleKeys.UserAddressAdd_location_retrieving.tr(),
-        style: CustomFonts.bodyText2(CustomColors.secondaryText),
+        style: CustomFonts.bodyText2(CustomColors.backgroundText),
         maxLines: 3,
       )),
     );
@@ -326,36 +332,35 @@ class _UserAddressAddViewState extends ConsumerState<UserAddressAddView> {
   Widget _customTextField(
       {String? label,
       int lines = 1,
-      required String formKey,
-      String? initialValue,
       TextInputType keyboardType = TextInputType.text,
-      TextEditingController? controller}) {
+      required TextEditingController controller}) {
     return Container(
       width: 330.smw,
       padding: EdgeInsets.symmetric(horizontal: 10.smw),
       margin: EdgeInsets.symmetric(vertical: 5.smh),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20.smh),
-          color: CustomColors.primary),
+          // border: Border.all(color: CustomColors.primary),
+          borderRadius: CustomThemeData.fullRounded),
       child: Center(
-        child: TextFormField(
-          initialValue: initialValue,
+        child: TextField(
           keyboardType: keyboardType,
           controller: controller,
-          onSaved: (value) {
-            if (value == null) return;
-            if (controller != null) return;
-            if (value.isNotEmpty) {
-              ref.read(provider).formData[formKey] = value;
-            }
-          },
           maxLines: lines,
-          style: CustomFonts.defaultField(CustomColors.primaryText),
+          style: CustomFonts.defaultField(CustomColors.backgroundText),
           decoration: InputDecoration(
+            focusedBorder: OutlineInputBorder(
+                borderRadius: CustomThemeData.fullRounded,
+                borderSide: BorderSide(color: CustomColors.primary)),
+            enabledBorder: OutlineInputBorder(
+                borderRadius: CustomThemeData.fullRounded,
+                borderSide: BorderSide(color: CustomColors.primary)),
+            border: OutlineInputBorder(
+                borderRadius: CustomThemeData.fullRounded,
+                borderSide: BorderSide(color: CustomColors.primary)),
             labelText: label?.tr(),
-            border: const OutlineInputBorder(borderSide: BorderSide.none),
-            labelStyle: CustomFonts.bodyText2(CustomColors.primaryText),
-            floatingLabelStyle: CustomFonts.bodyText2(CustomColors.primaryText),
+            labelStyle: CustomFonts.bodyText2(CustomColors.backgroundTextPale),
+            floatingLabelStyle:
+                CustomFonts.bodyText2(CustomColors.backgroundText),
           ),
         ),
       ),
@@ -378,7 +383,8 @@ class _UserAddressAddViewState extends ConsumerState<UserAddressAddView> {
                         : CustomIcons.radio_unchecked_dark_icon,
                     SizedBox(width: 15.smw),
                     CustomTextLocale(LocaleKeys.UserAddressAdd_person,
-                        style: CustomFonts.bodyText2(CustomColors.primaryText))
+                        style:
+                            CustomFonts.bodyText2(CustomColors.backgroundText))
                   ])),
               InkWell(
                   onTap: () {
@@ -390,7 +396,8 @@ class _UserAddressAddViewState extends ConsumerState<UserAddressAddView> {
                         : CustomIcons.radio_unchecked_dark_icon,
                     SizedBox(width: 15.smw),
                     CustomTextLocale(LocaleKeys.UserAddressAdd_corporate,
-                        style: CustomFonts.bodyText2(CustomColors.primaryText))
+                        style:
+                            CustomFonts.bodyText2(CustomColors.backgroundText))
                   ])),
             ],
           ),
@@ -411,16 +418,25 @@ class _UserAddressAddViewState extends ConsumerState<UserAddressAddView> {
   List<Widget> _personalInvoice() {
     return [
       _customTextField(
-          label: LocaleKeys.UserAddressAdd_identity_no, formKey: "TCKNo"),
+          label: LocaleKeys.UserAddressAdd_related_person,
+          controller: relatedPersonNameController),
+      _customTextField(
+          label: LocaleKeys.UserAddressAdd_identity_no,
+          controller: identityNoController),
     ];
   }
 
   List<Widget> _companyInvoice() {
     return [
       _customTextField(
-          label: LocaleKeys.UserAddressAdd_tax_number, formKey: "TaxNumber"),
+          label: LocaleKeys.UserAddressAdd_related_person,
+          controller: relatedPersonNameController),
       _customTextField(
-          label: LocaleKeys.UserAddressAdd_tax_office, formKey: "TaxOffice"),
+          label: LocaleKeys.UserAddressAdd_tax_number,
+          controller: taxNoController),
+      _customTextField(
+          label: LocaleKeys.UserAddressAdd_tax_office,
+          controller: taxOfficeController),
     ];
   }
 }

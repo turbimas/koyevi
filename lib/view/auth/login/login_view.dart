@@ -224,7 +224,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                       border: InputBorder.none,
                       hintStyle:
                           CustomFonts.defaultField(CustomColors.primaryText),
-                      hintText: LocaleKeys.Login_email_phone_hint.tr(),
+                      hintText: LocaleKeys.Login_phone_hint.tr(),
                       prefixIcon: Padding(
                         padding: EdgeInsets.only(right: 10.smw),
                         child: CustomIcons.field_profile_icon,
