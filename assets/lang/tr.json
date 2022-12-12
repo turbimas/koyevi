@@ -5,7 +5,7 @@
     },
     "Login": {
         "appbar_title": "Giriş Yap",
-        "email_phone_hint": "E-posta ya da telefon girin",
+        "phone_hint": "Telefon numarası",
         "password_hint": "Şifre girin",
         "forgot_password": "Şifrenizi mi unuttunuz ?",
         "login_button": "Giriş yap",
@@ -15,8 +15,7 @@
     "Register":{
         "appbar_title":"Hesap Oluştur",
         "full_name_hint":"Ad Soyad",
-        "phone_hint":"Numara",
-        "email_hint":"E-posta adresi",
+        "phone_hint":"Telefon numarası",
         "password_hint":"Şifre",
         "accept_agreement": "Üyelik sözleşmesini okudum ve kabul ediyorum",
         "register_button": "Kayıt ol",
@@ -268,7 +267,6 @@
         "name_surname": "Ad Soyad",
         "born_date": "Doğum tarihi",
         "phone": "Telefon",
-        "email":"E-posta",
         "change_password": "Şifremi değiştir",
         "old_password": "Eski şifre",
         "new_password": "Yeni şifre",
@@ -331,7 +329,6 @@
         "required":"Bu alan zorunludur",
         "too_long_name":"Adınız maksimum 30 karakter olabilir",
         "validation_code":"Geçersiz doğrulama kodu",
-        "email":"Geçerli bir e-posta adresi giriniz",
         "password":"Şifre en az 8 karakter olmalıdır",
         "password_confirm":"Şifreler uyuşmuyor",
         "old_password":"Eski şifreniz yanlış",
@@ -389,6 +386,6 @@
     "ERROR_DUE_TO_SERVER":"Sunucu kaynaklı hata, lütfen daha sonra tekrar deneyiniz.",
     "TRY_AGAIN":"Tekrar dene",
     "AuthService": {
-        "logout_successful": "Logout successful"
+        "logout_successful": "Başarıyla çıkış yapıldı"
       }
 }

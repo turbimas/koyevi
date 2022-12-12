@@ -28,6 +28,7 @@ import 'package:koyevi/view/main/home/home_view_model.dart';
 import 'package:koyevi/view/main/search/search_view.dart';
 import 'package:koyevi/view/main/search_result/search_result_view.dart';
 import 'package:koyevi/view/main/sub_categories/sub_categories_view.dart';
+import 'package:koyevi/view/user/user_address_add/user_address_add_view.dart';
 import 'package:koyevi/view/user/user_order_details/user_order_details_view.dart';
 
 class HomeView extends ConsumerStatefulWidget {
@@ -354,76 +355,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
     showDialog(
         context: context,
         builder: (context) {
-          return Dialog(
-              insetPadding:
-                  EdgeInsets.symmetric(horizontal: 20.smw, vertical: 0),
-              backgroundColor: CustomColors.secondary,
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: ref.watch(provider).addresses.length + 1,
-                itemBuilder: (context, index) {
-                  if (index == ref.watch(provider).addresses.length) {
-                    return Container(
-                        margin: EdgeInsets.symmetric(vertical: 10.smh),
-                        child: const SizedBox()
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.center,
-                        //   children: [
-                        //     CustomIcons.add_icon,
-                        //     SizedBox(width: 5.smw),
-                        //     CustomTextLocale(LocaleKeys.UserAddresses_add_address,
-                        //         style: CustomFonts.bodyText1(
-                        //             CustomColors.secondaryText)),
-                        //   ],
-                        // ),
-                        );
-                  } else {
-                    return InkWell(
-                      onTap: () {
-                        ref
-                            .read(provider)
-                            .setDefaultAddress(
-                                ref.watch(provider).addresses[index].id)
-                            .then((value) {
-                          Navigator.pop(context);
-                        });
-                      },
-                      child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 10.smw),
-                        margin: EdgeInsets.only(top: 10.smh),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    CustomText(
-                                        ref
-                                            .watch(provider)
-                                            .addresses[index]
-                                            .addressHeader,
-                                        style: CustomFonts.bodyText3(
-                                            CustomColors.secondaryText)),
-                                    CustomText(
-                                        ref
-                                            .watch(provider)
-                                            .addresses[index]
-                                            .address,
-                                        style: CustomFonts.bodyText4(
-                                            CustomColors.secondaryText)),
-                                  ]),
-                            ),
-                            ref.watch(provider).addresses[index] ==
-                                    ref.watch(provider).defaultAddress
-                                ? CustomIcons.radio_checked_light_icon
-                                : CustomIcons.radio_unchecked_light_icon,
-                          ],
-                        ),
-                      ),
-                    );
-                  }
-                },
-              ));
+          return _AddressSelectionWidget(provider: provider);
         });
   }
 
@@ -493,5 +425,87 @@ class _HomeViewState extends ConsumerState<HomeView> {
         ],
       ),
     );
+  }
+}
+
+class _AddressSelectionWidget extends ConsumerWidget {
+  const _AddressSelectionWidget({required this.provider});
+  final ChangeNotifierProvider<HomeViewModel> provider;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Dialog(
+        insetPadding: EdgeInsets.symmetric(horizontal: 20.smw, vertical: 0),
+        backgroundColor: CustomColors.secondary,
+        child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: ref.watch(provider).addresses.length + 1,
+          itemBuilder: (context, index) {
+            if (index == ref.watch(provider).addresses.length) {
+              return InkWell(
+                onTap: () {
+                  NavigationService.navigateToPage(const UserAddressAddView())
+                      .then((value) {
+                    ref.read(provider).getHomeData();
+                  });
+                },
+                child: Container(
+                  margin: EdgeInsets.symmetric(vertical: 10.smh),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CustomIcons.add_icon,
+                      SizedBox(width: 5.smw),
+                      CustomTextLocale(LocaleKeys.UserAddresses_add_address,
+                          style: CustomFonts.bodyText1(
+                              CustomColors.secondaryText)),
+                    ],
+                  ),
+                ),
+              );
+            } else {
+              return InkWell(
+                onTap: () {
+                  ref
+                      .read(provider)
+                      .setDefaultAddress(
+                          ref.watch(provider).addresses[index].id)
+                      .then((value) {
+                    Navigator.pop(context);
+                  });
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10.smw),
+                  margin: EdgeInsets.only(top: 10.smh),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CustomText(
+                                  ref
+                                      .watch(provider)
+                                      .addresses[index]
+                                      .addressHeader,
+                                  style: CustomFonts.bodyText3(
+                                      CustomColors.secondaryText)),
+                              CustomText(
+                                  ref.watch(provider).addresses[index].address,
+                                  style: CustomFonts.bodyText4(
+                                      CustomColors.secondaryText)),
+                            ]),
+                      ),
+                      ref.watch(provider).addresses[index] ==
+                              ref.watch(provider).defaultAddress
+                          ? CustomIcons.radio_checked_light_icon
+                          : CustomIcons.radio_unchecked_light_icon,
+                    ],
+                  ),
+                ),
+              );
+            }
+          },
+        ));
   }
 }
