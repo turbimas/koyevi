@@ -10,7 +10,7 @@ import 'package:koyevi/product/models/user_model.dart';
 import 'package:koyevi/product/widgets/main/main_view.dart';
 
 class ForgotPasswordViewModel extends ChangeNotifier {
-  late final String pinCode;
+  String pinCode = "";
   String phone = "";
   ForgotPasswordViewModel() {
     pinCode = Random().nextInt(999999).toString().padLeft(6, '0');
@@ -34,11 +34,7 @@ class ForgotPasswordViewModel extends ChangeNotifier {
     try {
       ResponseModel responseModel =
           await NetworkService.post("users/number_send", body: {
-        {
-          "Number": phone,
-          "Type": 2,
-          "VerificationCode": pinCode,
-        }
+        {"Number": "905531552630", "Type": 2, "VerificationCode": "denene"}
       });
       if (responseModel.success) {
         didCodeSent = true;

@@ -104,6 +104,7 @@ class _SplashViewState extends ConsumerState<SplashView>
       }
     }
 
+    AppConstants.isInitialized = true;
     NavigationService.navigateToPage(const MainView());
   }
 

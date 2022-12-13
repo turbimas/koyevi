@@ -63,6 +63,7 @@ class _SearchResultViewState extends ConsumerState<SearchResultView> {
   Widget build(BuildContext context) {
     return CustomSafeArea(
         child: Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar:
           CustomAppBar.activeBack(LocaleKeys.SearchResult_appbar_title.tr()),
       body: Column(

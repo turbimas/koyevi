@@ -8,24 +8,34 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:koyevi/core/initializations.dart';
+import 'package:koyevi/core/services/auth/authservice.dart';
 import 'package:koyevi/core/services/navigation/navigation_service.dart';
+import 'package:koyevi/core/services/network/network_service.dart';
+import 'package:koyevi/core/services/network/response_model.dart';
 import 'package:koyevi/product/constants/app_constants.dart';
 import 'package:koyevi/product/cubits/home_index_cubit/home_index_cubit.dart';
+import 'package:koyevi/product/models/product_over_view_model.dart';
 import 'package:koyevi/view/auth/splash/splash_view.dart';
+import 'package:koyevi/view/product/product_detail/product_detail_view.dart';
 import 'package:uni_links/uni_links.dart';
 
 void main(List<String> args) async {
   initSync();
   await initAsync();
 
-  // StreamSubscription<ServiceStatus> serviceStatusStream =
-  //     Geolocator.getServiceStatusStream().listen((ServiceStatus status) {
-  //   log(status.toString());
-  //   Geolocator.openAppSettings();
-  // });
-
-  linkStream.listen((String? uri) {
-    log("Açılan link: $uri");
+  linkStream.listen((String? uri) async {
+    if (uri!.split("?").last.startsWith("barcode=")) {
+      String barcode = uri.split("?").last.split("=").last;
+      ResponseModel responseModel =
+          await NetworkService.post("products/ProductfromBarcodes", body: {
+        "CariID": AuthService.id,
+        "BarcodeArrays": [barcode]
+      });
+      log(responseModel.data.toString());
+      NavigationService.navigateToPage(ProductDetailView(
+          productOverViewModel:
+              ProductOverViewModel.fromJson(responseModel.data!.first)));
+    }
   }, onError: (err) {});
 
   runApp(EasyLocalization(

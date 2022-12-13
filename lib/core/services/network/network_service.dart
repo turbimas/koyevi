@@ -126,6 +126,7 @@ abstract class NetworkService {
       }
       return ResponseModel<T>.fromJson(response.data!);
     } catch (e) {
+      log(e.toString());
       // token expired
       int? statusCode = (e as DioError).response!.statusCode;
       if (statusCode == 401) {

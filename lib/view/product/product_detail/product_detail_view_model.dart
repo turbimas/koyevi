@@ -116,6 +116,12 @@ class ProductDetailViewModel extends ChangeNotifier {
 
   Future<void> favoriteUpdate() async {
     try {
+      // TODO: localization
+      if (!AuthService.isLoggedIn) {
+        PopupHelper.showErrorToast(
+            "Bü özelliği kullanabilmeniz için giriş yapmalısınız");
+        return;
+      }
       ResponseModel response = await NetworkService.get(
           "products/favoriteupdate/${AuthService.id}/${productDetail!.barcode}");
       if (response.success) {

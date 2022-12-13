@@ -17,4 +17,6 @@ class AppConstants {
   static const APP_API = "https://goldenerp.com/api/ecom/";
 
   static String appToken = "";
+
+  static bool isInitialized = false;
 }
