@@ -92,7 +92,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 10.smh),
       decoration: BoxDecoration(
-          borderRadius: CustomThemeData.bottomInfiniteRounded,
+          borderRadius: CustomThemeData.bottomRounded2,
           color: CustomColors.secondary),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.smw),

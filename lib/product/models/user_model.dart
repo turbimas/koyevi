@@ -18,7 +18,7 @@ class UserModel {
     imageUrl = json["imageUrl"];
   }
 
-  get toJson => {
+  Map<String, dynamic> toJson() => {
         "ID": id,
         "Name": nameSurname,
         "MobilePhone": phone,
@@ -27,4 +27,7 @@ class UserModel {
         "BornDate": birthDate,
         "imageUrl": imageUrl
       };
+
+  @override
+  String toString() => toJson.toString();
 }

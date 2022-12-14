@@ -7,6 +7,7 @@ import 'package:koyevi/product/models/order/order_invoice_address.dart';
 class UserOrdersModel {
   late final int orderId;
   late final String ficheNo;
+  late final String deliveryCode;
   late final DateTime orderDate; // siparişin verildiği tarih
   DateTime? realDeliveryDate; // teslim edildiyse
   late final String statusName;
@@ -32,6 +33,7 @@ class UserOrdersModel {
   UserOrdersModel.fromJson(Map<String, dynamic> json) {
     orderId = json['OrderID'];
     ficheNo = json['FicheNo'];
+    deliveryCode = json['DeliveryCode'];
     orderDate = DateTime.parse(json['OrderDate']);
     realDeliveryDate = json['RealDeliveryDate'] != null
         ? DateTime.parse(json['RealDeliveryDate'])

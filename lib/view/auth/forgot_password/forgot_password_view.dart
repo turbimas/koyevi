@@ -91,11 +91,13 @@ class _ForgotPasswordViewState extends ConsumerState<ForgotPasswordView> {
               _pinCodeField(),
               _newPasswordField(),
               ref.watch(provider).isCodeVerified
-                  ? OkCancelPrompt(
-                      okCallBack: () {},
-                      cancelCallBack: () {
-                        NavigationService.back();
-                      })
+                  ? OkCancelPrompt(okCallBack: () {
+                      ref
+                          .read(provider)
+                          .newPassword(newPasswordController.text);
+                    }, cancelCallBack: () {
+                      NavigationService.back();
+                    })
                   : Container()
             ],
           ),
@@ -203,6 +205,7 @@ class _ForgotPasswordViewState extends ConsumerState<ForgotPasswordView> {
         onComplete: (result) {
           if (result == ref.watch(provider).pinCode) {
             ref.read(provider).isCodeVerified = true;
+            _focusNode2.requestFocus();
           } else {
             // TODO: localization eklenicek
             PopupHelper.showErrorToast("Hatalı Kod");
@@ -217,7 +220,7 @@ class _ForgotPasswordViewState extends ConsumerState<ForgotPasswordView> {
       return Container();
     }
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 50.smh),
+      margin: EdgeInsets.symmetric(vertical: 40.smh),
       padding: EdgeInsets.symmetric(horizontal: 30.smw),
       decoration: BoxDecoration(
           color: CustomColors.primary,
@@ -236,7 +239,8 @@ class _ForgotPasswordViewState extends ConsumerState<ForgotPasswordView> {
         decoration: InputDecoration(
             border: InputBorder.none,
             hintStyle: CustomFonts.defaultField(CustomColors.primaryText),
-            hintText: LocaleKeys.ForgotPassword_number_hint.tr()),
+            // TODO: add localization
+            hintText: "Şifrenizi girin"),
       ),
     );
   }

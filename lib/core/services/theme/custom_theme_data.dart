@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:koyevi/core/utils/extensions/ui_extensions.dart';
 
 abstract class CustomThemeData {
-  static double roundness = 15;
+  static double roundness = 15.r;
+  static double roundness2 = 30.r;
   static BorderRadius get fullInfiniteRounded => BorderRadius.circular(9999);
   static BorderRadius get leftInfiniteRounded => const BorderRadius.only(
         topLeft: Radius.circular(9999),
@@ -37,6 +39,11 @@ abstract class CustomThemeData {
   static BorderRadius get bottomRounded => BorderRadius.only(
         bottomLeft: Radius.circular(roundness),
         bottomRight: Radius.circular(roundness),
+      );
+
+  static BorderRadius get bottomRounded2 => BorderRadius.only(
+        bottomLeft: Radius.circular(roundness2),
+        bottomRight: Radius.circular(roundness2),
       );
 
   static List<BoxShadow> get shadow1 => [

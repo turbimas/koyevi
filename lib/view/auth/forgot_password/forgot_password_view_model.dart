@@ -1,3 +1,4 @@
+import 'dart:developer' as dev;
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -33,8 +34,10 @@ class ForgotPasswordViewModel extends ChangeNotifier {
   Future<void> sendVerificationCode() async {
     try {
       ResponseModel responseModel =
-          await NetworkService.post("users/number_send", body: {
-        {"Number": "905531552630", "Type": 2, "VerificationCode": "denene"}
+          await NetworkService.post("users/numbersend", body: {
+        "NumberPhone": phone,
+        "ProcessType": "2",
+        "VerificationCode": pinCode
       });
       if (responseModel.success) {
         didCodeSent = true;
@@ -50,12 +53,13 @@ class ForgotPasswordViewModel extends ChangeNotifier {
           await NetworkService.get("users/user_info/$phone");
       if (userData.success) {
         UserModel user = UserModel.fromJson(userData.data);
+        dev.log(user.toString());
         user.password = password;
         ResponseModel responseModel =
             await NetworkService.post("users/user_edit", body: user.toJson());
         if (responseModel.success) {
           // TODO: localization ekle
-          PopupHelper.showSuccessDialog("Şifrəniz uğurla dəyişdirildi");
+          PopupHelper.showSuccessToast("Şifreniz başarıyla değiştirildi");
           AuthService.login(user);
           NavigationService.navigateToPage(const MainView());
         } else {

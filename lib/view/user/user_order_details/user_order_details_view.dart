@@ -7,6 +7,7 @@ import 'package:koyevi/core/services/theme/custom_colors.dart';
 import 'package:koyevi/core/services/theme/custom_fonts.dart';
 import 'package:koyevi/core/services/theme/custom_images.dart';
 import 'package:koyevi/core/services/theme/custom_theme_data.dart';
+import 'package:koyevi/core/utils/extensions/datetime_extensions.dart';
 import 'package:koyevi/core/utils/extensions/ui_extensions.dart';
 import 'package:koyevi/product/constants/app_constants.dart';
 import 'package:koyevi/product/models/order/order_detail_row.dart';
@@ -57,9 +58,7 @@ class _UserOrderDetailsViewState extends ConsumerState<UserOrderDetailsView> {
     return ref.watch(provider).isLoading
         ? _loading()
         : ref.watch(provider).orderLines == null
-            ? TryAgain(
-                callBack: ref.read(provider).getDetails,
-              )
+            ? TryAgain(callBack: ref.read(provider).getDetails)
             : _content();
   }
 
@@ -75,6 +74,7 @@ class _UserOrderDetailsViewState extends ConsumerState<UserOrderDetailsView> {
         padding: EdgeInsets.symmetric(horizontal: 10.smw, vertical: 10.smh),
         child: Column(
           children: [
+            _deliveryCode(),
             _orderDetails(),
             _deliveryDetails(),
             _invoiceDetails(),
@@ -85,6 +85,31 @@ class _UserOrderDetailsViewState extends ConsumerState<UserOrderDetailsView> {
             ..._products(),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _deliveryCode() {
+    if (widget.orderTitle.realDeliveryDate != null) {
+      return Container();
+    }
+    return Container(
+      width: AppConstants.designWidth / 2,
+      margin: EdgeInsets.only(bottom: 15.smh),
+      padding: EdgeInsets.symmetric(horizontal: 10.smw, vertical: 10.smh),
+      decoration: BoxDecoration(
+          border: Border.all(color: CustomColors.primary),
+          borderRadius: CustomThemeData.fullRounded,
+          color: CustomColors.card),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          CustomText("Teslimat Kodu",
+              style: CustomFonts.bodyText3(CustomColors.cardTextPale)),
+          CustomText(widget.orderTitle.deliveryCode,
+              style: CustomFonts.bodyText1(CustomColors.cardText)),
+        ],
       ),
     );
   }
@@ -151,7 +176,7 @@ class _UserOrderDetailsViewState extends ConsumerState<UserOrderDetailsView> {
                       child: Padding(
                         padding: EdgeInsets.only(left: 30.smw),
                         child: CustomText(
-                            widget.orderTitle.orderDate.toString(),
+                            widget.orderTitle.orderDate.toFormattedString(),
                             style:
                                 CustomFonts.bodyText4(CustomColors.card2Text)),
                       ),
@@ -235,8 +260,8 @@ class _UserOrderDetailsViewState extends ConsumerState<UserOrderDetailsView> {
                                         .deliveryDate !=
                                     null
                                 ? widget.orderTitle.deliveryAddressDetail!
-                                    .deliveryDate
-                                    .toString()
+                                    .deliveryDate!
+                                    .toFormattedString()
                                 : "-",
                             style:
                                 CustomFonts.bodyText4(CustomColors.card2Text)),
@@ -260,7 +285,8 @@ class _UserOrderDetailsViewState extends ConsumerState<UserOrderDetailsView> {
                         padding: EdgeInsets.only(left: 30.smw),
                         child: CustomText(
                             widget.orderTitle.realDeliveryDate != null
-                                ? widget.orderTitle.realDeliveryDate.toString()
+                                ? widget.orderTitle.realDeliveryDate!
+                                    .toFormattedString()
                                 : "-",
                             style:
                                 CustomFonts.bodyText4(CustomColors.card2Text)),
@@ -330,6 +356,7 @@ class _UserOrderDetailsViewState extends ConsumerState<UserOrderDetailsView> {
                         child: CustomText(
                             widget.orderTitle.deliveryAddressDetail?.address ??
                                 "-",
+                            maxLines: 2,
                             style:
                                 CustomFonts.bodyText4(CustomColors.card2Text)),
                       ),
@@ -490,6 +517,7 @@ class _UserOrderDetailsViewState extends ConsumerState<UserOrderDetailsView> {
                         child: CustomText(
                             widget.orderTitle.invoiceAddressDetail?.address ??
                                 "-",
+                            maxLines: 2,
                             style:
                                 CustomFonts.bodyText4(CustomColors.card2Text)),
                       ),
