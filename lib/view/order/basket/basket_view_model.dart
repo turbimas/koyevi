@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:koyevi/core/services/auth/authservice.dart';
 import 'package:koyevi/core/services/navigation/navigation_service.dart';
 import 'package:koyevi/core/services/network/network_service.dart';
@@ -6,8 +7,8 @@ import 'package:koyevi/core/services/network/response_model.dart';
 import 'package:koyevi/core/services/theme/custom_colors.dart';
 import 'package:koyevi/core/services/theme/custom_fonts.dart';
 import 'package:koyevi/core/utils/helpers/popup_helper.dart';
-import 'package:koyevi/product/models/order/basket_data_model.dart';
-import 'package:koyevi/product/models/order/basket_total_model.dart';
+import 'package:koyevi/product/cubits/home_index_cubit/home_index_cubit.dart';
+import 'package:koyevi/product/models/order/basket_model.dart';
 import 'package:koyevi/product/models/product_over_view_model.dart';
 import 'package:koyevi/product/models/user/address_model.dart';
 import 'package:koyevi/product/widgets/custom_text.dart';
@@ -17,12 +18,11 @@ import 'package:koyevi/view/user/user_address_add/user_address_add_view.dart';
 class BasketViewModel extends ChangeNotifier {
   BasketViewModel();
 
-  List<ProductOverViewModel> products = [];
-  List<ProductOverViewModel> filteredProducts = [];
-
-  BasketTotalModel? basketTotal;
+  BasketModel? basketModel;
 
   ProductOverViewModel? delivery;
+  List<ProductOverViewModel> filteredProducts = [];
+  List<ProductOverViewModel> products = [];
 
   bool _retrieving = false;
   bool get retrieving => _retrieving;
@@ -33,32 +33,17 @@ class BasketViewModel extends ChangeNotifier {
 
   Future<void> getBasket() async {
     retrieving = true;
-    filteredProducts.clear();
     try {
-      ResponseModelList basketResponse =
-          await NetworkService.get<List>("orders/getbasket/${AuthService.id}");
-      ResponseModel totalResponse =
-          await NetworkService.get("orders/calculatetotals/${AuthService.id}");
-
-      if (basketResponse.success && totalResponse.success) {
-        products = basketResponse.data!
-            .map((e) => BasketDataModel.fromJson(e).product)
-            .toList()
-            .where((element) => element.barcode != "DELIVERY")
-            .map((e) => e)
-            .toList();
-        filteredProducts.addAll(products);
-
-        basketTotal = BasketTotalModel.fromJson(totalResponse.data);
+      ResponseModel basketDetails =
+          await NetworkService.get("orders/getbasket/${AuthService.id}");
+      if (basketDetails.success) {
+        filteredProducts.clear();
+        basketModel = BasketModel.fromJson(basketDetails.data);
+        filteredProducts
+            .addAll(basketModel!.basketDetails.map((e) => e.product));
+        products.addAll(filteredProducts);
       } else {
-        if (!totalResponse.success) {
-          PopupHelper.showErrorDialog(
-              errorMessage: totalResponse.errorMessage!);
-        }
-        if (!basketResponse.success) {
-          PopupHelper.showErrorDialog(
-              errorMessage: basketResponse.errorMessage!);
-        }
+        PopupHelper.showErrorDialog(errorMessage: basketDetails.errorMessage!);
       }
     } catch (e) {
       PopupHelper.showErrorDialogWithCode(e);
@@ -69,6 +54,20 @@ class BasketViewModel extends ChangeNotifier {
 
   Future<void> goBasketDetail() async {
     try {
+      if (basketModel!.generalTotals < basketModel!.minDeliveryTotals) {
+        // todo: add localization
+        PopupHelper.showErrorDialog(
+            errorMessage:
+                "Sepetinizdeki ürünlerin toplamı ${basketModel!.minDeliveryTotals} TL'den az olamaz.",
+            actions: {
+              "Hemen alışverişe devam et": () {
+                NavigationService.context.read<HomeIndexCubit>().set(2);
+                NavigationService.back();
+              }
+            });
+        return;
+      }
+
       ResponseModel response =
           await NetworkService.get("users/adresses/${AuthService.id}");
       if (response.success) {
@@ -77,8 +76,12 @@ class BasketViewModel extends ChangeNotifier {
             .toList();
         if (addresses.isNotEmpty) {
           NavigationService.navigateToPage(BasketDetailView(
-              basketTotal: basketTotal!, addresses: addresses));
+                  basketModel: basketModel!, addresses: addresses))
+              .then((value) {
+            getBasket();
+          });
         } else {
+          // TODO: add localization
           PopupHelper
               .showErrorDialog(errorMessage: "Adres bulunamadı", actions: {
             "Hemen adres ekle!": () {
@@ -146,7 +149,6 @@ class BasketViewModel extends ChangeNotifier {
           if (response.success) {
             products.clear();
             filteredProducts.clear();
-            basketTotal = null;
           } else {
             PopupHelper.showErrorDialog(errorMessage: response.errorMessage!);
           }

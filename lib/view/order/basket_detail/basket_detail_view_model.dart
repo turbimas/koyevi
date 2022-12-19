@@ -4,15 +4,18 @@ import 'package:koyevi/core/services/navigation/navigation_service.dart';
 import 'package:koyevi/core/services/network/network_service.dart';
 import 'package:koyevi/core/services/network/response_model.dart';
 import 'package:koyevi/core/utils/helpers/popup_helper.dart';
-import 'package:koyevi/product/models/order/basket_total_model.dart';
+import 'package:koyevi/product/models/order/basket_model.dart';
+import 'package:koyevi/product/models/order/promotion_model.dart';
 import 'package:koyevi/product/models/user/address_model.dart';
 import 'package:koyevi/product/models/user/delivery_time_model.dart';
 import 'package:koyevi/view/order/order_success/order_success_view.dart';
 
 class BasketDetailViewModel extends ChangeNotifier {
-  BasketTotalModel basketTotal;
+  BasketModel basketModel;
+  List<PromotionModel> promotions = [];
+
   TextEditingController noteController = TextEditingController();
-  BasketDetailViewModel({required this.basketTotal, required this.addresses}) {
+  BasketDetailViewModel({required this.basketModel, required this.addresses}) {
     _selectedDeliveryAddress = addresses.first;
     _selectedTaxAddress = addresses.first;
     pageCreatedTime = DateTime.now();
@@ -150,25 +153,46 @@ class BasketDetailViewModel extends ChangeNotifier {
   Future<void> getData() async {
     try {
       isLoading = true;
-      ResponseModel timeResponse =
+      ResponseModelMap<dynamic> basketModelData =
+          await NetworkService.get("orders/getbasket/${AuthService.id}");
+      ResponseModelList timeResponse =
           await NetworkService.post("orders/deliverySummary", body: {
         "lat": selectedDeliveryAddress.lat,
         "lng": selectedDeliveryAddress.lng,
       });
-      ResponseModel addressResponse =
+      ResponseModelList addressResponse =
           await NetworkService.get("users/adresses/${AuthService.id}");
-      if (timeResponse.success && addressResponse.success) {
-        isLoading = false;
-        times = timeResponse.data
+      ResponseModelList promotionResponse = await NetworkService.get(
+          "orders/getapplicablepromotions/${AuthService.id}");
+
+      if (timeResponse.success &&
+          addressResponse.success &&
+          promotionResponse.success &&
+          basketModelData.success) {
+        basketModel.reFillFromJson(basketModelData.data!);
+        times = timeResponse.data!
             .map<DeliveryTimeModel>((e) => DeliveryTimeModel.fromJson(e))
             .toList();
-        addresses = addressResponse.data
+        addresses = addressResponse.data!
             .map<AddressModel>((e) => AddressModel.fromJson(e))
             .toList();
         selectedDate = times!.first.dates.first.dayDateTime;
         selectedHour = times!.first.dates.first.hours.first;
+        promotions = promotionResponse.data!
+            .map<PromotionModel>((e) => PromotionModel.fromJson(e))
+            .toList();
       } else {
-        PopupHelper.showErrorDialog(errorMessage: timeResponse.errorMessage!);
+        if (timeResponse.success == false) {
+          PopupHelper.showErrorDialog(errorMessage: timeResponse.errorMessage!);
+        }
+        if (addressResponse.success == false) {
+          PopupHelper.showErrorDialog(
+              errorMessage: addressResponse.errorMessage!);
+        }
+        if (promotionResponse.success == false) {
+          PopupHelper.showErrorDialog(
+              errorMessage: promotionResponse.errorMessage!);
+        }
       }
     } catch (e) {
       PopupHelper.showErrorDialogWithCode(e);

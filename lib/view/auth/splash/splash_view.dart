@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io' show Platform;
 
 import 'package:easy_localization/easy_localization.dart';
@@ -31,7 +30,6 @@ class _SplashViewState extends ConsumerState<SplashView>
   @override
   void initState() {
     super.initState();
-    log("splash");
     _loadApp();
   }
 
@@ -105,7 +103,7 @@ class _SplashViewState extends ConsumerState<SplashView>
     }
 
     AppConstants.isInitialized = true;
-    NavigationService.navigateToPage(const MainView());
+    NavigationService.navigateToPageAndRemoveUntil(const MainView());
   }
 
   _showUpdateDialog(String updateLink) {

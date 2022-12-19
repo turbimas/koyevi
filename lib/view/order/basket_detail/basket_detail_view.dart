@@ -14,7 +14,7 @@ import 'package:koyevi/core/services/theme/custom_theme_data.dart';
 import 'package:koyevi/core/utils/extensions/ui_extensions.dart';
 import 'package:koyevi/core/utils/helpers/popup_helper.dart';
 import 'package:koyevi/product/constants/app_constants.dart';
-import 'package:koyevi/product/models/order/basket_total_model.dart';
+import 'package:koyevi/product/models/order/basket_model.dart';
 import 'package:koyevi/product/models/user/address_model.dart';
 import 'package:koyevi/product/models/user/delivery_time_model.dart';
 import 'package:koyevi/product/widgets/custom_appbar.dart';
@@ -25,13 +25,14 @@ import 'package:koyevi/product/widgets/terms/on_bilgilendirme_formu.dart';
 import 'package:koyevi/product/widgets/try_again_widget.dart';
 import 'package:koyevi/view/order/basket_detail/basket_detail_view_model.dart';
 import 'package:koyevi/view/order/delivery_times/delivery_times.dart';
+import 'package:koyevi/view/order/promotions/promotions_view.dart';
 import 'package:koyevi/view/user/user_addresses/user_addresses_view.dart';
 
 class BasketDetailView extends ConsumerStatefulWidget {
-  final BasketTotalModel basketTotal;
+  final BasketModel basketModel;
   final List<AddressModel> addresses;
   const BasketDetailView(
-      {Key? key, required this.basketTotal, required this.addresses})
+      {Key? key, required this.basketModel, required this.addresses})
       : super(key: key);
 
   @override
@@ -49,7 +50,7 @@ class _BasketDetailState extends ConsumerState<BasketDetailView> {
   @override
   void initState() {
     provider = ChangeNotifierProvider((ref) => BasketDetailViewModel(
-        basketTotal: widget.basketTotal, addresses: widget.addresses));
+        basketModel: widget.basketModel, addresses: widget.addresses));
     Future.delayed(Duration.zero, () {
       ref.read(provider).getData();
     });
@@ -138,6 +139,8 @@ class _BasketDetailState extends ConsumerState<BasketDetailView> {
                     : _taxAddress(),
                 SizedBox(height: 15.smh),
                 _deliveryTime(),
+                SizedBox(height: 15.smh),
+                _promotion(),
                 SizedBox(height: 15.smh),
                 _paymentType(),
                 SizedBox(height: 15.smh),
@@ -319,7 +322,58 @@ class _BasketDetailState extends ConsumerState<BasketDetailView> {
     );
   }
 
-  _paymentType() {
+  Widget _promotion() {
+    return InkWell(
+      onTap: () {
+        NavigationService.navigateToPage(PromotionsView(
+                selectedPromotionID:
+                    ref.watch(provider).basketModel.promotionID))
+            .then((value) {
+          ref.read(provider).getData();
+        });
+      },
+      child: Container(
+        margin: const EdgeInsets.only(top: 5.0),
+        padding: const EdgeInsets.all(5.0),
+        decoration: BoxDecoration(boxShadow: [
+          BoxShadow(
+              color: CustomColors.secondary,
+              spreadRadius: 5,
+              blurStyle: BlurStyle.outer,
+              blurRadius: 7),
+        ], borderRadius: CustomThemeData.fullRounded),
+        child: SizedBox(
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CustomTextLocale(LocaleKeys.BasketDetail_choice_promotion,
+                      style:
+                          CustomFonts.bodyText3(CustomColors.backgroundText)),
+                ],
+              ),
+              SizedBox(height: 10.smh),
+              _radioContainer(
+                  title: ref.watch(provider).basketModel.promotionID == 0
+                      ? "-"
+                      : ref
+                          .watch(provider)
+                          .promotions
+                          .where((element) =>
+                              element.promotionID ==
+                              ref.watch(provider).basketModel.promotionID)
+                          .first
+                          .promotionDescription,
+                  isSelected: ref.watch(provider).basketModel.promotionID != 0),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _paymentType() {
     return Container(
       margin: const EdgeInsets.only(top: 5.0),
       padding: const EdgeInsets.all(5.0),
@@ -344,9 +398,9 @@ class _BasketDetailState extends ConsumerState<BasketDetailView> {
             ),
             SizedBox(height: 10.smh),
             _radioContainer(
-                title: LocaleKeys.BasketDetail_pay_on_door,
+                title: LocaleKeys.BasketDetail_pay_on_door.tr(),
                 isSelected: true,
-                description: LocaleKeys.BasketDetail_pay_on_door_or_card),
+                description: LocaleKeys.BasketDetail_pay_on_door_or_card.tr()),
           ],
         ),
       ),
@@ -441,8 +495,8 @@ class _BasketDetailState extends ConsumerState<BasketDetailView> {
                     CustomText(
                         ref
                             .watch(provider)
-                            .basketTotal
-                            .lineTotal
+                            .basketModel
+                            .lineTotals
                             .toStringAsFixed(2),
                         style: CustomFonts.bodyText4(CustomColors.cardText))
                   ],
@@ -455,8 +509,8 @@ class _BasketDetailState extends ConsumerState<BasketDetailView> {
                     CustomText(
                         ref
                             .watch(provider)
-                            .basketTotal
-                            .deliveryTotal
+                            .basketModel
+                            .deliveryTotals
                             .toStringAsFixed(2),
                         style: CustomFonts.bodyText4(CustomColors.cardText))
                   ],
@@ -469,8 +523,8 @@ class _BasketDetailState extends ConsumerState<BasketDetailView> {
                     CustomText(
                         ref
                             .watch(provider)
-                            .basketTotal
-                            .promotionTotal
+                            .basketModel
+                            .promotionTotals
                             .toStringAsFixed(2),
                         style: CustomFonts.bodyText4(CustomColors.cardText))
                   ],
@@ -492,8 +546,8 @@ class _BasketDetailState extends ConsumerState<BasketDetailView> {
                   CustomText(
                       ref
                           .watch(provider)
-                          .basketTotal
-                          .generalTotal
+                          .basketModel
+                          .generalTotals
                           .toStringAsFixed(2),
                       style: CustomFonts.bodyText4(CustomColors.cardText))
                 ],
@@ -528,10 +582,10 @@ class _BasketDetailState extends ConsumerState<BasketDetailView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CustomTextLocale(title,
+                    CustomText(title,
                         style: CustomFonts.bodyText4(CustomColors.primaryText)),
                     description != null
-                        ? CustomTextLocale(description,
+                        ? CustomText(description,
                             style:
                                 CustomFonts.bodyText5(CustomColors.primaryText),
                             maxLines: 2)

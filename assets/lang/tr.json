@@ -145,7 +145,7 @@
         "continue":"Devam et"
     },
     "Promotions": {
-        "appbar_title":"Promosyon ve Kampanyalar",
+        "appbar_title":"Kampanyalarım",
         "not_use":"Promosyon kullanmayacağım"
     },
     "BasketSuccess": {
@@ -197,7 +197,7 @@
         "greeting": "Merhaba\n{}",
         "edit_profile": "Profilimi Düzenle",
         "orders":"Siparişlerim",
-        "promotions":"Promosyon ve Kampanyalar",
+        "promotions":"Kampanyalar",
         "addresses":"Adreslerim",
         "saved_cards":"Kartlarım",
         "ratings":"Değerlendirmelerim",
@@ -298,7 +298,8 @@
         "cancel":"İptal et"
     },
     "UserPromotions":{
-        "appbar_title":"Promosyon ve Kampanyalar"
+        "appbar_title":"Promosyon ve Kampanyalar",
+        "no_promotion":"Üzgünüz. Şuan hiçbir kampyanız bulunmamaktadır."
     },
     "UserAddressDetail":{
         "appbar_title":"Adres detayları",

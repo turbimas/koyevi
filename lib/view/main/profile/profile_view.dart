@@ -17,6 +17,7 @@ import 'package:koyevi/view/auth/login/login_view.dart';
 import 'package:koyevi/view/user/user_addresses/user_addresses_view.dart';
 import 'package:koyevi/view/user/user_orders/user_orders_view.dart';
 import 'package:koyevi/view/user/user_profile/user_profile_view.dart';
+import 'package:koyevi/view/user/user_promotions/user_promotions_view.dart';
 import 'package:koyevi/view/user/user_questions/user_questions_view.dart';
 import 'package:koyevi/view/user/user_ratings/user_ratings_view.dart';
 
@@ -125,7 +126,7 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
             children: [
               icon,
               SizedBox(width: 20.smw),
-              CustomText(title,
+              CustomTextLocale(title,
                   style: CustomFonts.bodyText1(CustomColors.cardText))
             ],
           )),
@@ -145,15 +146,19 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
     return Column(
       children: [
         _option(
-            title: LocaleKeys.Profile_orders.tr(),
+            title: LocaleKeys.Profile_orders,
             page: const UserOrdersView(),
             icon: CustomIcons.profile_delivery),
+        _option(
+            title: LocaleKeys.Profile_promotions,
+            page: const UserPromotionsView(),
+            icon: CustomIcons.profile_gift),
         //_option(
         //    title: LocaleKeys.Profile_promotions.tr(),
         //  page: const UserPromotionsView(),
         //icon: CustomIcons.profile_gift),
         _option(
-            title: LocaleKeys.Profile_addresses.tr(),
+            title: LocaleKeys.Profile_addresses,
             page: const UserAddressesView(),
             icon: CustomIcons.profile_address),
         // _option(
@@ -161,15 +166,15 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
         //     path: NavigationConstants.userCards,
         //     icon: CustomIcons.profile_cards),
         _option(
-            title: LocaleKeys.Profile_ratings.tr(),
+            title: LocaleKeys.Profile_ratings,
             page: const UserRatingsView(),
             icon: CustomIcons.profile_ratings),
         _option(
-            title: LocaleKeys.Profile_questions.tr(),
+            title: LocaleKeys.Profile_questions,
             page: const UserQuestionsView(),
             icon: CustomIcons.profile_questions),
         _option(
-            title: LocaleKeys.Profile_logout.tr(),
+            title: LocaleKeys.Profile_logout,
             page: const LoginView(),
             icon: CustomIcons.profile_logout,
             noBack: true)

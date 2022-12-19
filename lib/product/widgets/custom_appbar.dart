@@ -6,17 +6,16 @@ import 'package:koyevi/core/utils/extensions/ui_extensions.dart';
 import 'package:koyevi/product/widgets/custom_text.dart';
 
 class CustomAppBar {
-  static PreferredSize activeBack(String title) => PreferredSize(
+  static PreferredSize activeBack(String title, {dynamic data}) =>
+      PreferredSize(
         preferredSize: Size.fromHeight(50.smh),
         child: AppBar(
           backgroundColor: CustomColors.primary,
           title: CustomText(title, style: CustomFonts.appBar),
           centerTitle: true,
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios),
-            onPressed: () =>
-                Navigator.pop(NavigationService.navigatorKey.currentContext!),
-          ),
+              icon: const Icon(Icons.arrow_back_ios),
+              onPressed: () => Navigator.pop(NavigationService.context, data)),
         ),
       );
 

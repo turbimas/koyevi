@@ -46,7 +46,7 @@ class ProductDetailViewModel extends ChangeNotifier {
   Future<void> getProductDetail(String barcode) async {
     try {
       isLoading = true;
-      ResponseModelMap<String, dynamic> responseModel =
+      ResponseModelMap<dynamic> responseModel =
           await NetworkService.get<Map<String, dynamic>>(
               "products/productdetail/${AuthService.id}/$barcode");
       if (responseModel.success) {

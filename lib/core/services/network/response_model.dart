@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 
-typedef ResponseModelMap<K, V> = ResponseModel<Map<K, V>>;
+typedef ResponseModelMap<V> = ResponseModel<Map<String, V>>;
 typedef ResponseModelList<T> = ResponseModel<List<T>>;
 typedef ResponseModelString = ResponseModel<String>;
 typedef ResponseModelBoolean = ResponseModel<bool>;

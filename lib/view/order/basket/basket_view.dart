@@ -71,7 +71,13 @@ class _BasketViewState extends ConsumerState<BasketView>
     if (!AuthService.isLoggedIn) {
       return const LoginPageWidget();
     }
-    return ref.watch(provider).retrieving ? _loading() : _content();
+    if (ref.watch(provider).retrieving) {
+      return _loading();
+    }
+    if (ref.watch(provider).products.isEmpty) {
+      return _empty();
+    }
+    return _content();
   }
 
   Widget _loading() {
@@ -81,10 +87,6 @@ class _BasketViewState extends ConsumerState<BasketView>
   }
 
   Widget _content() {
-    return ref.watch(provider).products.isEmpty ? _empty() : _notEmpty();
-  }
-
-  Widget _notEmpty() {
     return Stack(
       children: [
         Positioned(
@@ -201,11 +203,11 @@ class _BasketViewState extends ConsumerState<BasketView>
                         color: CustomColors.card2,
                         borderRadius: CustomThemeData.topInfiniteRounded),
                     child: Center(
-                        child: ref.watch(provider).basketTotal!.lineTotal >
+                        child: ref.watch(provider).basketModel!.lineTotals >
                                 ref
                                     .watch(provider)
-                                    .basketTotal!
-                                    .deliveryFreeAmount
+                                    .basketModel!
+                                    .minFreeDeliveryTotals
                             ? CustomTextLocale(LocaleKeys.Basket_free_delivery,
                                 style: CustomFonts.bodyText4(
                                     CustomColors.card2TextPale))
@@ -214,12 +216,12 @@ class _BasketViewState extends ConsumerState<BasketView>
                                 args: [
                                   (ref
                                               .watch(provider)
-                                              .basketTotal!
-                                              .deliveryFreeAmount -
+                                              .basketModel!
+                                              .minFreeDeliveryTotals -
                                           ref
                                               .watch(provider)
-                                              .basketTotal!
-                                              .lineTotal)
+                                              .basketModel!
+                                              .lineTotals)
                                       .toStringAsFixed(2)
                                 ],
                                 style: CustomFonts.bodyText4(
@@ -289,8 +291,8 @@ class _BasketViewState extends ConsumerState<BasketView>
                             CustomText(
                                 ref
                                     .watch(provider)
-                                    .basketTotal!
-                                    .lineTotal
+                                    .basketModel!
+                                    .lineTotals
                                     .toStringAsFixed(2),
                                 style: CustomFonts.bodyText4(
                                     CustomColors.cardText))
@@ -305,8 +307,8 @@ class _BasketViewState extends ConsumerState<BasketView>
                             CustomText(
                                 ref
                                     .watch(provider)
-                                    .basketTotal!
-                                    .deliveryTotal
+                                    .basketModel!
+                                    .deliveryTotals
                                     .toStringAsFixed(2),
                                 style: CustomFonts.bodyText4(
                                     CustomColors.cardText))
@@ -321,8 +323,8 @@ class _BasketViewState extends ConsumerState<BasketView>
                             CustomText(
                                 ref
                                     .watch(provider)
-                                    .basketTotal!
-                                    .promotionTotal
+                                    .basketModel!
+                                    .promotionTotals
                                     .toStringAsFixed(2),
                                 style: CustomFonts.bodyText4(
                                     CustomColors.cardText))
@@ -346,8 +348,8 @@ class _BasketViewState extends ConsumerState<BasketView>
                           CustomText(
                               ref
                                   .watch(provider)
-                                  .basketTotal!
-                                  .generalTotal
+                                  .basketModel!
+                                  .generalTotals
                                   .toStringAsFixed(2),
                               style:
                                   CustomFonts.bodyText4(CustomColors.cardText))

@@ -296,7 +296,8 @@
     "cancel": "Cancel order"
   },
   "UserPromotions": {
-    "appbar_title": "Promotions"
+    "appbar_title": "Promotions",
+    "no_promotion": "You have no promotion"
   },
 
   "UserCardDetail": {
