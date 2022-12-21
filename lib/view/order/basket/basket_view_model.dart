@@ -1,12 +1,15 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:koyevi/core/services/auth/authservice.dart';
+import 'package:koyevi/core/services/localization/locale_keys.g.dart';
 import 'package:koyevi/core/services/navigation/navigation_service.dart';
 import 'package:koyevi/core/services/network/network_service.dart';
 import 'package:koyevi/core/services/network/response_model.dart';
 import 'package:koyevi/core/services/theme/custom_colors.dart';
 import 'package:koyevi/core/services/theme/custom_fonts.dart';
 import 'package:koyevi/core/utils/helpers/popup_helper.dart';
+import 'package:koyevi/product/cubits/basket_model_cubit/basket_model_cubit.dart';
 import 'package:koyevi/product/cubits/home_index_cubit/home_index_cubit.dart';
 import 'package:koyevi/product/models/order/basket_model.dart';
 import 'package:koyevi/product/models/product_over_view_model.dart';
@@ -38,6 +41,7 @@ class BasketViewModel extends ChangeNotifier {
           await NetworkService.get("orders/getbasket/${AuthService.id}");
       if (basketDetails.success) {
         filteredProducts.clear();
+        products.clear();
         basketModel = BasketModel.fromJson(basketDetails.data);
         filteredProducts
             .addAll(basketModel!.basketDetails.map((e) => e.product));
@@ -55,12 +59,11 @@ class BasketViewModel extends ChangeNotifier {
   Future<void> goBasketDetail() async {
     try {
       if (basketModel!.generalTotals < basketModel!.minDeliveryTotals) {
-        // todo: add localization
         PopupHelper.showErrorDialog(
-            errorMessage:
-                "Sepetinizdeki ürünlerin toplamı ${basketModel!.minDeliveryTotals} TL'den az olamaz.",
+            errorMessage: LocaleKeys.Basket_cannot_lower_than.tr(
+                args: [basketModel!.minDeliveryTotals.toStringAsFixed(2)]),
             actions: {
-              "Hemen alışverişe devam et": () {
+              LocaleKeys.Basket_continue_shopping.tr(): () {
                 NavigationService.context.read<HomeIndexCubit>().set(2);
                 NavigationService.back();
               }
@@ -81,15 +84,16 @@ class BasketViewModel extends ChangeNotifier {
             getBasket();
           });
         } else {
-          // TODO: add localization
-          PopupHelper
-              .showErrorDialog(errorMessage: "Adres bulunamadı", actions: {
-            "Hemen adres ekle!": () {
-              NavigationService.back().then((value) {
-                NavigationService.navigateToPage(const UserAddressAddView());
+          PopupHelper.showErrorDialog(
+              errorMessage: LocaleKeys.Basket_address_not_found.tr(),
+              actions: {
+                LocaleKeys.Basket_add_address_now.tr(): () {
+                  NavigationService.back().then((value) {
+                    NavigationService.navigateToPage(
+                        const UserAddressAddView());
+                  });
+                }
               });
-            }
-          });
         }
       } else {
         PopupHelper.showErrorDialog(errorMessage: response.errorMessage!);
@@ -149,6 +153,7 @@ class BasketViewModel extends ChangeNotifier {
           if (response.success) {
             products.clear();
             filteredProducts.clear();
+            NavigationService.context.read<BasketModelCubit>().refresh();
           } else {
             PopupHelper.showErrorDialog(errorMessage: response.errorMessage!);
           }

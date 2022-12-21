@@ -9,6 +9,7 @@ import 'package:koyevi/core/services/theme/custom_icons.dart';
 import 'package:koyevi/core/services/theme/custom_images.dart';
 import 'package:koyevi/core/services/theme/custom_theme_data.dart';
 import 'package:koyevi/core/utils/extensions/ui_extensions.dart';
+import 'package:koyevi/core/utils/helpers/crypt_helper.dart';
 import 'package:koyevi/core/utils/validators/validators.dart';
 import 'package:koyevi/product/constants/app_constants.dart';
 import 'package:koyevi/product/widgets/custom_appbar.dart';
@@ -82,7 +83,7 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CustomTextLocale(LocaleKeys.Register_register_button.tr(),
+                  CustomTextLocale(LocaleKeys.Register_register_button,
                       style: CustomFonts.bigButton(CustomColors.secondaryText)),
                   CustomIcons.enter_icon
                 ]),
@@ -132,14 +133,14 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                 // focusNode: _nameSurnameFocusNode,
                 // nextFocusNode: _phoneFocusNode,
                 key: "Name",
-                validator: Validators.instance.fullNameValidator,
+                validator: CustomValidators.instance.fullNameValidator,
                 hint: LocaleKeys.Register_full_name_hint.tr(),
                 icon: CustomIcons.field_profile_icon),
             _customTextField(
                 // focusNode: _phoneFocusNode,
                 // nextFocusNode: _passwordFocusNode,
                 key: "MobilePhone",
-                validator: Validators.instance.phoneValidator,
+                validator: CustomValidators.instance.phoneValidator,
                 initialValue: "90",
                 keyboardType: TextInputType.phone,
                 hint: LocaleKeys.Register_phone_hint.tr(),
@@ -147,7 +148,7 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
             _customTextField(
                 // focusNode: _passwordFocusNode,
                 key: "Password",
-                validator: Validators.instance.passwordValidator,
+                validator: CustomValidators.instance.passwordValidator,
                 keyboardType: TextInputType.visiblePassword,
                 hint: LocaleKeys.Register_password_hint.tr(),
                 icon: CustomIcons.field_password_icon,
@@ -189,7 +190,7 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
             initialValue: initialValue,
             scrollPadding: EdgeInsets.only(
                 bottom: MediaQuery.of(context).viewInsets.bottom),
-            validator: validator ?? Validators.instance.notEmpty,
+            validator: validator ?? CustomValidators.instance.notEmpty,
             // focusNode: focusNode,
             keyboardType: keyboardType,
             textInputAction: TextInputAction.next,
@@ -201,7 +202,12 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
               // }
             },
             onSaved: (newValue) {
-              ref.watch(provider).registerData[key] = newValue;
+              if (key == "Password" && newValue != null) {
+                ref.watch(provider).registerData[key] =
+                    CryptHelper.toMD5(newValue);
+              } else {
+                ref.watch(provider).registerData[key] = newValue;
+              }
             },
             textAlignVertical: TextAlignVertical.center,
             textAlign: TextAlign.left,

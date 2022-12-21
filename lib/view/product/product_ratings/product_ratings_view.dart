@@ -48,7 +48,8 @@ class ProductRatingsViewState extends ConsumerState<ProductRatingsView> {
       child: Scaffold(
         appBar: CustomAppBar.activeBack(
             LocaleKeys.ProductRatings_appbar_title.tr(
-                args: [widget.product.name])),
+                args: [widget.product.name]),
+            showBasket: true),
         body: _body(),
       ),
     );

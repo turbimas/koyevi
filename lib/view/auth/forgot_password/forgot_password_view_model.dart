@@ -1,8 +1,9 @@
-import 'dart:developer' as dev;
 import 'dart:math';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:koyevi/core/services/auth/authservice.dart';
+import 'package:koyevi/core/services/localization/locale_keys.g.dart';
 import 'package:koyevi/core/services/navigation/navigation_service.dart';
 import 'package:koyevi/core/services/network/network_service.dart';
 import 'package:koyevi/core/services/network/response_model.dart';
@@ -53,13 +54,12 @@ class ForgotPasswordViewModel extends ChangeNotifier {
           await NetworkService.get("users/user_info/$phone");
       if (userData.success) {
         UserModel user = UserModel.fromJson(userData.data);
-        dev.log(user.toString());
         user.password = password;
         ResponseModel responseModel =
             await NetworkService.post("users/user_edit", body: user.toJson());
         if (responseModel.success) {
-          // TODO: localization ekle
-          PopupHelper.showSuccessToast("Şifreniz başarıyla değiştirildi");
+          PopupHelper.showSuccessToast(
+              LocaleKeys.ForgotPassword_successfully_changed.tr());
           AuthService.login(user);
           NavigationService.navigateToPage(const MainView());
         } else {

@@ -42,7 +42,8 @@ class _SearchViewState extends ConsumerState<SearchView> {
   Widget build(BuildContext context) {
     return CustomSafeArea(
         child: Scaffold(
-      appBar: CustomAppBar.activeBack(LocaleKeys.Search_appbar_title.tr()),
+      appBar: CustomAppBar.activeBack(LocaleKeys.Search_appbar_title.tr(),
+          showBasket: true),
       body: _body(),
     ));
   }

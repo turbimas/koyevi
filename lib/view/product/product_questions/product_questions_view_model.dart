@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:koyevi/core/services/auth/authservice.dart';
+import 'package:koyevi/core/services/localization/locale_keys.g.dart';
 import 'package:koyevi/core/services/network/network_service.dart';
 import 'package:koyevi/core/services/network/response_model.dart';
 import 'package:koyevi/core/utils/helpers/popup_helper.dart';
@@ -75,13 +77,13 @@ class ProductQuestionsViewModel extends ChangeNotifier {
             });
             if (response.success) {
               PopupHelper.showSuccessDialog(
-                  "Başarıyla sorunuz gönderildi! Cevaplandığı zaman profilinizde görünecektir.");
+                  LocaleKeys.ProductQuestions_question_sent.tr());
             } else {
               PopupHelper.showErrorDialog(errorMessage: response.errorMessage!);
             }
           } else {
             PopupHelper.showErrorDialog(
-                errorMessage: "Lütfen sorunuzu giriniz!");
+                errorMessage: LocaleKeys.ProductQuestions_enter_question.tr());
           }
         });
   }

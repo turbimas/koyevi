@@ -11,9 +11,13 @@
         "path":"assets/icons/svg/menu_home_icon.svg",
         "size": 25
     },
-    "menu_basket_icon": {
+    "menu_basket_icon__large": {
         "path":"assets/icons/svg/menu_basket_icon.svg",
         "size": 25
+    },
+    "menu_basket_icon__medium": {
+        "path":"assets/icons/svg/menu_basket_icon.svg",
+        "size": 20
     },
     "menu_profile_icon": {
         "path":"assets/icons/svg/menu_profile_icon.svg",

@@ -53,7 +53,8 @@ class _ProductQuestionsViewState extends ConsumerState<ProductQuestionsView> {
           resizeToAvoidBottomInset: false,
           appBar: CustomAppBar.activeBack(
               LocaleKeys.ProductQuestions_appbar_title.tr(
-                  args: [widget.product.name])),
+                  args: [widget.product.name]),
+              showBasket: true),
           body: Stack(
             children: [
               _body(),

@@ -10,7 +10,7 @@ abstract class CustomFonts {
       GoogleFonts.inder(fontSize: 20.sp, color: color);
 
   static TextStyle appBar =
-      GoogleFonts.inder(fontSize: 20.sp, color: CustomColors.primaryText);
+      GoogleFonts.inder(fontSize: 16.sp, color: CustomColors.primaryText);
 
   static TextStyle bodyText1(Color color) =>
       GoogleFonts.inder(fontSize: 18.sp, color: color);

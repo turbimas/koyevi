@@ -9,7 +9,6 @@ import 'package:koyevi/core/services/theme/custom_fonts.dart';
 import 'package:koyevi/core/services/theme/custom_images.dart';
 import 'package:koyevi/core/utils/extensions/ui_extensions.dart';
 import 'package:koyevi/product/widgets/custom_appbar.dart';
-import 'package:koyevi/product/widgets/custom_safearea.dart';
 import 'package:koyevi/product/widgets/custom_searchbar_view.dart';
 import 'package:koyevi/product/widgets/custom_text.dart';
 import 'package:koyevi/product/widgets/login_page_widget.dart';
@@ -41,13 +40,12 @@ class _FavoritesViewState extends ConsumerState<FavoritesView> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomSafeArea(
-      child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          appBar:
-              CustomAppBar.inactiveBack(LocaleKeys.Favorites_appbar_title.tr()),
-          body: _body()),
-    );
+    return Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: CustomAppBar.inactiveBack(
+            LocaleKeys.Favorites_appbar_title.tr(),
+            showBasket: true),
+        body: _body());
   }
 
   Widget _body() {

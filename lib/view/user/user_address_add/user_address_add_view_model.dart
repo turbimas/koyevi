@@ -1,14 +1,15 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:koyevi/core/services/auth/authservice.dart';
+import 'package:koyevi/core/services/localization/locale_keys.g.dart';
 import 'package:koyevi/core/services/navigation/navigation_service.dart';
 import 'package:koyevi/core/services/network/network_service.dart';
 import 'package:koyevi/core/services/network/response_model.dart';
 import 'package:koyevi/core/utils/helpers/popup_helper.dart';
 import 'package:koyevi/product/models/user/google_address_model.dart';
 import 'package:koyevi/product/models/user/locale_address_model.dart';
-// TODO: localizaton eklenicek
 
 class UserAddressAddViewModel extends ChangeNotifier {
   late TextEditingController buildingNoController;
@@ -97,7 +98,9 @@ class UserAddressAddViewModel extends ChangeNotifier {
   }) async {
     try {
       if (addressHeader.isEmpty) {
-        PopupHelper.showErrorDialog(errorMessage: "Adres başlığı boş olamaz");
+        PopupHelper.showErrorDialog(
+            errorMessage:
+                LocaleKeys.UserAddressAdd_address_header_can_not_be_empty.tr());
         return;
       }
       localeAddressModel.cariID = AuthService.id;
@@ -138,7 +141,8 @@ class UserAddressAddViewModel extends ChangeNotifier {
       });
 
       if (response.success) {
-        PopupHelper.showSuccessToast("Adres başarıyla eklendi");
+        PopupHelper.showSuccessToast(
+            LocaleKeys.UserAddressAdd_address_added_successfully.tr());
         NavigationService.back();
       } else {
         PopupHelper.showErrorDialog(errorMessage: response.errorMessage!);
@@ -156,7 +160,8 @@ class UserAddressAddViewModel extends ChangeNotifier {
         _goCurrentLocation();
       } else {
         PopupHelper.showErrorDialog(
-            errorMessage: "Lütfen konum servislerini açın");
+            errorMessage:
+                LocaleKeys.UserAddressAdd_open_location_services.tr());
       }
     } else {
       permission = await Geolocator.requestPermission();
@@ -166,10 +171,13 @@ class UserAddressAddViewModel extends ChangeNotifier {
           _goCurrentLocation();
         } else {
           PopupHelper.showErrorDialog(
-              errorMessage: "Lütfen konum servislerini açın");
+              errorMessage:
+                  LocaleKeys.UserAddressAdd_open_location_services.tr());
         }
       } else {
-        PopupHelper.showErrorDialog(errorMessage: "Lütfen konum iznini verin");
+        PopupHelper.showErrorDialog(
+            errorMessage:
+                LocaleKeys.UserAddressAdd_grant_location_permission.tr());
       }
     }
   }

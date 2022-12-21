@@ -38,40 +38,12 @@ class ValidationViewModel extends ChangeNotifier {
     }
   }
 
-  Future<bool> sendMail() async {
-    try {
-      ResponseModel response =
-          await NetworkService.post("users/email_verification", body: {
-        "Email": registerData["Email"],
-        "NameSurname": registerData["Name"],
-        "VerificationCode": validateCode
-      });
-      if (response.success) {
-        return true;
-      } else {
-        PopupHelper.showErrorDialog(
-            errorMessage: response.errorMessage!,
-            dismissible: false,
-            actions: {
-              LocaleKeys.Validation_go_back.tr(): () {
-                NavigationService.back(times: 2, data: false);
-              }
-            });
-        return false;
-      }
-    } catch (e) {
-      PopupHelper.showErrorDialogWithCode(e);
-      return false;
-    }
-  }
-
   Future<bool> sendMessage() async {
     try {
       ResponseModel response =
-          await NetworkService.post("users/number_verification", body: {
-        "Number": registerData["MobilePhone"],
-        "Email": registerData["Email"],
-        "NameSurname": registerData["Name"],
+          await NetworkService.post("users/numbersend", body: {
+        "NumberPhone": registerData["MobilePhone"],
+        "ProcessType": 1,
         "VerificationCode": validateCode
       });
       if (response.success) {
@@ -95,7 +67,7 @@ class ValidationViewModel extends ChangeNotifier {
 
   Future<void> resend() async {
     generateValidateCode();
-    resented = await sendMail();
+    resented = await sendMessage();
   }
 
   Future<void> approve() async {
@@ -108,7 +80,6 @@ class ValidationViewModel extends ChangeNotifier {
           "Name": registerData["Name"],
           "BornDate": registerData["BornDate"],
           "MobilePhone": registerData["MobilePhone"],
-          "Email": registerData["Email"],
           "Password": registerData["Password"],
           "Cinsiyet": registerData["Gender"]
         });
@@ -123,7 +94,7 @@ class ValidationViewModel extends ChangeNotifier {
 
       if (response.success) {
         ResponseModel userInfo = await NetworkService.get(
-            "users/user_info/${registerData["Email"] ?? registerData["MobilePhone"]}");
+            "users/user_info/${registerData["MobilePhone"]}");
         if (userInfo.success) {
           // formKey.currentState?.dispose();
           await AuthService.login(UserModel.fromJson(userInfo.data));

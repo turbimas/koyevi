@@ -45,8 +45,9 @@ class _UserRatingsViewState extends ConsumerState<UserRatingsView> {
     return CustomSafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar:
-            CustomAppBar.activeBack(LocaleKeys.UserRatings_appbar_title.tr()),
+        appBar: CustomAppBar.activeBack(
+            LocaleKeys.UserRatings_appbar_title.tr(),
+            showBasket: true),
         body: _body(),
       ),
     );
@@ -138,18 +139,18 @@ class _UserRatingsViewState extends ConsumerState<UserRatingsView> {
                 style: CustomFonts.bodyText2(CustomColors.backgroundText))),
       );
     }
-    //TODO: burayı expanded e çevir
-    return SizedBox(
-      height: 670.smh,
-      width: 340.smw,
+    return Expanded(
       child: ListView.builder(
+        shrinkWrap: true,
         addAutomaticKeepAlives: true,
         itemCount: ref.watch(provider).index == 0
             ? ref.watch(provider).rated.length
             : ref.watch(provider).unrated.length,
-        itemBuilder: (context, index) => ref.watch(provider).index == 0
-            ? _ratedCard(index)
-            : _unratedCard(index),
+        itemBuilder: (context, index) => Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10.smw),
+            child: ref.watch(provider).index == 0
+                ? _ratedCard(index)
+                : _unratedCard(index)),
       ),
     );
   }

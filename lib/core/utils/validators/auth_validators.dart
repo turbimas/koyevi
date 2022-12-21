@@ -13,10 +13,11 @@ mixin AuthValidators {
   }
 
   String? phoneValidator(String? value) {
-    // phone number regex with country code
-    final RegExp phoneRegex = RegExp(r'^\+?[0-9]{10,13}$');
-    // check if phone number is valid
-    if (value != null && !phoneRegex.hasMatch(value)) {
+    if (value == null) {
+      return LocaleKeys.Validators_phone.tr();
+    }
+    value = value.replaceAll(" ", "");
+    if (value.length != 12 || !value.startsWith("90")) {
       return LocaleKeys.Validators_phone.tr();
     }
     return null;

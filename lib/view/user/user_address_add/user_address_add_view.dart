@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:koyevi/core/services/auth/authservice.dart';
 import 'package:koyevi/core/services/localization/locale_keys.g.dart';
 import 'package:koyevi/core/services/navigation/navigation_service.dart';
 import 'package:koyevi/core/services/theme/custom_colors.dart';
@@ -51,7 +52,8 @@ class _UserAddressAddViewState extends ConsumerState<UserAddressAddView> {
     floorNoController = TextEditingController();
     doorNoController = TextEditingController();
     relatedMailController = TextEditingController();
-    relatedPhoneController = TextEditingController();
+    relatedPhoneController =
+        TextEditingController(text: AuthService.currentUser!.phone);
     noteController = TextEditingController();
 
     relatedPersonNameController = TextEditingController();
@@ -89,7 +91,8 @@ class _UserAddressAddViewState extends ConsumerState<UserAddressAddView> {
     return CustomSafeArea(
       child: Scaffold(
         appBar: CustomAppBar.activeBack(
-            LocaleKeys.UserAddressAdd_appbar_title.tr()),
+            LocaleKeys.UserAddressAdd_appbar_title.tr(),
+            showBasket: true),
         body: _content(),
       ),
     );

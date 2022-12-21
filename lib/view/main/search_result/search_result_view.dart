@@ -64,8 +64,8 @@ class _SearchResultViewState extends ConsumerState<SearchResultView> {
     return CustomSafeArea(
         child: Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar:
-          CustomAppBar.activeBack(LocaleKeys.SearchResult_appbar_title.tr()),
+      appBar: CustomAppBar.activeBack(LocaleKeys.SearchResult_appbar_title.tr(),
+          showBasket: true),
       body: Column(
         children: [_actions(), _products(), _mainMenu()],
       ),
@@ -209,34 +209,6 @@ class _SearchResultViewState extends ConsumerState<SearchResultView> {
 
   void _showFilterPopup() {
     PopupHelper.showErrorToast(LocaleKeys.SearchResult_soon.tr());
-    return;
-    showDialog(
-        context: context,
-        builder: (context) {
-          return Consumer(builder: (context, ref, child) {
-            return Dialog(
-              insetPadding: EdgeInsets.symmetric(horizontal: 0.smw),
-              backgroundColor: Colors.transparent,
-              child: Container(
-                  width: 330.smw,
-                  height: 500.smh,
-                  decoration: BoxDecoration(
-                      borderRadius: CustomThemeData.fullRounded,
-                      color: CustomColors.primary),
-                  child: Column(children: [
-                    Container(
-                        margin: EdgeInsets.symmetric(vertical: 10.smh),
-                        padding: EdgeInsets.symmetric(horizontal: 30.smw),
-                        child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: CustomTextLocale(
-                                LocaleKeys.SearchResult_filter,
-                                style: CustomFonts.bodyText1(
-                                    CustomColors.primaryText)))),
-                  ])),
-            );
-          });
-        });
   }
 
   void _showOrderPopup() {
@@ -464,7 +436,7 @@ class _SearchResultViewState extends ConsumerState<SearchResultView> {
                 NavigationService.navigateToPageAndRemoveUntil(
                     const MainView());
               },
-              child: CustomIcons.menu_basket_icon),
+              child: CustomIcons.menu_basket_icon__large),
           InkWell(
               onTap: () {
                 context.read<HomeIndexCubit>().set(4);

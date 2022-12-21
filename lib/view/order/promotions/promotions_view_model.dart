@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:koyevi/core/services/auth/authservice.dart';
+import 'package:koyevi/core/services/localization/locale_keys.g.dart';
 import 'package:koyevi/core/services/navigation/navigation_service.dart';
 import 'package:koyevi/core/services/network/network_service.dart';
 import 'package:koyevi/core/services/network/response_model.dart';
@@ -27,7 +29,8 @@ class PromotionsViewModel extends ChangeNotifier {
       if (responseModel.success) {
         promotions.clear();
         promotions.add(PromotionModel(
-            promotionID: 0, promotionDescription: "Seçim Yapmadan Devam Et"));
+            promotionID: 0,
+            promotionDescription: LocaleKeys.Promotions_not_use.tr()));
         promotions.addAll((responseModel.data as List)
             .map((e) => PromotionModel.fromJson(e)));
       } else {

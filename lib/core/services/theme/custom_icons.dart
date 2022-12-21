@@ -9,7 +9,8 @@ abstract class CustomIcons {
   static late final Widget menu_search_icon;
   static late final Widget menu_favorite_icon;
   static late final Widget menu_home_icon;
-  static late final Widget menu_basket_icon;
+  static late final Widget menu_basket_icon__large;
+  static late final Widget menu_basket_icon__medium;
   static late final Widget menu_profile_icon;
   static late final Widget cancel_icon__medium;
   static late final Widget cancel_icon__large;
@@ -73,7 +74,8 @@ abstract class CustomIcons {
     menu_search_icon = _svgPicture("menu_search_icon");
     menu_favorite_icon = _svgPicture("menu_favorite_icon");
     menu_home_icon = _svgPicture("menu_home_icon");
-    menu_basket_icon = _svgPicture("menu_basket_icon");
+    menu_basket_icon__large = _svgPicture("menu_basket_icon__large");
+    menu_basket_icon__medium = _svgPicture("menu_basket_icon__medium");
     menu_profile_icon = _svgPicture("menu_profile_icon");
     cancel_icon__medium = _svgPicture("cancel_icon__medium");
     cancel_icon__large = _svgPicture("cancel_icon__large");

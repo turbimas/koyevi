@@ -13,6 +13,7 @@ import 'package:koyevi/product/constants/app_constants.dart';
 abstract class NetworkService {
   static late Dio _dio;
   static const debug = true;
+  static const debugDetailed = false;
   static bool notInited = true;
 
   static Future<void> init() async {
@@ -79,7 +80,7 @@ abstract class NetworkService {
         fullUrl,
         queryParameters: queryParameters,
       );
-      if (debug) {
+      if (debugDetailed) {
         log("GET DATA: ${data.data}");
       }
       return ResponseModel<T>.fromJson(data.data!);
@@ -121,7 +122,7 @@ abstract class NetworkService {
         queryParameters: queryParameters,
         data: body,
       );
-      if (debug) {
+      if (debugDetailed) {
         log("POST DATA: ${response.data}");
       }
       return ResponseModel<T>.fromJson(response.data!);

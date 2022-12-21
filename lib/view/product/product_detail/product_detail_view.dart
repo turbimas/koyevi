@@ -65,7 +65,8 @@ class _ProductDetailViewState extends ConsumerState<ProductDetailView> {
       child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: CustomAppBar.activeBack(
-              LocaleKeys.ProductDetail_appbar_title.tr()),
+              LocaleKeys.ProductDetail_appbar_title.tr(),
+              showBasket: true),
           body: ref.watch(provider).isLoading
               ? _loading()
               : ref.watch(provider).productDetail != null

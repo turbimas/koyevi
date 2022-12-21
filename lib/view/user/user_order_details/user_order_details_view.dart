@@ -48,7 +48,8 @@ class _UserOrderDetailsViewState extends ConsumerState<UserOrderDetailsView> {
     return CustomSafeArea(
       child: Scaffold(
         appBar: CustomAppBar.activeBack(
-            LocaleKeys.UserOrderDetails_appbar_title.tr()),
+            LocaleKeys.UserOrderDetails_appbar_title.tr(),
+            showBasket: true),
         body: _body(),
       ),
     );

@@ -41,8 +41,9 @@ class _UserAddressesViewState extends ConsumerState<UserAddressesView> {
     return CustomSafeArea(
       child: Scaffold(
         floatingActionButton: _fab(context),
-        appBar:
-            CustomAppBar.activeBack(LocaleKeys.UserAddresses_appbar_title.tr()),
+        appBar: CustomAppBar.activeBack(
+            LocaleKeys.UserAddresses_appbar_title.tr(),
+            showBasket: true),
         body: _body(),
       ),
     );

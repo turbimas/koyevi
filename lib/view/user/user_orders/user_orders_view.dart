@@ -41,8 +41,8 @@ class _UserOrdersViewState extends ConsumerState<UserOrdersView> {
   Widget build(BuildContext context) {
     return CustomSafeArea(
       child: Scaffold(
-        appBar:
-            CustomAppBar.activeBack(LocaleKeys.UserOrders_appbar_title.tr()),
+        appBar: CustomAppBar.activeBack(LocaleKeys.UserOrders_appbar_title.tr(),
+            showBasket: true),
         body: _body(),
       ),
     );

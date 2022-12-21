@@ -1,9 +1,13 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:koyevi/core/services/auth/authservice.dart';
+import 'package:koyevi/core/services/localization/locale_keys.g.dart';
 import 'package:koyevi/core/services/navigation/navigation_service.dart';
 import 'package:koyevi/core/services/network/network_service.dart';
 import 'package:koyevi/core/services/network/response_model.dart';
 import 'package:koyevi/core/utils/helpers/popup_helper.dart';
+import 'package:koyevi/product/cubits/home_index_cubit/home_index_cubit.dart';
 import 'package:koyevi/product/models/order/basket_model.dart';
 import 'package:koyevi/product/models/order/promotion_model.dart';
 import 'package:koyevi/product/models/user/address_model.dart';
@@ -92,10 +96,23 @@ class BasketDetailViewModel extends ChangeNotifier {
 
   Future<void> createOrder() async {
     try {
+      if (basketModel.generalTotals < basketModel.minDeliveryTotals) {
+        await PopupHelper.showErrorDialog(
+            errorMessage: LocaleKeys.BasketDetail_cannot_lower_than.tr(
+                args: [basketModel.minDeliveryTotals.toStringAsFixed(2)]),
+            actions: {
+              LocaleKeys.BasketDetail_continue_shopping.tr(): () {
+                NavigationService.context.read<HomeIndexCubit>().set(2);
+                NavigationService.back(times: 2);
+              }
+            },
+            dismissible: false);
+        return;
+      }
+
       if (!acceptTerms) {
         await PopupHelper.showErrorDialog(
-            errorMessage:
-                "Sipariş oluşturabilmek için sipariş koşullarını kabul etmelisiniz");
+            errorMessage: LocaleKeys.BasketDetail_term_and_conditions.tr());
         return;
       }
 /*

@@ -54,16 +54,34 @@ class PopupHelper {
     showErrorDialog(errorMessage: "ERROR".tr(), error: e);
   }
 
-  static Future<void> showSuccessDialog(String message) async {
-    showDialog(
+  static Future<T> showSuccessDialog<T>(String message,
+      {Map<String, Function> actions = const {},
+      bool cancelIcon = false}) async {
+    return await showDialog(
         context: _context,
         barrierDismissible: true,
         builder: (context) => AlertDialog(
               backgroundColor: CustomColors.approve,
-              title: Text(
-                message.tr(),
+              icon: cancelIcon
+                  ? IconButton(
+                      icon: CustomIcons.cancel_icon__large,
+                      onPressed: () {
+                        NavigationService.back(data: false);
+                      })
+                  : null,
+              title: CustomText(
+                message,
+                maxLines: 10,
                 style: CustomFonts.bodyText3(CustomColors.cancelText),
               ),
+              actions: actions.keys
+                  .map((e) => TextButton(
+                      style: TextButton.styleFrom(
+                        foregroundColor: CustomColors.approveText,
+                      ),
+                      onPressed: actions[e] as Function(),
+                      child: CustomText(e)))
+                  .toList(),
             ));
   }
 
@@ -76,13 +94,9 @@ class PopupHelper {
 
   static Future<void> showErrorToast(String message) async {
     Fluttertoast.showToast(
-        // TODO: renkleri eski haline getir
         msg: message,
-        textColor: Colors.white,
-        backgroundColor: Colors.red
-        // textColor: CustomColors.cancelText,
-        // backgroundColor: CustomColors.cancel
-        );
+        textColor: CustomColors.cancelText,
+        backgroundColor: CustomColors.cancel);
   }
 }
 

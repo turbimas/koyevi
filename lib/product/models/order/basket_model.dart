@@ -39,4 +39,17 @@ class BasketModel {
     basketDetails
         .removeWhere((element) => element.product.barcode == "DELIVERY");
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'PromotionID': promotionID,
+      'MinFreeDeliveryTotals': minFreeDeliveryTotals,
+      'MinDeliveryTotals': minDeliveryTotals,
+      'LineTotals': lineTotals,
+      'DeliveryTotals': deliveryTotals,
+      'PromotionTotals': promotionTotals,
+      'GeneralTotals': generalTotals,
+      'BasketDetails': basketDetails.map((e) => e.toJson()).toList(),
+    };
+  }
 }

@@ -32,7 +32,8 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar.inactiveBack(LocaleKeys.Profile_appbar_title.tr()),
+      appBar: CustomAppBar.inactiveBack(LocaleKeys.Profile_appbar_title.tr(),
+          showBasket: true),
       body: _body(),
     );
   }

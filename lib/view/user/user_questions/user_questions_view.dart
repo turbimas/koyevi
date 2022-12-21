@@ -45,8 +45,9 @@ class _UserQuestionsViewState extends ConsumerState<UserQuestionsView> {
   Widget build(BuildContext context) {
     return CustomSafeArea(
       child: Scaffold(
-        appBar:
-            CustomAppBar.activeBack(LocaleKeys.UserQuestions_appbar_title.tr()),
+        appBar: CustomAppBar.activeBack(
+            LocaleKeys.UserQuestions_appbar_title.tr(),
+            showBasket: true),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,

@@ -2,6 +2,7 @@ import 'dart:io' show Platform;
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:koyevi/core/services/auth/authservice.dart';
 import 'package:koyevi/core/services/localization/locale_keys.g.dart';
@@ -13,6 +14,7 @@ import 'package:koyevi/core/services/theme/custom_icons.dart';
 import 'package:koyevi/core/services/theme/custom_images.dart';
 import 'package:koyevi/core/utils/helpers/popup_helper.dart';
 import 'package:koyevi/product/constants/app_constants.dart';
+import 'package:koyevi/product/cubits/basket_model_cubit/basket_model_cubit.dart';
 import 'package:koyevi/product/models/user_model.dart';
 import 'package:koyevi/product/widgets/main/main_view.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -90,14 +92,13 @@ class _SplashViewState extends ConsumerState<SplashView>
         UserModel user = UserModel.fromJson(userData.data);
         if (AuthService.cachePassword == user.password) {
           AuthService.login(user);
+          context.read<BasketModelCubit>().refresh();
         } else {
-          PopupHelper.showErrorToast("Şifreniz değiştirilmiş");
+          PopupHelper.showErrorToast(LocaleKeys.Splash_password_changed);
           AuthService.logout(showSuccessMessage: false);
-          // Todo: localization eklenicek
         }
       } else {
-        PopupHelper.showErrorToast(
-            "Kullanıcı bilgileri alınamadığı için hesabınızdan çıkış yapıldı");
+        PopupHelper.showErrorToast(LocaleKeys.Splash_user_info_error.tr());
         AuthService.logout(showSuccessMessage: false);
       }
     }
@@ -108,10 +109,9 @@ class _SplashViewState extends ConsumerState<SplashView>
 
   _showUpdateDialog(String updateLink) {
     PopupHelper.showErrorDialog(
-        errorMessage:
-            "Güncelleme mevcut! Uygulamayı kullanabilmek için lütfen güncelleyin",
+        errorMessage: LocaleKeys.Splash_update_available.tr(),
         actions: {
-          "Güncelle": () {
+          LocaleKeys.Splash_update.tr(): () {
             launchUrlString(updateLink);
           }
         });

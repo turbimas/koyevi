@@ -2,7 +2,11 @@
   "ForgotPassword": {
     "appbar_title": "Forgot Password",
     "prompt_message": "Please enter your phone number in the following area. We will remind you of your login information by SMS",
-    "number_hint": "Enter your phone number"
+    "number_hint": "Enter your phone number",
+    "successfully_changed":"Your password has been changed successfully",
+    "wrong_code": "Confirmation code wrong!",
+    "new_password_hint": "Enter your new password",
+    "enter_phone":"Please enter your phone number"
   },
   "Login": {
     "appbar_title": "Login",
@@ -23,6 +27,12 @@
     "term_condition_1": "Üyelik sözleşmesini",
     "term_condition_2": "Okudum, kabul ediyorum"
   },
+  "Splash": {
+    "password_changed":"Your password has been changed!",
+        "user_info_error":"User information error! We logout for your safety",
+        "update_available":"Update available. To continue using the application, please update the application.",
+        "update":"Update"
+  },
   "Validation": {
     "sent_message": "We sent a confirmation code to {}",
     "validation_hint": "Enter confirmation code",
@@ -40,7 +50,9 @@
     "order_status": "Order status: {}",
     "order_id": "Order number:",
     "check_network_connection": "Check your internet connection",
-    "order_details": "Details"
+    "order_details": "Details",
+    "continue":"Continue",
+        "address_change_warn":"If you change the address, your basket will be cleaned!"
   },
   "Favorites": {
     "appbar_title": "My favorite products",
@@ -90,7 +102,11 @@
     "discount_cost": "Discount amount",
     "total": "Total amount",
     "free_delivery": "Free Delivery!",
-    "for_free_delivery": "For free delivery {} TL more !"
+    "for_free_delivery": "For free delivery {} TL more !",
+    "address_not_found":"Address not found",
+    "add_address_now":"Add address now",
+    "cannot_lower_than":"Your basket fee can not be lower than {}",
+    "continue_shopping":"Continue to shopping"
   },
   "BasketDetail": {
     "appbar_title": "Order Details",
@@ -119,7 +135,10 @@
     "estimated_delivery_time": "Estimated Delivery Time: {}",
     "out_off_process_time": "You exceeded the transaction time",
     "non_address": "No address was found",
-    "delivery_tax_separate": "Same invoice and delivery address"
+    "delivery_tax_separate": "Same invoice and delivery address",
+    "cannot_lower_than":"Your basket fee can not be lower than {}",
+    "continue_shopping":"Continue to shopping",
+    "term_and_conditions":"In order to create an order, you should read and accept the distance sales contract and the preliminary information form."
   },
 
   "DeliveryTime": {
@@ -145,7 +164,8 @@
   },
   "Promotions": {
     "appbar_title": "Promotions",
-    "not_use": "I will not use promotions"
+    "not_use": "I will not use promotions",
+    "choice":"Use"
   },
   "BasketSuccess": {
     "appbar_title": "Order Successful",
@@ -172,7 +192,10 @@
     "add_to_basket": "Add to Basket",
     "rating_avg_count": "{} All ratings ({})",
     "cant_shipped": "Can't shipped",
-    "not_in_sale": "Not in sale"
+    "not_in_sale": "Not in sale",
+    "login_to_use":"You have to be logged in to use this feature",
+    "product_added_favorites":"Product added to favorites",
+    "product_removed_favorites":"Product removed from favorites"
   },
   "ProductImage": {
     "appbar_title": "{}"
@@ -189,7 +212,9 @@
     "question_count": "{} Answer & Question",
     "search_hint": "Search in questions",
     "ask_question": "Ask a question",
-    "seller_response": "Seller answer"
+    "seller_response": "Seller answer",
+    "question_sent":"Your question has been sent successfully. It will be in your profile when it answered",
+      "enter_question":"Please, enter your question!"
   },
   "Profile": {
     "appbar_title": "Profile",
@@ -234,10 +259,14 @@
     "location_retrieving": "Location information is obtaining...",
     "person": "Personal",
     "corporate": "Corporate",
-    "related_person":"Related person",
+    "related_person":"Company name",
     "identity_no": "TCKN no",
     "tax_number": "Tax Number",
-    "tax_office": "Tax Office"
+    "tax_office": "Tax Office",
+    "address_header_can_not_be_empty": "Address header can not be empty",
+    "address_added_successfully": "Address added successfully",
+    "open_location_services":"Please open location services",
+    "grant_location_permission":"Please grant location permission"
   },
   "UserAddresses": {
     "appbar_title": "My addresses",

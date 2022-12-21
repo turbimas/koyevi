@@ -2,7 +2,11 @@
     "ForgotPassword": {
         "appbar_title": "Şifremi unuttum",
         "prompt_message": "Lütfen aşşağıdaki alana numaranızı girin. Size göndereceğimiz sms ile giriş bilgilerinizi hatırlatacağız.",
-        "number_hint":"Numaranızı girin"
+        "number_hint":"Numaranızı girin",
+        "successfully_changed":"Şifreniz başarıyla değiştirildi",
+        "wrong_code":"Onay kodu yanlış",
+        "new_password_hint":"Yeni şifrenizi girin",
+        "enter_phone":"Lütfen telefon numaranızı girin"
     },
     "Login": {
         "appbar_title": "Giriş Yap",
@@ -23,6 +27,12 @@
         "term_condition_1":"Üyelik sözleşmesini",
         "term_condition_2":"Okudum, kabul ediyorum"
     },
+    "Splash": {
+        "password_changed":"Şifreniz değiştirilmiş",
+        "user_info_error":"Kullanıcı bilgileri alınamadığı için hesabınızdan çıkış yapıldı",
+        "update_available":"Güncelleme mevcut! Uygulamayı kullanabilmek için lütfen güncelleyin",
+        "update":"Güncelle"
+    },
     "Validation": {
         "sent_message": "{} numarasına bir onay kodu ilettik",
         "validation_hint": "Onay kodunu girin",
@@ -41,7 +51,9 @@
         "order_status":"Sipariş durumu: {}",
         "order_id":"Sipariş numarası:",
         "check_network_connection":"İnternet bağlantınızı kontrol edin",
-        "order_details":"Detaylar"
+        "order_details":"Detaylar",
+        "continue":"Devam et",
+        "address_change_warn":"Adres değiştirirseniz sepetiniz temizlenecek!"
     },
     "Favorites": {
         "appbar_title": "Favorileri ürünlerim",
@@ -91,7 +103,12 @@
         "discount_cost": "İndirim tutarı",
         "total":"Toplam tutar",
         "free_delivery":"Ücretsiz teslimat!",
-        "for_free_delivery":"Ücretsiz teslimat için {} TL daha !"
+        "for_free_delivery":"Ücretsiz teslimat için {} TL daha !",
+        "address_not_found":"Teslimat adresi bulunamadı",
+        "add_address_now":"Hemen adres ekle!",
+        "cannot_lower_than":"Sepetinizdeki ürünlerin toplamı {} TL'den az olamaz",
+        "continue_shopping":"Hemen alışverişe devam et"
+
     },
     "BasketDetail": {
         "appbar_title":"Sipariş detayları",
@@ -120,7 +137,10 @@
         "estimated_delivery_time":"Tahmini teslimat süresi: {}",
         "out_off_process_time":"İşlem süresini aştınız",
         "non_address":"Hiçbir adres bulunamadı",
-        "delivery_tax_separate":"Fatura ve teslimat adresi aynı"
+        "delivery_tax_separate":"Fatura ve teslimat adresi aynı",
+        "cannot_lower_than":"Sepetinizdeki ürünlerin toplamı {} TL'den az olamaz",
+        "continue_shopping":"Hemen alışverişe devam et",
+        "term_and_conditions":"Sipariş oluşturabilmek için mesafeli satış sözleşmesini ve ön bilgilendirme formunu okuyup kabul etmelisiniz"
     },
     
     "DeliveryTime":{
@@ -146,7 +166,8 @@
     },
     "Promotions": {
         "appbar_title":"Kampanyalarım",
-        "not_use":"Promosyon kullanmayacağım"
+        "not_use":"Promosyon kullanmayacağım",
+        "choice":"Seç"
     },
     "BasketSuccess": {
         "appbar_title": "Sipariş başarılı",
@@ -173,7 +194,10 @@
         "add_to_basket":"Sepete ekle",
         "rating_avg_count": "{} Toplam değerlendirmeler ({})" ,
         "cant_shipped":"Kargolanamaz",
-        "not_in_sale":"Satışta değil"
+        "not_in_sale":"Satışta değil",
+        "login_to_use":"Bu özelliği kullanabilmek için giriş yapmalısınız",
+        "product_added_favorites":"Ürün favorilerinize eklendi",
+        "product_removed_favorites":"Ürün favorilerinizden kaldırıldı"
     },
     "ProductImage":{
         "appbar_title":"{}"
@@ -190,7 +214,10 @@
         "question_count": "{} adet Soru & Cevap",
         "search_hint":"Sorularda ara",
         "ask_question": "Soru sor",
-        "seller_response":"Satıcı yanıtı"
+        "seller_response":"Satıcı yanıtı",
+        "question_sent":"Sorunuz başarıyla gönderildi! Cevaplandığı zaman profilinizde görünecektir.",
+        "enter_question":"Lütfen sorunuzu giriniz!"
+
     },
     "Profile": {
         "appbar_title": "Profilim",
@@ -235,10 +262,14 @@
     "location_retrieving":"Konum bilgisi alınıyor...",
     "person": "Şahıs",
     "corporate": "Kurumsal",
-    "related_person":"İlgili kişi",
+    "related_person":"Firma ünvanı",
     "identity_no": "TCKN no",
     "tax_number": "Vergi no",
-    "tax_office": "Vergi dairesi"
+    "tax_office": "Vergi dairesi",
+    "address_header_can_not_be_empty":"Adres başlığı boş olamaz",
+    "address_added_successfully":"Adres başarıyla eklendi",
+    "open_location_services":"Lütfen konum servislerini açın",
+    "grant_location_permission":"Lütfen konum iznini verin"
     },
     "UserAddresses":{
         "appbar_title":"Adreslerim",

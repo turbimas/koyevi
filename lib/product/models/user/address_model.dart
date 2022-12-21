@@ -22,6 +22,7 @@ class AddressModel {
         isDefault = json['isDefault'];
 
   @override
+  // ignore: avoid_renaming_method_parameters, hash_and_equals
   operator ==(o) => o is AddressModel && o.id == id;
 
   toJson() => {
@@ -36,5 +37,6 @@ class AddressModel {
         'isDefault': isDefault,
       };
 
+  @override
   toString() => toJson().toString();
 }

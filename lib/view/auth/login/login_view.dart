@@ -9,6 +9,8 @@ import 'package:koyevi/core/services/theme/custom_icons.dart';
 import 'package:koyevi/core/services/theme/custom_images.dart';
 import 'package:koyevi/core/services/theme/custom_theme_data.dart';
 import 'package:koyevi/core/utils/extensions/ui_extensions.dart';
+import 'package:koyevi/core/utils/helpers/crypt_helper.dart';
+import 'package:koyevi/core/utils/validators/validators.dart';
 import 'package:koyevi/product/constants/app_constants.dart';
 import 'package:koyevi/product/widgets/custom_appbar.dart';
 import 'package:koyevi/product/widgets/custom_safearea.dart';
@@ -159,9 +161,9 @@ class _LoginViewState extends ConsumerState<LoginView> {
       padding: EdgeInsets.only(
           top: 15.smh, left: 45.smw, right: 45.smw, bottom: 0.smh),
       child: InkWell(
-        onTap: () => ref
-            .read(provider)
-            .login(loginInfo: _loginInfo.text, password: _password.text),
+        onTap: () => ref.read(provider).login(
+            loginInfo: _loginInfo.text,
+            password: CryptHelper.toMD5(_password.text)),
         child: Container(
           height: 75.smh,
           width: 270.smw,
@@ -214,6 +216,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
                 padding: EdgeInsets.only(
                     left: 20.smw, top: 8.smh, bottom: 7.smh, right: 20.smw),
                 child: TextFormField(
+                  validator: CustomValidators.instance.phoneValidator,
                   keyboardType: TextInputType.phone,
                   controller: _loginInfo,
                   textInputAction: TextInputAction.next,
@@ -242,12 +245,14 @@ class _LoginViewState extends ConsumerState<LoginView> {
                   padding: EdgeInsets.only(
                       left: 20.smw, top: 8.smh, bottom: 7.smh, right: 20.smw),
                   child: TextFormField(
+                    validator: CustomValidators.instance.passwordValidator,
                     focusNode: _passwordFocusNode,
                     obscureText: ref.watch(provider).isHiding,
                     controller: _password,
                     onFieldSubmitted: (value) {
                       () => ref.read(provider).login(
-                          loginInfo: _loginInfo.text, password: _password.text);
+                          loginInfo: _loginInfo.text,
+                          password: CryptHelper.toMD5(_password.text));
                     },
                     textInputAction: TextInputAction.done,
                     textAlignVertical: TextAlignVertical.center,

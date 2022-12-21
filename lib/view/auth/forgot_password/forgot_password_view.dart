@@ -10,6 +10,7 @@ import 'package:koyevi/core/services/theme/custom_icons.dart';
 import 'package:koyevi/core/services/theme/custom_images.dart';
 import 'package:koyevi/core/services/theme/custom_theme_data.dart';
 import 'package:koyevi/core/utils/extensions/ui_extensions.dart';
+import 'package:koyevi/core/utils/helpers/crypt_helper.dart';
 import 'package:koyevi/core/utils/helpers/popup_helper.dart';
 import 'package:koyevi/core/utils/validators/validators.dart';
 import 'package:koyevi/product/widgets/custom_appbar.dart';
@@ -92,9 +93,8 @@ class _ForgotPasswordViewState extends ConsumerState<ForgotPasswordView> {
               _newPasswordField(),
               ref.watch(provider).isCodeVerified
                   ? OkCancelPrompt(okCallBack: () {
-                      ref
-                          .read(provider)
-                          .newPassword(newPasswordController.text);
+                      ref.read(provider).newPassword(
+                          CryptHelper.toMD5(newPasswordController.text));
                     }, cancelCallBack: () {
                       NavigationService.back();
                     })
@@ -117,8 +117,8 @@ class _ForgotPasswordViewState extends ConsumerState<ForgotPasswordView> {
             ref.read(provider).phone = phoneController.text;
             ref.read(provider).sendVerificationCode();
           } else {
-            // Todo : localization eklenicek
-            PopupHelper.showErrorToast("Lütfen telefon numaranızı giriniz");
+            PopupHelper.showErrorToast(
+                LocaleKeys.ForgotPassword_enter_phone.tr());
           }
         },
         child: CustomIcons.forward_icon_light,
@@ -142,7 +142,7 @@ class _ForgotPasswordViewState extends ConsumerState<ForgotPasswordView> {
         },
         controller: phoneController,
         enabled: !ref.watch(provider).didCodeSent,
-        validator: Validators.instance.phoneValidator,
+        validator: CustomValidators.instance.phoneValidator,
         onSaved: (newValue) async {
           ref.read(provider).phone = newValue!;
           ref.read(provider).sendVerificationCode();
@@ -207,8 +207,8 @@ class _ForgotPasswordViewState extends ConsumerState<ForgotPasswordView> {
             ref.read(provider).isCodeVerified = true;
             _focusNode2.requestFocus();
           } else {
-            // TODO: localization eklenicek
-            PopupHelper.showErrorToast("Hatalı Kod");
+            PopupHelper.showErrorToast(
+                LocaleKeys.ForgotPassword_wrong_code.tr());
           }
         },
       ),
@@ -229,7 +229,7 @@ class _ForgotPasswordViewState extends ConsumerState<ForgotPasswordView> {
       width: 300.smw,
       child: TextFormField(
         controller: newPasswordController,
-        validator: Validators.instance.passwordValidator,
+        validator: CustomValidators.instance.passwordValidator,
         onSaved: (newValue) async {
           ref.read(provider).phone = newValue!;
           ref.read(provider).sendVerificationCode();
@@ -239,8 +239,7 @@ class _ForgotPasswordViewState extends ConsumerState<ForgotPasswordView> {
         decoration: InputDecoration(
             border: InputBorder.none,
             hintStyle: CustomFonts.defaultField(CustomColors.primaryText),
-            // TODO: add localization
-            hintText: "Şifrenizi girin"),
+            hintText: LocaleKeys.ForgotPassword_new_password_hint.tr()),
       ),
     );
   }

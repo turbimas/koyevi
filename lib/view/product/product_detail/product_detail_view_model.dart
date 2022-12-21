@@ -1,10 +1,15 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:koyevi/core/services/auth/authservice.dart';
 import 'package:koyevi/core/services/localization/locale_keys.g.dart';
+import 'package:koyevi/core/services/navigation/navigation_service.dart';
 import 'package:koyevi/core/services/network/network_service.dart';
 import 'package:koyevi/core/services/network/response_model.dart';
 import 'package:koyevi/core/utils/helpers/popup_helper.dart';
 import 'package:koyevi/product/models/product_detail_model.dart';
+
+import '../../../product/cubits/basket_model_cubit/basket_model_cubit.dart';
 
 class ProductDetailViewModel extends ChangeNotifier {
   ProductDetailViewModel();
@@ -82,8 +87,9 @@ class ProductDetailViewModel extends ChangeNotifier {
       if (!response.success) {
         productDetail!.removeBasket();
         notifyListeners();
-
         PopupHelper.showErrorDialog(errorMessage: response.errorMessage!);
+      } else {
+        NavigationService.context.read<BasketModelCubit>().refresh();
       }
     } catch (e) {
       productDetail!.removeBasket();
@@ -102,10 +108,13 @@ class ProductDetailViewModel extends ChangeNotifier {
         "Barcode": productDetail!.barcode,
         "Quantity": productDetail!.basketQuantity ?? 0
       });
+
       if (!response.success) {
         productDetail!.addBasket();
         notifyListeners();
         PopupHelper.showErrorDialog(errorMessage: response.errorMessage!);
+      } else {
+        NavigationService.context.read<BasketModelCubit>().refresh();
       }
     } catch (e) {
       productDetail!.addBasket();
@@ -116,10 +125,8 @@ class ProductDetailViewModel extends ChangeNotifier {
 
   Future<void> favoriteUpdate() async {
     try {
-      // TODO: localization
       if (!AuthService.isLoggedIn) {
-        PopupHelper.showErrorToast(
-            "Bü özelliği kullanabilmeniz için giriş yapmalısınız");
+        PopupHelper.showErrorToast(LocaleKeys.ProductDetail_login_to_use.tr());
         return;
       }
       ResponseModel response = await NetworkService.get(
@@ -127,8 +134,8 @@ class ProductDetailViewModel extends ChangeNotifier {
       if (response.success) {
         productDetail!.isFavorite = !productDetail!.isFavorite;
         PopupHelper.showSuccessToast(productDetail!.isFavorite
-            ? "Ürün favorilere eklendi"
-            : "Ürün favorilerden çıkarıldı");
+            ? LocaleKeys.ProductDetail_product_added_favorites.tr()
+            : LocaleKeys.ProductDetail_product_removed_favorites.tr());
         notifyListeners();
       } else {
         PopupHelper.showErrorDialog(errorMessage: response.errorMessage!);

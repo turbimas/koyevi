@@ -35,8 +35,8 @@ class CategoriesState extends ConsumerState<CategoriesView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          CustomAppBar.inactiveBack(LocaleKeys.Categories_appbar_title.tr()),
+      appBar: CustomAppBar.inactiveBack(LocaleKeys.Categories_appbar_title.tr(),
+          showBasket: true),
       body: Padding(
         padding: EdgeInsets.only(
             top: 10.smh, left: 15.smw, right: 15.smw, bottom: 75.smh),

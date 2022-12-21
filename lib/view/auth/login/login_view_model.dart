@@ -20,7 +20,6 @@ class LoginViewModel extends ChangeNotifier {
 
   Future<void> login(
       {required String loginInfo, required String password}) async {
-    // TODO : Validation uygulanacak
     ResponseModel loginResponse =
         await NetworkService.get("users/login/$loginInfo/$password");
     if (loginResponse.success) {

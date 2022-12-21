@@ -13,6 +13,7 @@ import 'package:koyevi/core/services/navigation/navigation_service.dart';
 import 'package:koyevi/core/services/network/network_service.dart';
 import 'package:koyevi/core/services/network/response_model.dart';
 import 'package:koyevi/product/constants/app_constants.dart';
+import 'package:koyevi/product/cubits/basket_model_cubit/basket_model_cubit.dart';
 import 'package:koyevi/product/cubits/home_index_cubit/home_index_cubit.dart';
 import 'package:koyevi/product/models/product_over_view_model.dart';
 import 'package:koyevi/view/auth/splash/splash_view.dart';
@@ -57,8 +58,11 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (context) => HomeIndexCubit(),
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => HomeIndexCubit()),
+          BlocProvider(create: (context) => BasketModelCubit())
+        ],
         child: ProviderScope(
             child: ScreenUtilInit(
                 designSize: AppConstants.designSize,

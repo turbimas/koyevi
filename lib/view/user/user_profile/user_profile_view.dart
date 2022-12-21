@@ -10,6 +10,7 @@ import 'package:koyevi/core/services/theme/custom_colors.dart';
 import 'package:koyevi/core/services/theme/custom_fonts.dart';
 import 'package:koyevi/core/services/theme/custom_theme_data.dart';
 import 'package:koyevi/core/utils/extensions/ui_extensions.dart';
+import 'package:koyevi/core/utils/validators/validators.dart';
 import 'package:koyevi/product/widgets/custom_appbar.dart';
 import 'package:koyevi/product/widgets/custom_safearea.dart';
 import 'package:koyevi/product/widgets/custom_text.dart';
@@ -38,7 +39,8 @@ class _UserProfileViewState extends ConsumerState<UserProfileView> {
   Widget build(BuildContext context) {
     return CustomSafeArea(
         child: Scaffold(
-      appBar: CustomAppBar.activeBack(LocaleKeys.UserProfile_appbar_title.tr()),
+      appBar: CustomAppBar.activeBack(LocaleKeys.UserProfile_appbar_title.tr(),
+          showBasket: true),
       body: _body(),
     ));
   }
@@ -65,6 +67,7 @@ class _UserProfileViewState extends ConsumerState<UserProfileView> {
                         style: CustomFonts.bodyText2(
                             CustomColors.backgroundText))),
                 _customTextField(
+                    validator: CustomValidators.instance.fullNameValidator,
                     hintText: LocaleKeys.UserProfile_name_surname.tr(),
                     formKey: "Name",
                     initialValue: AuthService.currentUser!.nameSurname),
@@ -89,6 +92,7 @@ class _UserProfileViewState extends ConsumerState<UserProfileView> {
                             ?.toString()
                             .split(" ")[0])),
                 _customTextField(
+                    validator: CustomValidators.instance.phoneValidator,
                     hintText: LocaleKeys.UserProfile_phone,
                     formKey: "MobilePhone",
                     initialValue: AuthService.currentUser!.phone.toString()),
@@ -146,6 +150,7 @@ class _UserProfileViewState extends ConsumerState<UserProfileView> {
   Widget _customTextField(
       {required String hintText,
       required String formKey,
+      String? Function(String?)? validator,
       bool obscureText = false,
       String? initialValue}) {
     return Container(
@@ -157,6 +162,7 @@ class _UserProfileViewState extends ConsumerState<UserProfileView> {
           color: CustomColors.primary),
       child: Center(
           child: TextFormField(
+        validator: validator,
         obscureText: obscureText,
         onSaved: (value) {
           ref.read(provider).formData[formKey] = value;
@@ -178,14 +184,17 @@ class _UserProfileViewState extends ConsumerState<UserProfileView> {
     return Column(
       children: [
         _customTextField(
-            hintText: LocaleKeys.UserProfile_old_password,
+            hintText: LocaleKeys.UserProfile_old_password.tr(),
+            validator: CustomValidators.instance.passwordValidator,
             formKey: "oldPassword",
             obscureText: true),
         _customTextField(
-            hintText: LocaleKeys.UserProfile_new_password,
+            hintText: LocaleKeys.UserProfile_new_password.tr(),
+            validator: CustomValidators.instance.passwordValidator,
             formKey: "newPassword"),
         _customTextField(
-            hintText: LocaleKeys.UserProfile_new_password_again,
+            hintText: LocaleKeys.UserProfile_new_password_again.tr(),
+            validator: CustomValidators.instance.passwordValidator,
             formKey: "newPasswordAgain"),
       ],
     );

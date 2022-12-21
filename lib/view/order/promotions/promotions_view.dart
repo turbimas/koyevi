@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:koyevi/core/services/localization/locale_keys.g.dart';
 import 'package:koyevi/core/services/theme/custom_colors.dart';
 import 'package:koyevi/core/services/theme/custom_fonts.dart';
 import 'package:koyevi/core/services/theme/custom_icons.dart';
@@ -21,7 +23,6 @@ class PromotionsView extends ConsumerStatefulWidget {
   ConsumerState<ConsumerStatefulWidget> createState() => _PromotionsViewState();
 }
 
-// TODO: add localization
 class _PromotionsViewState extends ConsumerState<PromotionsView> {
   late final ChangeNotifierProvider<PromotionsViewModel> provider;
 
@@ -39,7 +40,8 @@ class _PromotionsViewState extends ConsumerState<PromotionsView> {
   Widget build(BuildContext context) {
     return CustomSafeArea(
       child: Scaffold(
-        appBar: CustomAppBar.activeBack("Promosyonlar"),
+        appBar:
+            CustomAppBar.activeBack(LocaleKeys.Promotions_appbar_title.tr()),
         body: _body(),
       ),
     );
@@ -121,7 +123,7 @@ class _PromotionsViewState extends ConsumerState<PromotionsView> {
           child: Center(
               child: ref.watch(provider).selectedPromotionID == id
                   ? CustomIcons.check_icon
-                  : CustomText("Seç",
+                  : CustomTextLocale(LocaleKeys.Promotions_choice,
                       style:
                           CustomFonts.bodyText3(CustomColors.secondaryText)))),
     );

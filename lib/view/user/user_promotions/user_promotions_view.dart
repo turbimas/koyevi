@@ -37,7 +37,8 @@ class _UserPromotionsViewState extends ConsumerState<UserPromotionsView> {
     return CustomSafeArea(
       child: Scaffold(
         appBar: CustomAppBar.activeBack(
-            LocaleKeys.UserPromotions_appbar_title.tr()),
+            LocaleKeys.UserPromotions_appbar_title.tr(),
+            showBasket: true),
         body: _body(),
       ),
     );
@@ -89,17 +90,24 @@ class _UserPromotionsViewState extends ConsumerState<UserPromotionsView> {
         padding: EdgeInsets.symmetric(horizontal: 10.smw, vertical: 10.smh),
         margin: EdgeInsets.only(top: 10.smh),
         child: Center(
-          child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-            promotionModel.imageUrl != null
-                ? Image.network(promotionModel.imageUrl!,
-                    height: 100.smh, width: 300.smw, fit: BoxFit.cover)
-                : Container(),
-            CustomText(
-              promotionModel.promotionDescription * 50,
-              maxLines: 3,
-              style: CustomFonts.bodyText3(CustomColors.cardText),
-            ),
-          ]),
+          child: Column(
+              mainAxisAlignment: promotionModel.imageUrl == null
+                  ? MainAxisAlignment.center
+                  : MainAxisAlignment.spaceBetween,
+              children: [
+                promotionModel.imageUrl != null
+                    ? ClipRRect(
+                        borderRadius: CustomThemeData.fullRounded,
+                        child: Image.network(promotionModel.imageUrl!,
+                            height: 100.smh, width: 300.smw, fit: BoxFit.cover),
+                      )
+                    : const SizedBox(),
+                CustomText(
+                  promotionModel.promotionDescription,
+                  maxLines: 3,
+                  style: CustomFonts.bodyText3(CustomColors.cardText),
+                ),
+              ]),
         ),
       ),
     );

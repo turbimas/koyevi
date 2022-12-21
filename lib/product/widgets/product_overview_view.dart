@@ -2,6 +2,7 @@
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:koyevi/core/services/auth/authservice.dart';
 import 'package:koyevi/core/services/localization/locale_keys.g.dart';
@@ -14,6 +15,7 @@ import 'package:koyevi/core/services/theme/custom_icons.dart';
 import 'package:koyevi/core/services/theme/custom_theme_data.dart';
 import 'package:koyevi/core/utils/extensions/ui_extensions.dart';
 import 'package:koyevi/core/utils/helpers/popup_helper.dart';
+import 'package:koyevi/product/cubits/basket_model_cubit/basket_model_cubit.dart';
 import 'package:koyevi/product/models/product_detail_model.dart';
 import 'package:koyevi/product/models/product_over_view_model.dart';
 import 'package:koyevi/product/widgets/custom_text.dart';
@@ -234,7 +236,6 @@ class _ProductOverviewViewVerticalState
         "Barcode": widget.product.barcode,
         "Quantity": widget.product.basketFactor,
       });
-
       if (response.success) {
         setState(() {
           widget.product.basketQuantity ??= 0;
@@ -242,6 +243,7 @@ class _ProductOverviewViewVerticalState
               widget.product.basketQuantity! + widget.product.basketFactor;
           widget.onBasketChanged?.call();
         });
+        NavigationService.context.read<BasketModelCubit>().refresh();
       } else {
         // setState(() {
         //   widget.product.basketQuantity = widget.product.basketQuantity! - 1;
@@ -287,6 +289,7 @@ class _ProductOverviewViewVerticalState
             widget.product.basketQuantity = null;
           }
         });
+        NavigationService.context.read<BasketModelCubit>().refresh();
       } else {
         // setState(() {
         //   widget.product.basketQuantity =

@@ -89,40 +89,43 @@ class _HomeViewState extends ConsumerState<HomeView> {
 
   Widget _addressBar() {
     AddressModel? address = ref.watch(provider).defaultAddress;
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 10.smh),
-      decoration: BoxDecoration(
-          borderRadius: CustomThemeData.bottomRounded2,
-          color: CustomColors.secondary),
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.smw),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CustomIcons.location_icon,
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10.smw),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CustomText(
-                        address != null
-                            ? address.addressHeader.toString()
-                            : "-",
-                        style: CustomFonts.bodyText4(CustomColors.cardInner),
-                        maxLines: 1),
-                    CustomText(
-                        address != null ? address.address.toString() : "-",
-                        style: CustomFonts.bodyText4(CustomColors.cardInner),
-                        maxLines: 1),
-                  ],
+    return InkWell(
+      onTap: _addressesDialog,
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 10.smh),
+        decoration: BoxDecoration(
+            borderRadius: CustomThemeData.bottomRounded2,
+            color: CustomColors.secondary),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.smw),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CustomIcons.location_icon,
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10.smw),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CustomText(
+                          address != null
+                              ? address.addressHeader.toString()
+                              : "-",
+                          style: CustomFonts.bodyText4(CustomColors.cardInner),
+                          maxLines: 1),
+                      CustomText(
+                          address != null ? address.address.toString() : "-",
+                          style: CustomFonts.bodyText4(CustomColors.cardInner),
+                          maxLines: 1),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            InkWell(onTap: _addressesDialog, child: CustomIcons.order_icon)
-          ],
+              CustomIcons.order_icon
+            ],
+          ),
         ),
       ),
     );
@@ -429,14 +432,17 @@ class _HomeViewState extends ConsumerState<HomeView> {
 }
 
 class _AddressSelectionWidget extends ConsumerWidget {
-  const _AddressSelectionWidget({required this.provider});
   final ChangeNotifierProvider<HomeViewModel> provider;
-
+  const _AddressSelectionWidget({required this.provider});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Dialog(
-        insetPadding: EdgeInsets.symmetric(horizontal: 20.smw, vertical: 0),
-        backgroundColor: CustomColors.secondary,
+    return Align(
+      alignment: Alignment.topCenter,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 20.smw, vertical: 10.smh),
+        decoration: BoxDecoration(
+            color: CustomColors.secondary,
+            borderRadius: CustomThemeData.bottomRounded2),
         child: ListView.builder(
           shrinkWrap: true,
           itemCount: ref.watch(provider).addresses.length + 1,
@@ -450,16 +456,11 @@ class _AddressSelectionWidget extends ConsumerWidget {
                   });
                 },
                 child: Container(
-                  margin: EdgeInsets.symmetric(vertical: 10.smh),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CustomIcons.add_icon,
-                      SizedBox(width: 5.smw),
-                      CustomTextLocale(LocaleKeys.UserAddresses_add_address,
-                          style: CustomFonts.bodyText1(
-                              CustomColors.secondaryText)),
-                    ],
+                  margin: EdgeInsets.only(bottom: 10.smh, top: 20.smh),
+                  padding: EdgeInsets.symmetric(horizontal: 10.smw),
+                  child: RotationTransition(
+                    turns: const AlwaysStoppedAnimation(45 / 360),
+                    child: Center(child: CustomIcons.cancel_icon__large),
                   ),
                 ),
               );
@@ -492,6 +493,7 @@ class _AddressSelectionWidget extends ConsumerWidget {
                                       CustomColors.secondaryText)),
                               CustomText(
                                   ref.watch(provider).addresses[index].address,
+                                  maxLines: 3,
                                   style: CustomFonts.bodyText4(
                                       CustomColors.secondaryText)),
                             ]),
@@ -506,6 +508,8 @@ class _AddressSelectionWidget extends ConsumerWidget {
               );
             }
           },
-        ));
+        ),
+      ),
+    );
   }
 }

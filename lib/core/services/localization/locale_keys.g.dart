@@ -4,6 +4,10 @@ abstract class  LocaleKeys {
   static const ForgotPassword_appbar_title = 'ForgotPassword.appbar_title';
   static const ForgotPassword_prompt_message = 'ForgotPassword.prompt_message';
   static const ForgotPassword_number_hint = 'ForgotPassword.number_hint';
+  static const ForgotPassword_successfully_changed = 'ForgotPassword.successfully_changed';
+  static const ForgotPassword_wrong_code = 'ForgotPassword.wrong_code';
+  static const ForgotPassword_new_password_hint = 'ForgotPassword.new_password_hint';
+  static const ForgotPassword_enter_phone = 'ForgotPassword.enter_phone';
   static const ForgotPassword = 'ForgotPassword';
   static const Login_appbar_title = 'Login.appbar_title';
   static const Login_phone_hint = 'Login.phone_hint';
@@ -22,6 +26,11 @@ abstract class  LocaleKeys {
   static const Register_term_condition_1 = 'Register.term_condition_1';
   static const Register_term_condition_2 = 'Register.term_condition_2';
   static const Register = 'Register';
+  static const Splash_password_changed = 'Splash.password_changed';
+  static const Splash_user_info_error = 'Splash.user_info_error';
+  static const Splash_update_available = 'Splash.update_available';
+  static const Splash_update = 'Splash.update';
+  static const Splash = 'Splash';
   static const Validation_sent_message = 'Validation.sent_message';
   static const Validation_validation_hint = 'Validation.validation_hint';
   static const Validation_wrong_code = 'Validation.wrong_code';
@@ -38,6 +47,8 @@ abstract class  LocaleKeys {
   static const Home_order_id = 'Home.order_id';
   static const Home_check_network_connection = 'Home.check_network_connection';
   static const Home_order_details = 'Home.order_details';
+  static const Home_continue = 'Home.continue';
+  static const Home_address_change_warn = 'Home.address_change_warn';
   static const Home = 'Home';
   static const Favorites_appbar_title = 'Favorites.appbar_title';
   static const Favorites_search_hint = 'Favorites.search_hint';
@@ -81,6 +92,10 @@ abstract class  LocaleKeys {
   static const Basket_total = 'Basket.total';
   static const Basket_free_delivery = 'Basket.free_delivery';
   static const Basket_for_free_delivery = 'Basket.for_free_delivery';
+  static const Basket_address_not_found = 'Basket.address_not_found';
+  static const Basket_add_address_now = 'Basket.add_address_now';
+  static const Basket_cannot_lower_than = 'Basket.cannot_lower_than';
+  static const Basket_continue_shopping = 'Basket.continue_shopping';
   static const Basket = 'Basket';
   static const BasketDetail_appbar_title = 'BasketDetail.appbar_title';
   static const BasketDetail_edit = 'BasketDetail.edit';
@@ -109,6 +124,9 @@ abstract class  LocaleKeys {
   static const BasketDetail_out_off_process_time = 'BasketDetail.out_off_process_time';
   static const BasketDetail_non_address = 'BasketDetail.non_address';
   static const BasketDetail_delivery_tax_separate = 'BasketDetail.delivery_tax_separate';
+  static const BasketDetail_cannot_lower_than = 'BasketDetail.cannot_lower_than';
+  static const BasketDetail_continue_shopping = 'BasketDetail.continue_shopping';
+  static const BasketDetail_term_and_conditions = 'BasketDetail.term_and_conditions';
   static const BasketDetail = 'BasketDetail';
   static const DeliveryTime_appbar_title = 'DeliveryTime.appbar_title';
   static const DeliveryTime = 'DeliveryTime';
@@ -129,6 +147,7 @@ abstract class  LocaleKeys {
   static const ReturnSuccess = 'ReturnSuccess';
   static const Promotions_appbar_title = 'Promotions.appbar_title';
   static const Promotions_not_use = 'Promotions.not_use';
+  static const Promotions_choice = 'Promotions.choice';
   static const Promotions = 'Promotions';
   static const BasketSuccess_appbar_title = 'BasketSuccess.appbar_title';
   static const BasketSuccess_inform_message = 'BasketSuccess.inform_message';
@@ -152,6 +171,9 @@ abstract class  LocaleKeys {
   static const ProductDetail_rating_avg_count = 'ProductDetail.rating_avg_count';
   static const ProductDetail_cant_shipped = 'ProductDetail.cant_shipped';
   static const ProductDetail_not_in_sale = 'ProductDetail.not_in_sale';
+  static const ProductDetail_login_to_use = 'ProductDetail.login_to_use';
+  static const ProductDetail_product_added_favorites = 'ProductDetail.product_added_favorites';
+  static const ProductDetail_product_removed_favorites = 'ProductDetail.product_removed_favorites';
   static const ProductDetail = 'ProductDetail';
   static const ProductImage_appbar_title = 'ProductImage.appbar_title';
   static const ProductImage = 'ProductImage';
@@ -166,6 +188,8 @@ abstract class  LocaleKeys {
   static const ProductQuestions_search_hint = 'ProductQuestions.search_hint';
   static const ProductQuestions_ask_question = 'ProductQuestions.ask_question';
   static const ProductQuestions_seller_response = 'ProductQuestions.seller_response';
+  static const ProductQuestions_question_sent = 'ProductQuestions.question_sent';
+  static const ProductQuestions_enter_question = 'ProductQuestions.enter_question';
   static const ProductQuestions = 'ProductQuestions';
   static const Profile_appbar_title = 'Profile.appbar_title';
   static const Profile_greeting = 'Profile.greeting';
@@ -210,6 +234,10 @@ abstract class  LocaleKeys {
   static const UserAddressAdd_identity_no = 'UserAddressAdd.identity_no';
   static const UserAddressAdd_tax_number = 'UserAddressAdd.tax_number';
   static const UserAddressAdd_tax_office = 'UserAddressAdd.tax_office';
+  static const UserAddressAdd_address_header_can_not_be_empty = 'UserAddressAdd.address_header_can_not_be_empty';
+  static const UserAddressAdd_address_added_successfully = 'UserAddressAdd.address_added_successfully';
+  static const UserAddressAdd_open_location_services = 'UserAddressAdd.open_location_services';
+  static const UserAddressAdd_grant_location_permission = 'UserAddressAdd.grant_location_permission';
   static const UserAddressAdd = 'UserAddressAdd';
   static const UserAddresses_appbar_title = 'UserAddresses.appbar_title';
   static const UserAddresses_add_address = 'UserAddresses.add_address';

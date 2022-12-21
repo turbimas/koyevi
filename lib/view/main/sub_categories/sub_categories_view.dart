@@ -53,7 +53,8 @@ class _SubCategoriesViewState extends ConsumerState<SubCategoriesView> {
     return CustomSafeArea(
         child: Scaffold(
             appBar: CustomAppBar.activeBack(
-                LocaleKeys.Subcategories_appbar_title.tr()),
+                LocaleKeys.Subcategories_appbar_title.tr(),
+                showBasket: true),
             body: ref.watch(provider).retrieving ? _loading() : _body()));
   }
 
