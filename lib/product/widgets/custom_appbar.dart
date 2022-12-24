@@ -85,6 +85,13 @@ class __BasketTotalIconState extends State<_BasketTotalIcon> {
     }
     BasketModel? basketModel =
         context.watch<BasketModelCubit>().state.basketModel;
+    if (basketModel == null) {
+      return const SizedBox();
+    }
+
+    if (basketModel.generalTotals == 0) {
+      return const SizedBox();
+    }
     return InkWell(
       onTap: () {
         NavigationService.navigateToPageAndRemoveUntil(const MainView());
@@ -107,7 +114,7 @@ class __BasketTotalIconState extends State<_BasketTotalIcon> {
           children: [
             CustomIcons.menu_basket_icon__medium,
             SizedBox(width: 5.smw),
-            CustomText(basketModel?.generalTotals.toString() ?? "-",
+            CustomText(basketModel.generalTotals.toStringAsFixed(2),
                 style: CustomFonts.bodyText5(CustomColors.primaryText))
           ],
         ),

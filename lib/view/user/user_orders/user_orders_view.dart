@@ -8,6 +8,7 @@ import 'package:koyevi/core/services/theme/custom_fonts.dart';
 import 'package:koyevi/core/services/theme/custom_icons.dart';
 import 'package:koyevi/core/services/theme/custom_images.dart';
 import 'package:koyevi/core/services/theme/custom_theme_data.dart';
+import 'package:koyevi/core/utils/extensions/datetime_extensions.dart';
 import 'package:koyevi/core/utils/extensions/ui_extensions.dart';
 import 'package:koyevi/product/constants/app_constants.dart';
 import 'package:koyevi/product/models/user/user_orders_model.dart';
@@ -175,7 +176,7 @@ class _UserOrdersViewState extends ConsumerState<UserOrdersView> {
                             style: CustomFonts.bodyText4(
                                 CustomColors.card2TextPale),
                           ),
-                          CustomText(order.orderDate.toString(),
+                          CustomText(order.orderDate.toFormattedString(),
                               style:
                                   CustomFonts.bodyText4(CustomColors.card2Text))
                         ],
@@ -199,7 +200,7 @@ class _UserOrdersViewState extends ConsumerState<UserOrdersView> {
                     CustomTextLocale(LocaleKeys.UserOrders_order_total,
                         style:
                             CustomFonts.bodyText4(CustomColors.card2TextPale)),
-                    CustomText("${order.total} TL",
+                    CustomText("${order.total.toStringAsFixed(2)} TL",
                         style: CustomFonts.bodyText3(CustomColors.card2Text)),
                   ])
                 ],

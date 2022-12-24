@@ -357,7 +357,7 @@ class _ProductDetailViewState extends ConsumerState<ProductDetailView> {
                     : CustomColors.card,
                 child: Center(
                   child: CustomTextLocale(LocaleKeys.ProductDetail_product_info,
-                      style: CustomFonts.bigButton(
+                      style: CustomFonts.bodyText1(
                           ref.watch(provider).selectedPropertyIndex == 0
                               ? CustomColors.primaryText
                               : CustomColors.cardText)),
@@ -377,7 +377,7 @@ class _ProductDetailViewState extends ConsumerState<ProductDetailView> {
                 child: Center(
                   child: CustomTextLocale(
                       LocaleKeys.ProductDetail_product_properties,
-                      style: CustomFonts.bigButton(
+                      style: CustomFonts.bodyText1(
                           ref.watch(provider).selectedPropertyIndex == 1
                               ? CustomColors.primaryText
                               : CustomColors.cardText)),

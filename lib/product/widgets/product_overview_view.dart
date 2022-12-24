@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, use_build_context_synchronously
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -225,10 +225,19 @@ class _ProductOverviewViewVerticalState
   }
 
   Future<void> _addBasket() async {
-    // setState(() {
-    // widget.product.basketQuantity ??= 0;
-    // widget.product.basketQuantity = widget.product.basketQuantity! + 1;
-    // });
+    if (!AuthService.isLoggedIn) {
+      PopupHelper.showErrorToast(LocaleKeys.ProductOverView_login_to_use.tr());
+      return;
+    }
+
+    if (!mounted) {
+      return;
+    }
+
+    widget.product.basketQuantity ??= 0;
+    widget.product.basketQuantity =
+        widget.product.basketQuantity! + widget.product.basketFactor;
+
     try {
       ResponseModel response =
           await NetworkService.post("orders/addbasket", body: {
@@ -237,71 +246,67 @@ class _ProductOverviewViewVerticalState
         "Quantity": widget.product.basketFactor,
       });
       if (response.success) {
-        setState(() {
-          widget.product.basketQuantity ??= 0;
-          widget.product.basketQuantity =
-              widget.product.basketQuantity! + widget.product.basketFactor;
-          widget.onBasketChanged?.call();
-        });
+        if (widget.onBasketChanged != null) {
+          widget.onBasketChanged!.call();
+        } else {
+          setState(() {});
+        }
         NavigationService.context.read<BasketModelCubit>().refresh();
       } else {
-        // setState(() {
-        //   widget.product.basketQuantity = widget.product.basketQuantity! - 1;
-        //   if (widget.product.basketQuantity == 0) {
-        //     widget.product.basketQuantity = null;
-        //   }
-        // });
+        widget.product.basketQuantity = widget.product.basketFactor;
+        if (widget.product.basketQuantity! < 0.01) {
+          widget.product.basketQuantity = null;
+        }
         PopupHelper.showErrorDialog(errorMessage: response.errorMessage!);
       }
     } catch (e) {
-      // setState(() {
-      //   widget.product.basketQuantity = widget.product.basketQuantity! - 1;
-      //   if (widget.product.basketQuantity == 0) {
-      //     widget.product.basketQuantity = null;
-      //   }
-      // });
+      widget.product.basketQuantity = widget.product.basketFactor;
+      if (widget.product.basketQuantity! < 0.01) {
+        widget.product.basketQuantity = null;
+      }
       PopupHelper.showErrorDialogWithCode(e);
     }
   }
 
   Future<void> _removeBasket() async {
-    // // setState(() {
-    // widget.product.basketQuantity = widget.product.basketQuantity! - 1;
-    // if (widget.product.basketQuantity! <= 0) {
-    //   widget.product.basketQuantity = null;
-    // }
-    // // });
+    if (!AuthService.isLoggedIn) {
+      PopupHelper.showErrorToast(LocaleKeys.ProductOverView_login_to_use.tr());
+      return;
+    }
+
+    if (!mounted) {
+      return;
+    }
+
+    widget.product.basketQuantity =
+        widget.product.basketQuantity! - widget.product.basketFactor;
+    if (widget.product.basketQuantity! <= 0.01) {
+      // floating hesaplamasından dolayı 0.01
+      widget.product.basketQuantity = null;
+    }
+
     try {
       ResponseModel response =
           await NetworkService.post("orders/updatebasket", body: {
         "CariID": AuthService.id,
         "Barcode": widget.product.barcode,
-        "Quantity": widget.product.basketQuantity != null
-            ? (widget.product.basketQuantity! - widget.product.basketFactor)
-            : 0
+        "Quantity": widget.product.basketQuantity ?? 0
       });
       if (response.success) {
-        setState(() {
-          widget.onBasketChanged?.call();
-          widget.product.basketQuantity =
-              widget.product.basketQuantity! - widget.product.basketFactor;
-          if (widget.product.basketQuantity! <= 0) {
-            widget.product.basketQuantity = null;
-          }
-        });
+        if (widget.onBasketChanged != null) {
+          widget.onBasketChanged!.call();
+        } else {
+          setState(() {});
+        }
         NavigationService.context.read<BasketModelCubit>().refresh();
       } else {
-        // setState(() {
-        //   widget.product.basketQuantity =
-        //       (widget.product.basketQuantity ?? 0) + 1;
-        // });
+        widget.product.basketQuantity =
+            (widget.product.basketQuantity ?? 0) + widget.product.basketFactor;
         PopupHelper.showErrorDialog(errorMessage: response.errorMessage!);
       }
     } catch (e) {
-      // setState(() {
-      //   widget.product.basketQuantity =
-      //       (widget.product.basketQuantity ?? 0) + 1;
-      // });
+      widget.product.basketQuantity =
+          (widget.product.basketQuantity ?? 0) + widget.product.basketFactor;
       PopupHelper.showErrorDialogWithCode(e);
     }
   }

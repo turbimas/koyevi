@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,6 +9,7 @@ import 'package:koyevi/core/services/navigation/navigation_service.dart';
 import 'package:koyevi/core/services/network/network_service.dart';
 import 'package:koyevi/core/services/network/response_model.dart';
 import 'package:koyevi/core/utils/helpers/popup_helper.dart';
+import 'package:koyevi/product/cubits/basket_model_cubit/basket_model_cubit.dart';
 import 'package:koyevi/product/cubits/home_index_cubit/home_index_cubit.dart';
 import 'package:koyevi/product/models/order/basket_model.dart';
 import 'package:koyevi/product/models/order/promotion_model.dart';
@@ -29,10 +32,10 @@ class BasketDetailViewModel extends ChangeNotifier {
 
   late DateTime pageCreatedTime;
 
-  bool _hemenTeslimAl = true;
-  bool get hemenTeslimAl => _hemenTeslimAl;
-  set hemenTeslimAl(bool value) {
-    _hemenTeslimAl = value;
+  late DeliveryTimeModel _selectedDeliveryTimeModel;
+  DeliveryTimeModel get selectedDeliveryTimeModel => _selectedDeliveryTimeModel;
+  set selectedDeliveryTimeModel(DeliveryTimeModel value) {
+    _selectedDeliveryTimeModel = value;
     notifyListeners();
   }
 
@@ -152,6 +155,7 @@ class BasketDetailViewModel extends ChangeNotifier {
       if (response.success) {
         NavigationService.navigateToPage(
             OrderSuccessView(orderId: response.data));
+        NavigationService.context.read<BasketModelCubit>().refresh();
       } else {
         await PopupHelper.showErrorDialog(errorMessage: response.errorMessage!);
       }
@@ -173,10 +177,7 @@ class BasketDetailViewModel extends ChangeNotifier {
       ResponseModelMap<dynamic> basketModelData =
           await NetworkService.get("orders/getbasket/${AuthService.id}");
       ResponseModelList timeResponse =
-          await NetworkService.post("orders/deliverySummary", body: {
-        "lat": selectedDeliveryAddress.lat,
-        "lng": selectedDeliveryAddress.lng,
-      });
+          await NetworkService.get("orders/deliverySummary/${AuthService.id}");
       ResponseModelList addressResponse =
           await NetworkService.get("users/adresses/${AuthService.id}");
       ResponseModelList promotionResponse = await NetworkService.get(
@@ -193,8 +194,14 @@ class BasketDetailViewModel extends ChangeNotifier {
         addresses = addressResponse.data!
             .map<AddressModel>((e) => AddressModel.fromJson(e))
             .toList();
-        selectedDate = times!.first.dates.first.dayDateTime;
-        selectedHour = times!.first.dates.first.hours.first;
+        selectedDeliveryTimeModel = times!.first;
+
+        for (DeliveryTimeModel time in times!) {
+          if (time.dates.length > 1) {
+            selectedDate = time.dates.first.dayDateTime;
+            selectedHour = time.dates.first.hours.first;
+          }
+        }
         promotions = promotionResponse.data!
             .map<PromotionModel>((e) => PromotionModel.fromJson(e))
             .toList();

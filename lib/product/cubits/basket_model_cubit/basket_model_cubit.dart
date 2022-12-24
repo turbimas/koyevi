@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:koyevi/core/services/auth/authservice.dart';
@@ -20,6 +22,7 @@ class BasketModelCubit extends Cubit<BasketModelState> {
     if (basketData.success) {
       BasketModel basketModel = BasketModel.fromJson(basketData.data!);
       emit(BasketModelState(basketModel));
+      log("Appbar sepeti güncellendi. YENİ TUTAR: ${basketModel.generalTotals.toString()}");
     } else {
       PopupHelper.showErrorDialog(errorMessage: basketData.errorMessage!);
     }

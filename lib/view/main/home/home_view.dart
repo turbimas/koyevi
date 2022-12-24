@@ -82,6 +82,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
           _searchBar(),
           AuthService.isLoggedIn ? _orders() : Container(height: 0),
           _bannersContent(),
+          SizedBox(height: 80.smh)
         ],
       ),
     );
@@ -386,9 +387,12 @@ class _HomeViewState extends ConsumerState<HomeView> {
                   style: CustomFonts.bodyText5(CustomColors.card2TextPale)),
               CustomTextLocale(LocaleKeys.Home_estimated_order_date,
                   args: [
-                    orderModel.deliveryAddressDetail!.deliveryDate!
-                        .toFormattedString()
+                    orderModel.deliveryAddressDetail!.deliveryDate != null
+                        ? orderModel.deliveryAddressDetail!.deliveryDate!
+                            .toFormattedString()
+                        : LocaleKeys.Home_ship_time_info.tr()
                   ],
+                  maxLines: 3,
                   style: CustomFonts.bodyText5(CustomColors.card2Text)),
               CustomTextLocale(LocaleKeys.Home_order_status,
                   args: [orderModel.statusName],

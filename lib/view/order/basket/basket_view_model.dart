@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,15 +8,12 @@ import 'package:koyevi/core/services/localization/locale_keys.g.dart';
 import 'package:koyevi/core/services/navigation/navigation_service.dart';
 import 'package:koyevi/core/services/network/network_service.dart';
 import 'package:koyevi/core/services/network/response_model.dart';
-import 'package:koyevi/core/services/theme/custom_colors.dart';
-import 'package:koyevi/core/services/theme/custom_fonts.dart';
 import 'package:koyevi/core/utils/helpers/popup_helper.dart';
 import 'package:koyevi/product/cubits/basket_model_cubit/basket_model_cubit.dart';
 import 'package:koyevi/product/cubits/home_index_cubit/home_index_cubit.dart';
 import 'package:koyevi/product/models/order/basket_model.dart';
 import 'package:koyevi/product/models/product_over_view_model.dart';
 import 'package:koyevi/product/models/user/address_model.dart';
-import 'package:koyevi/product/widgets/custom_text.dart';
 import 'package:koyevi/view/order/basket_detail/basket_detail_view.dart';
 import 'package:koyevi/view/user/user_address_add/user_address_add_view.dart';
 
@@ -25,7 +24,7 @@ class BasketViewModel extends ChangeNotifier {
 
   ProductOverViewModel? delivery;
   List<ProductOverViewModel> filteredProducts = [];
-  List<ProductOverViewModel> products = [];
+  List<ProductOverViewModel>? products;
 
   bool _retrieving = false;
   bool get retrieving => _retrieving;
@@ -35,21 +34,23 @@ class BasketViewModel extends ChangeNotifier {
   }
 
   Future<void> getBasket() async {
-    retrieving = true;
     try {
+      retrieving = true;
       ResponseModel basketDetails =
           await NetworkService.get("orders/getbasket/${AuthService.id}");
       if (basketDetails.success) {
         filteredProducts.clear();
-        products.clear();
+        products?.clear();
         basketModel = BasketModel.fromJson(basketDetails.data);
         filteredProducts
             .addAll(basketModel!.basketDetails.map((e) => e.product));
-        products.addAll(filteredProducts);
+        products = filteredProducts.cast();
       } else {
         PopupHelper.showErrorDialog(errorMessage: basketDetails.errorMessage!);
       }
     } catch (e) {
+      products = null;
+      filteredProducts.clear();
       PopupHelper.showErrorDialogWithCode(e);
     } finally {
       retrieving = false;
@@ -106,63 +107,32 @@ class BasketViewModel extends ChangeNotifier {
   void searchOnBasket(String value) {
     filteredProducts.clear();
     if (value.isNotEmpty) {
-      filteredProducts = products
+      filteredProducts = products!
           .where((element) =>
               element.name.toLowerCase().contains(value.toLowerCase()))
           .toList();
     } else {
-      filteredProducts.addAll(products);
+      filteredProducts.addAll(products!);
     }
     notifyListeners();
   }
 
-  Future<void> clearAll(BuildContext context) async {
-    await showDialog<bool>(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            backgroundColor: CustomColors.primary,
-            title: CustomText(
-              "Sepeti Temizle",
-              style: CustomFonts.bodyText1(CustomColors.primaryText),
-            ),
-            content: CustomText("Sepeti temizlemek istediğinize emin misiniz?",
-                maxLines: 2,
-                style: CustomFonts.bodyText4(CustomColors.primaryText)),
-            actions: [
-              TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop(false);
-                  },
-                  child: CustomText("Hayır",
-                      style: CustomFonts.bodyText2(CustomColors.primaryText))),
-              TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop(true);
-                  },
-                  child: CustomText("Evet",
-                      style: CustomFonts.bodyText2(CustomColors.primaryText))),
-            ],
-          );
-        }).then((value) async {
-      if (value == true) {
-        retrieving = true;
-        try {
-          ResponseModel response =
-              await NetworkService.get("orders/clearbasket/${AuthService.id}");
-          if (response.success) {
-            products.clear();
-            filteredProducts.clear();
-            NavigationService.context.read<BasketModelCubit>().refresh();
-          } else {
-            PopupHelper.showErrorDialog(errorMessage: response.errorMessage!);
-          }
-        } catch (e) {
-          PopupHelper.showErrorDialogWithCode(e);
-        } finally {
-          retrieving = false;
-        }
+  Future<void> clearAll() async {
+    retrieving = true;
+    try {
+      ResponseModel response =
+          await NetworkService.get("orders/clearbasket/${AuthService.id}");
+      if (response.success) {
+        products!.clear();
+        filteredProducts.clear();
+        NavigationService.context.read<BasketModelCubit>().refresh();
+      } else {
+        PopupHelper.showErrorDialog(errorMessage: response.errorMessage!);
       }
-    });
+    } catch (e) {
+      PopupHelper.showErrorDialogWithCode(e);
+    } finally {
+      retrieving = false;
+    }
   }
 }

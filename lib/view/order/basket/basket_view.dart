@@ -20,6 +20,7 @@ import 'package:koyevi/product/widgets/custom_appbar.dart';
 import 'package:koyevi/product/widgets/custom_text.dart';
 import 'package:koyevi/product/widgets/login_page_widget.dart';
 import 'package:koyevi/product/widgets/product_overview_view.dart';
+import 'package:koyevi/product/widgets/try_again_widget.dart';
 import 'package:koyevi/view/order/basket/basket_view_model.dart';
 
 class BasketView extends ConsumerStatefulWidget {
@@ -74,7 +75,10 @@ class _BasketViewState extends ConsumerState<BasketView>
     if (ref.watch(provider).retrieving) {
       return _loading();
     }
-    if (ref.watch(provider).products.isEmpty) {
+    if (ref.watch(provider).products == null) {
+      return TryAgain(callBack: ref.read(provider).getBasket);
+    }
+    if (ref.watch(provider).products!.isEmpty) {
       return _empty();
     }
     return _content();
@@ -116,7 +120,7 @@ class _BasketViewState extends ConsumerState<BasketView>
                 ),
                 SizedBox(width: 10.smw),
                 InkWell(
-                  onTap: () => ref.read(provider).clearAll(context),
+                  onTap: _clearBasket,
                   child: Container(
                     height: 50.smh,
                     width: 50.smw,
@@ -133,7 +137,7 @@ class _BasketViewState extends ConsumerState<BasketView>
             ),
             SizedBox(height: 10.smh),
             SizedBox(
-              height: 500.smh,
+              height: 580.smh,
               child: DynamicHeightGridView(
                   controller: _scrollController,
                   shrinkWrap: true,
@@ -227,7 +231,7 @@ class _BasketViewState extends ConsumerState<BasketView>
                                 style: CustomFonts.bodyText4(
                                     CustomColors.card2TextPale))))),
             Container(
-              height: 200.smh,
+              height: 180.smh,
               width: AppConstants.designWidth.smw,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
@@ -246,7 +250,7 @@ class _BasketViewState extends ConsumerState<BasketView>
                     topRight: Radius.circular(30)),
               ),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   InkWell(
                     onTap: ref.read(provider).goBasketDetail,
@@ -277,7 +281,7 @@ class _BasketViewState extends ConsumerState<BasketView>
                     color: Colors.transparent,
                     margin: EdgeInsets.symmetric(
                         horizontal: 25.smw, vertical: 10.smh),
-                    height: 80.smh,
+                    height: 60.smh,
                     width: AppConstants.designWidth.smw,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -314,22 +318,22 @@ class _BasketViewState extends ConsumerState<BasketView>
                                     CustomColors.cardText))
                           ],
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            CustomTextLocale(LocaleKeys.Basket_discount_cost,
-                                style: CustomFonts.bodyText4(
-                                    CustomColors.cardText)),
-                            CustomText(
-                                ref
-                                    .watch(provider)
-                                    .basketModel!
-                                    .promotionTotals
-                                    .toStringAsFixed(2),
-                                style: CustomFonts.bodyText4(
-                                    CustomColors.cardText))
-                          ],
-                        )
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //   children: [
+                        //     CustomTextLocale(LocaleKeys.Basket_discount_cost,
+                        //         style: CustomFonts.bodyText4(
+                        //             CustomColors.cardText)),
+                        //     CustomText(
+                        //         ref
+                        //             .watch(provider)
+                        //             .basketModel!
+                        //             .promotionTotals
+                        //             .toStringAsFixed(2),
+                        //         style: CustomFonts.bodyText4(
+                        //             CustomColors.cardText))
+                        //   ],
+                        // )
                       ],
                     ),
                   ),
@@ -379,6 +383,43 @@ class _BasketViewState extends ConsumerState<BasketView>
           duration: const Duration(milliseconds: 800),
           curve: Curves.linearToEaseOut);
       isExpanded = true;
+    }
+  }
+
+  Future<void> _clearBasket() async {
+    bool result = await showDialog<bool>(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                backgroundColor: CustomColors.primary,
+                title: CustomTextLocale(
+                  LocaleKeys.Basket_clear_basket_header,
+                  style: CustomFonts.bodyText1(CustomColors.primaryText),
+                ),
+                content: CustomTextLocale(LocaleKeys.Basket_clear_basket_body,
+                    maxLines: 2,
+                    style: CustomFonts.bodyText4(CustomColors.primaryText)),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop(false);
+                      },
+                      child: CustomTextLocale(LocaleKeys.Basket_no,
+                          style:
+                              CustomFonts.bodyText2(CustomColors.primaryText))),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop(true);
+                      },
+                      child: CustomTextLocale(LocaleKeys.Basket_yes,
+                          style:
+                              CustomFonts.bodyText2(CustomColors.primaryText))),
+                ],
+              );
+            }) ??
+        false;
+    if (result) {
+      ref.read(provider).clearAll();
     }
   }
 }

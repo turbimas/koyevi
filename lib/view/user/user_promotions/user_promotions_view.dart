@@ -71,11 +71,14 @@ class _UserPromotionsViewState extends ConsumerState<UserPromotionsView> {
   }
 
   Widget _content() {
-    return ListView.builder(
-      shrinkWrap: true,
-      itemCount: ref.watch(provider).promotions!.length,
-      itemBuilder: (context, index) =>
-          _promotionRow(ref.watch(provider).promotions![index]),
+    return Container(
+      margin: EdgeInsets.only(bottom: 10.smh),
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: ref.watch(provider).promotions!.length,
+        itemBuilder: (context, index) =>
+            _promotionRow(ref.watch(provider).promotions![index]),
+      ),
     );
   }
 
@@ -99,7 +102,7 @@ class _UserPromotionsViewState extends ConsumerState<UserPromotionsView> {
                     ? ClipRRect(
                         borderRadius: CustomThemeData.fullRounded,
                         child: Image.network(promotionModel.imageUrl!,
-                            height: 100.smh, width: 300.smw, fit: BoxFit.cover),
+                            height: 100.smh, width: 300.smw, fit: BoxFit.fill),
                       )
                     : const SizedBox(),
                 CustomText(

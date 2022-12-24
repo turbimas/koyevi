@@ -26,7 +26,6 @@ import 'package:koyevi/product/widgets/try_again_widget.dart';
 import 'package:koyevi/view/order/basket_detail/basket_detail_view_model.dart';
 import 'package:koyevi/view/order/delivery_times/delivery_times.dart';
 import 'package:koyevi/view/order/promotions/promotions_view.dart';
-import 'package:koyevi/view/user/user_addresses/user_addresses_view.dart';
 
 class BasketDetailView extends ConsumerStatefulWidget {
   final BasketModel basketModel;
@@ -208,30 +207,22 @@ class _BasketDetailState extends ConsumerState<BasketDetailView> {
       child: SizedBox(
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomTextLocale(LocaleKeys.BasketDetail_choice_address,
-                    style: CustomFonts.bodyText3(CustomColors.backgroundText)),
-                _editCard()
-              ],
+            Align(
+              alignment: Alignment.centerLeft,
+              child: CustomTextLocale(LocaleKeys.BasketDetail_choice_address,
+                  style: CustomFonts.bodyText3(CustomColors.backgroundText)),
             ),
             SizedBox(height: 15.smh),
-            ...ref
+            ref
                 .watch(provider)
                 .addresses
-                .map((e) => InkWell(
-                      onTap: () {
-                        ref.read(provider).selectedDeliveryAddress = e;
-                      },
-                      child: _radioContainer(
-                          title: e.addressHeader,
-                          description: e.address,
-                          isSelected:
-                              ref.watch(provider).selectedDeliveryAddress == e),
-                    ))
-                .toList(),
+                .map((e) => _radioContainer(
+                    title: e.addressHeader,
+                    description: e.address,
+                    isSelected:
+                        ref.watch(provider).selectedDeliveryAddress == e))
+                .toList()
+                .first,
           ],
         ),
       ),
@@ -287,6 +278,8 @@ class _BasketDetailState extends ConsumerState<BasketDetailView> {
     List<Widget> timesWidgets = ref.watch(provider).times!.map((e) {
       if (e.dates.length == 1) {
         return _hemenTeslimAlWidget(e);
+      } else if (e.dates.isEmpty) {
+        return _kargoTeslimAlWidget(e);
       } else {
         return _teslimatSuresiSec(e);
       }
@@ -401,32 +394,6 @@ class _BasketDetailState extends ConsumerState<BasketDetailView> {
                 title: LocaleKeys.BasketDetail_pay_on_door.tr(),
                 isSelected: true,
                 description: LocaleKeys.BasketDetail_pay_on_door_or_card.tr()),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _editCard() {
-    return InkWell(
-      onTap: () {
-        NavigationService.navigateToPage(const UserAddressesView())
-            .then((value) {
-          ref.read(provider).getData();
-        });
-      },
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 5.smw, vertical: 5.smh),
-        decoration: BoxDecoration(
-            borderRadius: CustomThemeData.fullInfiniteRounded,
-            color: CustomColors.secondary),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            CustomIcons.edit_icon__small,
-            SizedBox(width: 5.smw),
-            CustomTextLocale(LocaleKeys.BasketDetail_edit,
-                style: CustomFonts.bodyText5(CustomColors.secondaryText))
           ],
         ),
       ),
@@ -748,97 +715,62 @@ class _BasketDetailState extends ConsumerState<BasketDetailView> {
     ));
   }
 
-  Widget _hemenTeslimAlWidget(DeliveryTimeModel deliveryTimeModel) {
+  Widget _kargoTeslimAlWidget(DeliveryTimeModel deliveryTimeModel) {
     return InkWell(
       onTap: () {
-        ref.read(provider).selectedHour =
-            deliveryTimeModel.dates.first.hours.first;
-        ref.read(provider).selectedDate =
-            deliveryTimeModel.dates.first.dayDateTime;
-        ref.read(provider).hemenTeslimAl = true;
+        ref.read(provider).selectedDeliveryTimeModel = deliveryTimeModel;
+        ref.read(provider).selectedHour = null;
+        ref.read(provider).selectedDate = null;
       },
-      child: Container(
-        height: 60.smh,
-        width: 330.smw,
-        margin: EdgeInsets.only(bottom: 10.smh),
-        decoration: BoxDecoration(
-            borderRadius: CustomThemeData.fullRounded,
-            color: CustomColors.primary),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Expanded(
-                flex: 1,
-                child: Center(
-                  child: ref.watch(provider).hemenTeslimAl
-                      ? CustomIcons.radio_checked_light_icon
-                      : CustomIcons.radio_unchecked_light_icon,
-                )),
-            Expanded(
-                flex: 5,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CustomText(deliveryTimeModel.typeName,
-                        style: CustomFonts.bodyText2(CustomColors.primaryText)),
-                    CustomTextLocale(
-                        LocaleKeys.BasketDetail_estimated_delivery_time,
-                        args: [deliveryTimeModel.dates.first.hours.first],
-                        style: CustomFonts.bodyText4(CustomColors.primaryText)),
-                  ],
-                )),
-          ],
-        ),
-      ),
+      child: _radioContainer(
+          title: deliveryTimeModel.typeName,
+          isSelected: ref.watch(provider).selectedDeliveryTimeModel.typeName ==
+              deliveryTimeModel.typeName,
+          description: LocaleKeys.BasketDetail_ship_time_info.tr()),
     );
+  }
+
+  Widget _hemenTeslimAlWidget(DeliveryTimeModel deliveryTimeModel) {
+    return InkWell(
+        onTap: () {
+          ref.read(provider).selectedDeliveryTimeModel = deliveryTimeModel;
+          ref.read(provider).selectedHour =
+              deliveryTimeModel.dates.first.hours.first;
+          ref.read(provider).selectedDate =
+              deliveryTimeModel.dates.first.dayDateTime;
+        },
+        child: _radioContainer(
+            title: deliveryTimeModel.typeName,
+            isSelected: deliveryTimeModel ==
+                ref.watch(provider).selectedDeliveryTimeModel,
+            description: LocaleKeys.BasketDetail_estimated_delivery_time.tr(
+                args: [deliveryTimeModel.dates.first.hours.first])));
   }
 
   Widget _teslimatSuresiSec(DeliveryTimeModel deliveryTimeModel) {
     return InkWell(
-      onTap: () {
-        NavigationService.navigateToPage<Map<String, String>?>(
-                DeliveryTimesView(deliveryTimeModel: deliveryTimeModel))
-            .then((value) {
-          if (value != null) {
-            ref.read(provider).selectedHour = value["Hour"]!;
-            ref.read(provider).selectedDate = value["Date"]!;
-            ref.read(provider).hemenTeslimAl = false;
-          }
-        });
-      },
-      child: Container(
-        height: 70.smh,
-        width: 330.smw,
-        decoration: BoxDecoration(
-            borderRadius: CustomThemeData.fullRounded,
-            color: CustomColors.primary),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Expanded(
-                flex: 1,
-                child: Center(
-                    child: !ref.watch(provider).hemenTeslimAl
-                        ? CustomIcons.radio_checked_light_icon
-                        : CustomIcons.radio_unchecked_light_icon)),
-            Expanded(
-              flex: 5,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CustomText(deliveryTimeModel.typeName,
-                      style: CustomFonts.bodyText4(CustomColors.primaryText)),
-                  CustomText(
-                      "${ref.watch(provider).selectedDate!} | ${ref.watch(provider).selectedHour!}",
-                      style: CustomFonts.bodyText4(CustomColors.primaryText)),
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
-    );
+        onTap: () {
+          NavigationService.navigateToPage<Map<String, String>?>(
+                  DeliveryTimesView(deliveryTimeModel: deliveryTimeModel))
+              .then((value) {
+            if (value != null) {
+              ref.read(provider).selectedDeliveryTimeModel = deliveryTimeModel;
+              ref.read(provider).selectedHour = value["Hour"]!;
+              ref.read(provider).selectedDate = value["Date"]!;
+            }
+          });
+        },
+        child: _radioContainer(
+            title: deliveryTimeModel.typeName,
+            isSelected:
+                ref.watch(provider).selectedDeliveryTimeModel.typeName ==
+                    deliveryTimeModel.typeName,
+            description: ref
+                        .watch(provider)
+                        .selectedDeliveryTimeModel
+                        .typeName !=
+                    deliveryTimeModel.typeName
+                ? "${deliveryTimeModel.dates.first.dayDateTime} | ${deliveryTimeModel.dates.first.hours.first}"
+                : "${ref.watch(provider).selectedDate!} | ${ref.watch(provider).selectedHour!}"));
   }
 }

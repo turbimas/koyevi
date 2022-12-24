@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -74,6 +76,11 @@ class ProductDetailViewModel extends ChangeNotifier {
   }
 
   Future<void> addBasket() async {
+    if (!AuthService.isLoggedIn) {
+      PopupHelper.showErrorToast(LocaleKeys.ProductDetail_login_to_use.tr());
+      return;
+    }
+
     try {
       productDetail!.addBasket();
       notifyListeners();
@@ -99,6 +106,10 @@ class ProductDetailViewModel extends ChangeNotifier {
   }
 
   Future<void> updateBasket() async {
+    if (!AuthService.isLoggedIn) {
+      PopupHelper.showErrorToast(LocaleKeys.ProductDetail_login_to_use.tr());
+      return;
+    }
     try {
       productDetail!.removeBasket();
       notifyListeners();

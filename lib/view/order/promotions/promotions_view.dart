@@ -52,7 +52,7 @@ class _PromotionsViewState extends ConsumerState<PromotionsView> {
       return CustomImages.loading;
     }
 
-    if (ref.watch(provider).promotions.length == 1) {
+    if (ref.watch(provider).promotions.isEmpty) {
       return TryAgain(callBack: ref.read(provider).getPromotions);
     }
 
@@ -80,7 +80,7 @@ class _PromotionsViewState extends ConsumerState<PromotionsView> {
       child: Container(
         margin: EdgeInsets.only(top: 10.smh),
         padding: EdgeInsets.symmetric(horizontal: 10.smw, vertical: 10.smh),
-        height: promotionModel.imageUrl == null ? 70.smh : 180.smh,
+        height: promotionModel.imageUrl == null ? 80.smh : 185.smh,
         width: 320.smw,
         decoration: BoxDecoration(
             borderRadius: CustomThemeData.fullRounded,
@@ -89,13 +89,23 @@ class _PromotionsViewState extends ConsumerState<PromotionsView> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             promotionModel.imageUrl != null
-                ? Image.network(promotionModel.imageUrl!,
-                    height: 100.smh, width: 300.smw)
+                ? Container(
+                    margin: EdgeInsets.only(bottom: 5.smh),
+                    child: ClipRRect(
+                      borderRadius: CustomThemeData.fullRounded,
+                      child: Image.network(promotionModel.imageUrl!,
+                          height: 100.smh, width: 300.smw, fit: BoxFit.fill),
+                    ),
+                  )
                 : Container(),
             Row(
               children: [
-                CustomText(promotionModel.promotionDescription,
-                    style: CustomFonts.bodyText3(CustomColors.cardText)),
+                ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: 230.smw),
+                  child: CustomText(promotionModel.promotionDescription,
+                      style: CustomFonts.bodyText3(CustomColors.cardText),
+                      maxLines: 3),
+                ),
                 const Spacer(),
                 _choiceButton(promotionModel.promotionID)
               ],

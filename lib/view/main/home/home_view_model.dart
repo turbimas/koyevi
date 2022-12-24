@@ -99,13 +99,12 @@ class HomeViewModel extends ChangeNotifier {
           await NetworkService.get("users/AdressSetDefault/$id");
       if (response.success) {
         defaultAddress = addresses.firstWhere((element) => element.id == id);
+        getHomeData();
       } else {
         PopupHelper.showErrorToast(response.errorMessage!);
       }
     } catch (e) {
       PopupHelper.showErrorDialogWithCode(e);
-    } finally {
-      notifyListeners();
     }
   }
 }

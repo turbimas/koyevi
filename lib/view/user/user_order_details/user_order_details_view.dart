@@ -32,6 +32,8 @@ class UserOrderDetailsView extends ConsumerStatefulWidget {
 
 class _UserOrderDetailsViewState extends ConsumerState<UserOrderDetailsView> {
   late final ChangeNotifierProvider<UserOrderDetailsViewModel> provider;
+  int leftRatio = 8;
+  int rightRatio = 15;
 
   @override
   void initState() {
@@ -106,7 +108,7 @@ class _UserOrderDetailsViewState extends ConsumerState<UserOrderDetailsView> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          CustomText("Teslimat Kodu",
+          CustomTextLocale(LocaleKeys.UserOrderDetails_delivery_code,
               style: CustomFonts.bodyText3(CustomColors.cardTextPale)),
           CustomText(widget.orderTitle.deliveryCode,
               style: CustomFonts.bodyText1(CustomColors.cardText)),
@@ -147,13 +149,13 @@ class _UserOrderDetailsViewState extends ConsumerState<UserOrderDetailsView> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
-                      flex: 2,
+                      flex: leftRatio,
                       child: CustomTextLocale(LocaleKeys.UserOrderDetails_no,
                           style: CustomFonts.bodyText4(
                               CustomColors.card2TextPale)),
                     ),
                     Expanded(
-                      flex: 5,
+                      flex: rightRatio,
                       child: Padding(
                         padding: EdgeInsets.only(left: 30.smw),
                         child: CustomText(widget.orderTitle.ficheNo,
@@ -167,13 +169,13 @@ class _UserOrderDetailsViewState extends ConsumerState<UserOrderDetailsView> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
-                      flex: 2,
+                      flex: leftRatio,
                       child: CustomTextLocale(LocaleKeys.UserOrderDetails_date,
                           style: CustomFonts.bodyText4(
                               CustomColors.card2TextPale)),
                     ),
                     Expanded(
-                      flex: 5,
+                      flex: rightRatio,
                       child: Padding(
                         padding: EdgeInsets.only(left: 30.smw),
                         child: CustomText(
@@ -188,14 +190,14 @@ class _UserOrderDetailsViewState extends ConsumerState<UserOrderDetailsView> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
-                      flex: 2,
+                      flex: leftRatio,
                       child: CustomTextLocale(
                           LocaleKeys.UserOrderDetails_status,
                           style: CustomFonts.bodyText4(
                               CustomColors.card2TextPale)),
                     ),
                     Expanded(
-                      flex: 5,
+                      flex: rightRatio,
                       child: Padding(
                         padding: EdgeInsets.only(left: 30.smw),
                         child: CustomText(widget.orderTitle.statusName,
@@ -246,14 +248,14 @@ class _UserOrderDetailsViewState extends ConsumerState<UserOrderDetailsView> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
-                      flex: 2,
+                      flex: leftRatio,
                       child: CustomTextLocale(
                           LocaleKeys.UserOrderDetails_estimated_delivery_time,
                           style: CustomFonts.bodyText4(
                               CustomColors.card2TextPale)),
                     ),
                     Expanded(
-                      flex: 5,
+                      flex: rightRatio,
                       child: Padding(
                         padding: EdgeInsets.only(left: 30.smw),
                         child: CustomText(
@@ -263,7 +265,9 @@ class _UserOrderDetailsViewState extends ConsumerState<UserOrderDetailsView> {
                                 ? widget.orderTitle.deliveryAddressDetail!
                                     .deliveryDate!
                                     .toFormattedString()
-                                : "-",
+                                : LocaleKeys.UserOrderDetails_ship_time_info
+                                    .tr(),
+                            maxLines: 3,
                             style:
                                 CustomFonts.bodyText4(CustomColors.card2Text)),
                       ),
@@ -274,14 +278,14 @@ class _UserOrderDetailsViewState extends ConsumerState<UserOrderDetailsView> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
-                      flex: 2,
+                      flex: leftRatio,
                       child: CustomTextLocale(
                           LocaleKeys.UserOrderDetails_delivery_time,
                           style: CustomFonts.bodyText4(
                               CustomColors.card2TextPale)),
                     ),
                     Expanded(
-                      flex: 5,
+                      flex: rightRatio,
                       child: Padding(
                         padding: EdgeInsets.only(left: 30.smw),
                         child: CustomText(
@@ -299,13 +303,13 @@ class _UserOrderDetailsViewState extends ConsumerState<UserOrderDetailsView> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
-                      flex: 2,
+                      flex: leftRatio,
                       child: CustomTextLocale(LocaleKeys.UserOrderDetails_name,
                           style: CustomFonts.bodyText4(
                               CustomColors.card2TextPale)),
                     ),
                     Expanded(
-                      flex: 5,
+                      flex: rightRatio,
                       child: Padding(
                         padding: EdgeInsets.only(left: 30.smw),
                         child: CustomText(
@@ -322,13 +326,13 @@ class _UserOrderDetailsViewState extends ConsumerState<UserOrderDetailsView> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
-                      flex: 2,
+                      flex: leftRatio,
                       child: CustomTextLocale(LocaleKeys.UserOrderDetails_phone,
                           style: CustomFonts.bodyText4(
                               CustomColors.card2TextPale)),
                     ),
                     Expanded(
-                      flex: 5,
+                      flex: rightRatio,
                       child: Padding(
                         padding: EdgeInsets.only(left: 30.smw),
                         child: CustomText(
@@ -344,14 +348,14 @@ class _UserOrderDetailsViewState extends ConsumerState<UserOrderDetailsView> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
-                      flex: 2,
+                      flex: leftRatio,
                       child: CustomTextLocale(
                           LocaleKeys.UserOrderDetails_address,
                           style: CustomFonts.bodyText4(
                               CustomColors.card2TextPale)),
                     ),
                     Expanded(
-                      flex: 5,
+                      flex: rightRatio,
                       child: Padding(
                         padding: EdgeInsets.only(left: 30.smw),
                         child: CustomText(
@@ -405,13 +409,13 @@ class _UserOrderDetailsViewState extends ConsumerState<UserOrderDetailsView> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
-                      flex: 2,
+                      flex: leftRatio,
                       child: CustomTextLocale(LocaleKeys.UserOrderDetails_name,
                           style: CustomFonts.bodyText4(
                               CustomColors.card2TextPale)),
                     ),
                     Expanded(
-                      flex: 5,
+                      flex: rightRatio,
                       child: Padding(
                         padding: EdgeInsets.only(left: 30.smw),
                         child: CustomText(
@@ -428,13 +432,13 @@ class _UserOrderDetailsViewState extends ConsumerState<UserOrderDetailsView> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
-                      flex: 2,
+                      flex: leftRatio,
                       child: CustomTextLocale(LocaleKeys.UserOrderDetails_phone,
                           style: CustomFonts.bodyText4(
                               CustomColors.card2TextPale)),
                     ),
                     Expanded(
-                      flex: 5,
+                      flex: rightRatio,
                       child: Padding(
                         padding: EdgeInsets.only(left: 30.smw),
                         child: CustomText(
@@ -450,14 +454,14 @@ class _UserOrderDetailsViewState extends ConsumerState<UserOrderDetailsView> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
-                      flex: 2,
+                      flex: leftRatio,
                       child: CustomTextLocale(
                           LocaleKeys.UserOrderDetails_tax_office,
                           style: CustomFonts.bodyText4(
                               CustomColors.card2TextPale)),
                     ),
                     Expanded(
-                      flex: 5,
+                      flex: rightRatio,
                       child: Padding(
                         padding: EdgeInsets.only(left: 30.smw),
                         child: CustomText(
@@ -473,7 +477,7 @@ class _UserOrderDetailsViewState extends ConsumerState<UserOrderDetailsView> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
-                      flex: 2,
+                      flex: leftRatio,
                       child: CustomTextLocale(
                           widget.orderTitle.invoiceAddressDetail?.isPerson ??
                                   false
@@ -483,7 +487,7 @@ class _UserOrderDetailsViewState extends ConsumerState<UserOrderDetailsView> {
                               CustomColors.card2TextPale)),
                     ),
                     Expanded(
-                      flex: 5,
+                      flex: rightRatio,
                       child: Padding(
                         padding: EdgeInsets.only(left: 30.smw),
                         child: CustomText(
@@ -505,14 +509,14 @@ class _UserOrderDetailsViewState extends ConsumerState<UserOrderDetailsView> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
-                      flex: 2,
+                      flex: leftRatio,
                       child: CustomTextLocale(
                           LocaleKeys.UserOrderDetails_address,
                           style: CustomFonts.bodyText4(
                               CustomColors.card2TextPale)),
                     ),
                     Expanded(
-                      flex: 5,
+                      flex: rightRatio,
                       child: Padding(
                         padding: EdgeInsets.only(left: 30.smw),
                         child: CustomText(

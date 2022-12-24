@@ -53,7 +53,8 @@
         "check_network_connection":"İnternet bağlantınızı kontrol edin",
         "order_details":"Detaylar",
         "continue":"Devam et",
-        "address_change_warn":"Adres değiştirirseniz sepetiniz temizlenecek!"
+        "address_change_warn":"Adres değiştirirseniz sepetiniz temizlenecek!",
+        "ship_time_info":"Ortalama 3-5\niş günü"
     },
     "Favorites": {
         "appbar_title": "Favorileri ürünlerim",
@@ -107,7 +108,11 @@
         "address_not_found":"Teslimat adresi bulunamadı",
         "add_address_now":"Hemen adres ekle!",
         "cannot_lower_than":"Sepetinizdeki ürünlerin toplamı {} TL'den az olamaz",
-        "continue_shopping":"Hemen alışverişe devam et"
+        "continue_shopping":"Hemen alışverişe devam et",
+        "clear_basket_header":"Sepeti temizle",
+        "clear_basket_body":"Sepeti temizlemek istediğinize emin misiniz?",
+        "yes":"Evet",
+        "no":"Hayır"
 
     },
     "BasketDetail": {
@@ -140,7 +145,8 @@
         "delivery_tax_separate":"Fatura ve teslimat adresi aynı",
         "cannot_lower_than":"Sepetinizdeki ürünlerin toplamı {} TL'den az olamaz",
         "continue_shopping":"Hemen alışverişe devam et",
-        "term_and_conditions":"Sipariş oluşturabilmek için mesafeli satış sözleşmesini ve ön bilgilendirme formunu okuyup kabul etmelisiniz"
+        "term_and_conditions":"Sipariş oluşturabilmek için mesafeli satış sözleşmesini ve ön bilgilendirme formunu okuyup kabul etmelisiniz",
+        "ship_time_info":"Kargo ile gelen ürünlerimiz ortalama 3-5 iş günü içerisinde teslim edilir"
     },
     
     "DeliveryTime":{
@@ -326,7 +332,9 @@
         "tax_no": "Vergi no",
         "identity_no":"TCKN no",
         "return":"İade et",
-        "cancel":"İptal et"
+        "cancel":"İptal et",
+        "ship_time_info":"Kargo ile gelen ürünlerimiz ortalama 3-5 iş günü içerisinde teslim edilir",
+        "delivery_code":"Teslimat kodu"
     },
     "UserPromotions":{
         "appbar_title":"Promosyon ve Kampanyalar",
