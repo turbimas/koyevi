@@ -11,8 +11,8 @@ class AppConstants {
   static const EN_LOCALE = Locale("en");
   static const PATH_LOCALE = "assets/lang";
 
-  static const IOS_Version = "1.0.0";
-  static const ANDROID_Version = "1.0.0";
+  static const IOS_Version = "1.0.1";
+  static const ANDROID_Version = "1.0.1";
 
   // static const APP_API = "https://goldenerp.com/api/ecom/";
   static const APP_API = "https://koyevidogal.com/api/ecom/";
