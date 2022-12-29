@@ -235,7 +235,13 @@
         "saved_cards":"Kartlarım",
         "ratings":"Değerlendirmelerim",
         "questions":"Sorularım",
-        "logout":"Çıkış yap"
+        "logout":"Çıkış yap",
+        "delete_account":"Hesabı sil"
+    },
+    "UserDelete": {
+        "appbar_title":"Hesabı sil",
+        "password_prompt":"Hesabı silebilmek için şifrenizi girin",
+        "password_hint":"Şifre"
     },
     "UserQuestions":{
         "appbar_title":"Sorularım",

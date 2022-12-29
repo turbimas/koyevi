@@ -242,7 +242,12 @@ abstract class LocaleKeys {
   static const Profile_ratings = 'Profile.ratings';
   static const Profile_questions = 'Profile.questions';
   static const Profile_logout = 'Profile.logout';
+  static const Profile_delete_account = 'Profile.delete_account';
   static const Profile = 'Profile';
+  static const UserDelete_appbar_title = 'UserDelete.appbar_title';
+  static const UserDelete_password_prompt = 'UserDelete.password_prompt';
+  static const UserDelete_password_hint = 'UserDelete.password_hint';
+  static const UserDelete = 'UserDelete';
   static const UserQuestions_appbar_title = 'UserQuestions.appbar_title';
   static const UserQuestions_answered = 'UserQuestions.answered';
   static const UserQuestions_unanswered = 'UserQuestions.unanswered';

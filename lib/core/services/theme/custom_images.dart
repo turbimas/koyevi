@@ -21,6 +21,7 @@ abstract class CustomImages {
   static late final Widget ar_flag;
   static late final Widget image_not_found;
   static late final Widget loading;
+  static late final Widget delete_account;
 
   static void loadImages() {
     basket_empty = _image("basket_empty");
@@ -37,6 +38,7 @@ abstract class CustomImages {
     ar_flag = _image("ar_flag");
     image_not_found = _image("image_not_found");
     loading = _image("loading");
+    delete_account = _image("delete_account");
   }
 
   static Widget _image(String name) {

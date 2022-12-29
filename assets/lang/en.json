@@ -232,8 +232,14 @@
     "saved_cards": "Cards",
     "ratings": "Ratings",
     "questions": "Questions",
-    "logout": "Logout"
+    "logout": "Logout",
+    "delete_account":"Delete account"
   },
+  "UserDelete": {
+    "appbar_title":"Delete account",
+    "password_prompt":"To delete account you have to enter your password",
+    "password_hint":"Password"
+},
   "UserQuestions": {
     "appbar_title": "My questions",
     "answered": "Answered",

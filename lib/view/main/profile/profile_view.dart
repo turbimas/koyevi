@@ -15,6 +15,7 @@ import 'package:koyevi/product/widgets/custom_text.dart';
 import 'package:koyevi/product/widgets/login_page_widget.dart';
 import 'package:koyevi/view/auth/login/login_view.dart';
 import 'package:koyevi/view/user/user_addresses/user_addresses_view.dart';
+import 'package:koyevi/view/user/user_delete/user_delete_view.dart';
 import 'package:koyevi/view/user/user_orders/user_orders_view.dart';
 import 'package:koyevi/view/user/user_profile/user_profile_view.dart';
 import 'package:koyevi/view/user/user_promotions/user_promotions_view.dart';
@@ -178,7 +179,11 @@ class _ProfileViewState extends ConsumerState<ProfileView> {
             title: LocaleKeys.Profile_logout,
             page: const LoginView(),
             icon: CustomIcons.profile_logout,
-            noBack: true)
+            noBack: true),
+        _option(
+            title: LocaleKeys.Profile_delete_account,
+            page: const UserDeleteView(),
+            icon: CustomIcons.garbage_icon_dark)
       ],
     );
   }

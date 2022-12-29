@@ -77,6 +77,12 @@
         "width": 500,
         "height": 500
     },
+    "delete_account":{
+        "type":"pixel",
+        "path":"assets/images/png/delete_account.png",
+        "width":250,
+        "height":250
+    },
     "loading" : {
         "type":"gif",
         "path": "assets/images/gif/loading.gif",

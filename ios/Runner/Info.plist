@@ -49,5 +49,7 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>This identifier will be used to storage your personal data and use it on auth service.</string>
 </dict>
 </plist>
