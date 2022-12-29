@@ -116,12 +116,14 @@ class _SplashViewState extends ConsumerState<SplashView>
 
   _showUpdateDialog(String updateLink) {
     PopupHelper.showErrorDialog(
-        dismissible: true,
+        dismissible: false,
         errorMessage: LocaleKeys.Splash_update_available.tr(),
         actions: {
           LocaleKeys.Splash_update.tr(): () {
             launchUrlString(updateLink);
           }
-        });
+        }).then((value) {
+      _showUpdateDialog(updateLink);
+    });
   }
 }
