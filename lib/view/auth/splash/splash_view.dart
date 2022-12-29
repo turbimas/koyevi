@@ -56,6 +56,7 @@ class _SplashViewState extends ConsumerState<SplashView>
   }
 
   Future<void> _loadApp() async {
+    bool updateAvailable = false;
     // asset
     _loadAssets();
 
@@ -73,6 +74,7 @@ class _SplashViewState extends ConsumerState<SplashView>
         updateLink = versionData.data["IOS_Version"];
       }
       if (updateLink != null) {
+        updateAvailable = true;
         _showUpdateDialog(updateLink);
       }
     } else {
@@ -85,6 +87,9 @@ class _SplashViewState extends ConsumerState<SplashView>
           });
       // güncelleme bilgisi gelmediyse, kurulumu tekrar çağırır ve fonksiyonun kalanını sonlandırır
       _loadApp();
+      return;
+    }
+    if (updateAvailable) {
       return;
     }
     if (AuthService.isLoggedIn) {
