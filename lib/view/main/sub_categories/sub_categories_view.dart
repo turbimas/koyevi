@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -181,6 +182,7 @@ class _SubCategoriesViewState extends ConsumerState<SubCategoriesView> {
               mainAxisSpacing: 10.smh),
           itemBuilder: (context, index) {
             CategoryModel category = categories[index];
+
             bool isSelected = ref
                 .watch(provider)
                 .selectedCategories
@@ -198,12 +200,23 @@ class _SubCategoriesViewState extends ConsumerState<SubCategoriesView> {
                     borderRadius: CustomThemeData.fullRounded,
                   ),
                   child: Center(
-                      child: CustomText(category.groupName,
-                          maxLines: 3,
-                          textAlign: TextAlign.center,
-                          style: CustomFonts.bodyText4(isSelected
-                              ? CustomColors.primaryText
-                              : CustomColors.cardInnerText)))),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: category.groupName
+                              .split(" ")
+                              .map<Widget>((e) => AutoSizeText(
+                                    e,
+                                    maxLines: 1,
+                                  ))
+                              .toList())
+                      // AutoSizeText(category.groupName,
+                      //     maxLines: 1,
+                      //     textAlign: TextAlign.center,
+                      //     style: CustomFonts.bodyText4(isSelected
+                      //         ? CustomColors.primaryText
+                      //         : CustomColors.cardInnerText))
+                      )),
             );
           }),
     );
