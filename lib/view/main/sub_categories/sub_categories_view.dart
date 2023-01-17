@@ -108,7 +108,7 @@ class _SubCategoriesViewState extends ConsumerState<SubCategoriesView> {
           shrinkWrap: true,
           itemCount: ref.watch(provider).masterCategories!.length,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 5,
+              crossAxisCount: 4,
               childAspectRatio: 0.5,
               crossAxisSpacing: 10.smw,
               mainAxisSpacing: 10.smh),
@@ -141,16 +141,24 @@ class _SubCategoriesViewState extends ConsumerState<SubCategoriesView> {
                           borderRadius: CustomThemeData.fullRounded),
                       child: ClipRRect(
                         borderRadius: CustomThemeData.fullRounded,
-                        child: category.image(height: 60.smh, width: 60.smh),
+                        child: category.image(height: 100.smh, width: 100.smh),
                       ),
                     ),
                     SizedBox(height: 10.smh),
                     Expanded(
-                      child: CustomText(
-                        category.groupName,
-                        style: CustomFonts.bodyText4(CustomColors.cardText),
-                        textAlign: TextAlign.center,
-                        maxLines: 2,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: category.groupName
+                            .split(" ")
+                            .map((e) => AutoSizeText(
+                                  e,
+                                  style: CustomFonts.bodyText4(
+                                      CustomColors.cardText),
+                                  textAlign: TextAlign.center,
+                                  maxLines: 1,
+                                ))
+                            .toList(),
                       ),
                     ),
                   ],
@@ -176,7 +184,7 @@ class _SubCategoriesViewState extends ConsumerState<SubCategoriesView> {
                   ref.watch(provider).subCategories.indexOf(categories)]
               .length,
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 5,
+              crossAxisCount: 4,
               childAspectRatio: 0.75,
               crossAxisSpacing: 10.smw,
               mainAxisSpacing: 10.smh),
@@ -208,6 +216,10 @@ class _SubCategoriesViewState extends ConsumerState<SubCategoriesView> {
                               .map<Widget>((e) => AutoSizeText(
                                     e,
                                     maxLines: 1,
+                                    textAlign: TextAlign.center,
+                                    style: CustomFonts.bodyText4(isSelected
+                                        ? CustomColors.primaryText
+                                        : CustomColors.cardInnerText),
                                   ))
                               .toList())
                       // AutoSizeText(category.groupName,
