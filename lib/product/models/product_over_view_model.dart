@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:koyevi/core/services/theme/custom_images.dart';
 import 'package:koyevi/product/models/product_detail_model.dart';
@@ -18,6 +20,7 @@ class ProductOverViewModel {
   double basketFactor;
   final bool inSale;
   final bool canShipped;
+  bool get buyable => inSale && canShipped;
 
   int _favoriteId;
   bool get isFavorite => _favoriteId > 0;

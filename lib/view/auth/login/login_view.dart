@@ -204,38 +204,10 @@ class _LoginViewState extends ConsumerState<LoginView> {
   Widget _form() {
     return Form(
       key: _formKey,
-      child: Column(
-        children: [
-          Container(
-            height: 50.smh,
-            width: 300.smw,
-            decoration: BoxDecoration(
-                color: CustomColors.primary,
-                borderRadius: CustomThemeData.fullInfiniteRounded),
-            child: Padding(
-                padding: EdgeInsets.only(
-                    left: 20.smw, top: 8.smh, bottom: 7.smh, right: 20.smw),
-                child: TextFormField(
-                  validator: CustomValidators.instance.phoneValidator,
-                  keyboardType: TextInputType.phone,
-                  controller: _loginInfo,
-                  textInputAction: TextInputAction.next,
-                  textAlignVertical: TextAlignVertical.center,
-                  style: CustomFonts.defaultField(CustomColors.primaryText),
-                  decoration: InputDecoration(
-                      isCollapsed: true,
-                      border: InputBorder.none,
-                      hintStyle:
-                          CustomFonts.defaultField(CustomColors.primaryText),
-                      hintText: LocaleKeys.Login_phone_hint.tr(),
-                      prefixIcon: Padding(
-                        padding: EdgeInsets.only(right: 10.smw),
-                        child: CustomIcons.field_profile_icon,
-                      )),
-                )),
-          ),
-          SizedBox(height: 10.smh),
-          Container(
+      child: AutofillGroup(
+        child: Column(
+          children: [
+            Container(
               height: 50.smh,
               width: 300.smw,
               decoration: BoxDecoration(
@@ -245,31 +217,63 @@ class _LoginViewState extends ConsumerState<LoginView> {
                   padding: EdgeInsets.only(
                       left: 20.smw, top: 8.smh, bottom: 7.smh, right: 20.smw),
                   child: TextFormField(
-                    validator: CustomValidators.instance.passwordValidator,
-                    focusNode: _passwordFocusNode,
-                    obscureText: ref.watch(provider).isHiding,
-                    controller: _password,
-                    onFieldSubmitted: (value) {
-                      () => ref.read(provider).login(
-                          loginInfo: _loginInfo.text,
-                          password: CryptHelper.toMD5(_password.text));
-                    },
-                    textInputAction: TextInputAction.done,
+                    autofillHints: const [AutofillHints.telephoneNumber],
+                    validator: CustomValidators.instance.phoneValidator,
+                    keyboardType: TextInputType.phone,
+                    controller: _loginInfo,
+                    textInputAction: TextInputAction.next,
                     textAlignVertical: TextAlignVertical.center,
                     style: CustomFonts.defaultField(CustomColors.primaryText),
                     decoration: InputDecoration(
-                      isCollapsed: true,
-                      border: InputBorder.none,
-                      hintStyle:
-                          CustomFonts.defaultField(CustomColors.primaryText),
-                      hintText: LocaleKeys.Login_password_hint.tr(),
-                      prefixIcon: Padding(
-                        padding: EdgeInsets.only(right: 10.smw),
-                        child: CustomIcons.field_password_icon,
+                        isCollapsed: true,
+                        border: InputBorder.none,
+                        hintStyle:
+                            CustomFonts.defaultField(CustomColors.primaryText),
+                        hintText: LocaleKeys.Login_phone_hint.tr(),
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.only(right: 10.smw),
+                          child: CustomIcons.field_profile_icon,
+                        )),
+                  )),
+            ),
+            SizedBox(height: 10.smh),
+            Container(
+                height: 50.smh,
+                width: 300.smw,
+                decoration: BoxDecoration(
+                    color: CustomColors.primary,
+                    borderRadius: CustomThemeData.fullInfiniteRounded),
+                child: Padding(
+                    padding: EdgeInsets.only(
+                        left: 20.smw, top: 8.smh, bottom: 7.smh, right: 20.smw),
+                    child: TextFormField(
+                      autofillHints: const [AutofillHints.password],
+                      validator: CustomValidators.instance.passwordValidator,
+                      focusNode: _passwordFocusNode,
+                      obscureText: ref.watch(provider).isHiding,
+                      controller: _password,
+                      onFieldSubmitted: (value) {
+                        () => ref.read(provider).login(
+                            loginInfo: _loginInfo.text,
+                            password: CryptHelper.toMD5(_password.text));
+                      },
+                      textInputAction: TextInputAction.done,
+                      textAlignVertical: TextAlignVertical.center,
+                      style: CustomFonts.defaultField(CustomColors.primaryText),
+                      decoration: InputDecoration(
+                        isCollapsed: true,
+                        border: InputBorder.none,
+                        hintStyle:
+                            CustomFonts.defaultField(CustomColors.primaryText),
+                        hintText: LocaleKeys.Login_password_hint.tr(),
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.only(right: 10.smw),
+                          child: CustomIcons.field_password_icon,
+                        ),
                       ),
-                    ),
-                  ))),
-        ],
+                    ))),
+          ],
+        ),
       ),
     );
   }

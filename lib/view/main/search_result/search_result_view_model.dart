@@ -21,8 +21,6 @@ class SearchResultViewModel extends ChangeNotifier {
   Set<String> filterTradeMark = {};
   Set<String> filterUnitCode = {};
 
-  late final num minPrice;
-  late final num maxPrice;
   late final Set<String> tradeMarks;
   late final Set<String> unitCodes;
 
@@ -49,6 +47,7 @@ class SearchResultViewModel extends ChangeNotifier {
     } else if (orderPrice == false) {
       filteredProducts.sort((a, b) => b.unitPrice.compareTo(a.unitPrice));
     }
+    orderFilteredFromBuyable();
     NavigationService.back();
     notifyListeners();
   }
@@ -70,6 +69,7 @@ class SearchResultViewModel extends ChangeNotifier {
       }
     }
     filteredProducts.addAll(copy);
+    orderFilteredFromBuyable();
     copy.clear();
     notifyListeners();
   }
@@ -78,10 +78,7 @@ class SearchResultViewModel extends ChangeNotifier {
       {required this.products, this.categoryModel, this.searchText}) {
     if (products.isNotEmpty) {
       filteredProducts.addAll(products);
-      List<num> prices = products.map<num>((e) => e.unitPrice).toList();
-      prices.sort((a, b) => a.compareTo(b));
-      minPrice = prices.first;
-      maxPrice = prices.last;
+      orderFilteredFromBuyable();
 
       tradeMarks = {};
       for (var element in products) {
@@ -106,6 +103,22 @@ class SearchResultViewModel extends ChangeNotifier {
         filteredProducts.add(element);
       }
     }
+    orderFilteredFromBuyable();
     notifyListeners();
+  }
+
+  void orderFilteredFromBuyable() {
+    List<ProductOverViewModel> copy = filteredProducts.toList();
+    filteredProducts.clear();
+    for (var element in copy) {
+      if (element.buyable) {
+        filteredProducts.add(element);
+      }
+    }
+    for (var element in copy) {
+      if (!element.buyable) {
+        filteredProducts.add(element);
+      }
+    }
   }
 }

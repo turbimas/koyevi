@@ -127,33 +127,38 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
     return Form(
         autovalidateMode: AutovalidateMode.disabled,
         key: ref.watch(provider).formKey,
-        child: Column(
-          children: [
-            _customTextField(
-                // focusNode: _nameSurnameFocusNode,
-                // nextFocusNode: _phoneFocusNode,
-                key: "Name",
-                validator: CustomValidators.instance.fullNameValidator,
-                hint: LocaleKeys.Register_full_name_hint.tr(),
-                icon: CustomIcons.field_profile_icon),
-            _customTextField(
-                // focusNode: _phoneFocusNode,
-                // nextFocusNode: _passwordFocusNode,
-                key: "MobilePhone",
-                validator: CustomValidators.instance.phoneValidator,
-                initialValue: "90",
-                keyboardType: TextInputType.phone,
-                hint: LocaleKeys.Register_phone_hint.tr(),
-                icon: CustomIcons.field_phone_icon),
-            _customTextField(
-                // focusNode: _passwordFocusNode,
-                key: "Password",
-                validator: CustomValidators.instance.passwordValidator,
-                keyboardType: TextInputType.visiblePassword,
-                hint: LocaleKeys.Register_password_hint.tr(),
-                icon: CustomIcons.field_password_icon,
-                suffixIcon: CustomIcons.field_hide_password)
-          ],
+        child: AutofillGroup(
+          child: Column(
+            children: [
+              _customTextField(
+                  // focusNode: _nameSurnameFocusNode,
+                  // nextFocusNode: _phoneFocusNode,
+                  key: "Name",
+                  autofillHints: [AutofillHints.name],
+                  validator: CustomValidators.instance.fullNameValidator,
+                  hint: LocaleKeys.Register_full_name_hint.tr(),
+                  icon: CustomIcons.field_profile_icon),
+              _customTextField(
+                  // focusNode: _phoneFocusNode,
+                  // nextFocusNode: _passwordFocusNode,
+                  key: "MobilePhone",
+                  autofillHints: [AutofillHints.telephoneNumber],
+                  validator: CustomValidators.instance.phoneValidator,
+                  initialValue: "90",
+                  keyboardType: TextInputType.phone,
+                  hint: LocaleKeys.Register_phone_hint.tr(),
+                  icon: CustomIcons.field_phone_icon),
+              _customTextField(
+                  // focusNode: _passwordFocusNode,
+                  key: "Password",
+                  autofillHints: [AutofillHints.password],
+                  validator: CustomValidators.instance.passwordValidator,
+                  keyboardType: TextInputType.visiblePassword,
+                  hint: LocaleKeys.Register_password_hint.tr(),
+                  icon: CustomIcons.field_password_icon,
+                  suffixIcon: CustomIcons.field_hide_password)
+            ],
+          ),
         ));
   }
 
@@ -168,6 +173,7 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
       {required String key,
       String initialValue = "",
       required String hint,
+      required List<String> autofillHints,
       required Widget icon,
       String? Function(String?)? validator,
       // required FocusNode focusNode,
@@ -187,6 +193,7 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
           icon,
           Expanded(
               child: TextFormField(
+            autofillHints: autofillHints,
             initialValue: initialValue,
             scrollPadding: EdgeInsets.only(
                 bottom: MediaQuery.of(context).viewInsets.bottom),
