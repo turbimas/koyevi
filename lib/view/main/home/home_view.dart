@@ -134,17 +134,17 @@ class _HomeViewState extends ConsumerState<HomeView> {
 
   Widget _orders() {
     return ListView.builder(
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      itemCount: ref.watch(provider).orders.length,
-      itemBuilder: (context, index) {
-        UserOrdersModel order = ref.watch(provider).orders[index];
-        return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15.smw),
-          child: _orderCard(order),
-        );
-      },
-    );
+        padding: EdgeInsets.zero,
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: ref.watch(provider).orders.length,
+        itemBuilder: (context, index) {
+          UserOrdersModel order = ref.watch(provider).orders[index];
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15.smw),
+            child: _orderCard(order),
+          );
+        });
   }
 
   Widget _searchBar() {
