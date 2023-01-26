@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:koyevi/core/services/theme/custom_images.dart';
 import 'package:koyevi/product/models/product_detail_model.dart';

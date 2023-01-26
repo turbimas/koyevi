@@ -81,7 +81,7 @@ class _UserDeleteViewState extends ConsumerState<UserDeleteView> {
                       errorStyle:
                           CustomFonts.bodyText5(CustomColors.primaryText),
                       border: InputBorder.none,
-                      hintText: LocaleKeys.UserDelete_password_hint,
+                      hintText: LocaleKeys.UserDelete_password_hint.tr(),
                       hintStyle:
                           CustomFonts.defaultField(CustomColors.primaryText)),
                 ),

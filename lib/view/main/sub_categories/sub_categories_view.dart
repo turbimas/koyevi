@@ -12,7 +12,6 @@ import 'package:koyevi/product/constants/app_constants.dart';
 import 'package:koyevi/product/models/category_model.dart';
 import 'package:koyevi/product/widgets/custom_appbar.dart';
 import 'package:koyevi/product/widgets/custom_safearea.dart';
-import 'package:koyevi/product/widgets/custom_text.dart';
 import 'package:koyevi/product/widgets/ok_cancel_prompt.dart';
 import 'package:koyevi/view/main/sub_categories/sub_categories_view_model.dart';
 
