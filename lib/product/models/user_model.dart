@@ -3,6 +3,10 @@ class UserModel {
   late String nameSurname;
   late String phone;
   late String password;
+  late String cardID;
+
+  bool get hasCard => cardID.isNotEmpty;
+
   bool? gender;
   DateTime? birthDate;
   String? imageUrl;
@@ -16,6 +20,7 @@ class UserModel {
     birthDate =
         json["BornDate"] != null ? DateTime.parse(json["BornDate"]) : null;
     imageUrl = json["imageUrl"];
+    cardID = json["CardID"];
   }
 
   Map<String, dynamic> toJson() => {
@@ -25,7 +30,8 @@ class UserModel {
         "Password": password,
         "Cinsiyet": gender,
         "BornDate": birthDate,
-        "imageUrl": imageUrl
+        "imageUrl": imageUrl,
+        "CardID": cardID,
       };
 
   @override

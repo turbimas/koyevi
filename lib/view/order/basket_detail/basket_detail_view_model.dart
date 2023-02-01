@@ -12,14 +12,33 @@ import 'package:koyevi/core/utils/helpers/popup_helper.dart';
 import 'package:koyevi/product/cubits/basket_model_cubit/basket_model_cubit.dart';
 import 'package:koyevi/product/cubits/home_index_cubit/home_index_cubit.dart';
 import 'package:koyevi/product/models/order/basket_model.dart';
+import 'package:koyevi/product/models/order/basket_payment_type_model.dart';
 import 'package:koyevi/product/models/order/promotion_model.dart';
 import 'package:koyevi/product/models/user/address_model.dart';
 import 'package:koyevi/product/models/user/delivery_time_model.dart';
+import 'package:koyevi/view/order/online_payment/online_payment_view.dart';
 import 'package:koyevi/view/order/order_success/order_success_view.dart';
 
 class BasketDetailViewModel extends ChangeNotifier {
+  late DateTime pageCreatedTime;
+
+  List<BasketPaymentTypeModel> paymentTypes = [];
+  late BasketPaymentTypeModel _selectedPaymentType;
+
   BasketModel basketModel;
   List<PromotionModel> promotions = [];
+  List<AddressModel> addresses;
+  List<DeliveryTimeModel>? times;
+
+  bool _isLoading = false;
+
+  late DeliveryTimeModel _selectedDeliveryTimeModel;
+
+  String? selectedHour;
+  String? selectedDate;
+
+  late AddressModel _selectedDeliveryAddress;
+  late AddressModel _selectedTaxAddress;
 
   TextEditingController noteController = TextEditingController();
   BasketDetailViewModel({required this.basketModel, required this.addresses}) {
@@ -30,17 +49,25 @@ class BasketDetailViewModel extends ChangeNotifier {
 
   // bool get _hemenTeslimAlSelected => _selectedDeliveryTime.dates.length == 1;
 
-  late DateTime pageCreatedTime;
+  // getter setters
 
-  late DeliveryTimeModel _selectedDeliveryTimeModel;
+  BasketPaymentTypeModel get selectedPaymentType => _selectedPaymentType;
+  set selectedPaymentType(BasketPaymentTypeModel value) {
+    _selectedPaymentType = value;
+    notifyListeners();
+  }
+
+  bool get isLoading => _isLoading;
+  set isLoading(bool value) {
+    _isLoading = value;
+    notifyListeners();
+  }
+
   DeliveryTimeModel get selectedDeliveryTimeModel => _selectedDeliveryTimeModel;
   set selectedDeliveryTimeModel(DeliveryTimeModel value) {
     _selectedDeliveryTimeModel = value;
     notifyListeners();
   }
-
-  String? selectedHour;
-  String? selectedDate;
 
   bool _deliveryTaxSame = true;
   bool get deliveryTaxSame => _deliveryTaxSame;
@@ -77,10 +104,6 @@ class BasketDetailViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<AddressModel> addresses;
-  List<DeliveryTimeModel>? times;
-
-  late AddressModel _selectedDeliveryAddress;
   AddressModel get selectedDeliveryAddress => _selectedDeliveryAddress;
   set selectedDeliveryAddress(AddressModel value) {
     _selectedDeliveryAddress = value;
@@ -90,11 +113,74 @@ class BasketDetailViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  late AddressModel _selectedTaxAddress;
   AddressModel get selectedTaxAddress => _selectedTaxAddress;
   set selectedTaxAddress(AddressModel value) {
     _selectedTaxAddress = value;
     notifyListeners();
+  }
+
+  Future<void> getData() async {
+    try {
+      isLoading = true;
+      ResponseModelMap<dynamic> basketModelData =
+          await NetworkService.get("orders/getbasket/${AuthService.id}");
+      ResponseModelList timeResponse =
+          await NetworkService.get("orders/deliverySummary/${AuthService.id}");
+      ResponseModelList addressResponse =
+          await NetworkService.get("users/adresses/${AuthService.id}");
+      ResponseModelList promotionResponse = await NetworkService.get(
+          "orders/getapplicablepromotions/${AuthService.id}");
+      ResponseModelList paymentTypeResponse =
+          await NetworkService.get("orders/PaymentSummary/${AuthService.id}");
+
+      if (timeResponse.success &&
+          addressResponse.success &&
+          promotionResponse.success &&
+          basketModelData.success &&
+          paymentTypeResponse.success) {
+        basketModel.reFillFromJson(basketModelData.data!);
+        times = timeResponse.data!
+            .map<DeliveryTimeModel>((e) => DeliveryTimeModel.fromJson(e))
+            .toList();
+        addresses = addressResponse.data!
+            .map<AddressModel>((e) => AddressModel.fromJson(e))
+            .toList();
+        selectedDeliveryTimeModel = times!.first;
+
+        for (DeliveryTimeModel time in times!) {
+          if (time.dates.length > 1) {
+            selectedDate = time.dates.first.dayDateTime;
+            selectedHour = time.dates.first.hours.first;
+          }
+        }
+        promotions = promotionResponse.data!
+            .map<PromotionModel>((e) => PromotionModel.fromJson(e))
+            .toList();
+
+        paymentTypes = paymentTypeResponse.data!
+            .map<BasketPaymentTypeModel>(
+                (e) => BasketPaymentTypeModel.fromJson(e))
+            .toList();
+
+        _selectedPaymentType = paymentTypes.first;
+      } else {
+        if (timeResponse.success == false) {
+          PopupHelper.showErrorDialog(errorMessage: timeResponse.errorMessage!);
+        }
+        if (addressResponse.success == false) {
+          PopupHelper.showErrorDialog(
+              errorMessage: addressResponse.errorMessage!);
+        }
+        if (promotionResponse.success == false) {
+          PopupHelper.showErrorDialog(
+              errorMessage: promotionResponse.errorMessage!);
+        }
+      }
+    } catch (e) {
+      PopupHelper.showErrorDialogWithCode(e);
+    } finally {
+      isLoading = false;
+    }
   }
 
   Future<void> createOrder() async {
@@ -138,7 +224,7 @@ class BasketDetailViewModel extends ChangeNotifier {
         orderNotes.add("Temasız Teslimat");
       }
 
-      ResponseModel response =
+      ResponseModel createOrderResponse =
           await NetworkService.post("orders/createorder", body: {
         "CariID": AuthService.id,
         "DeliveryAdressID": selectedDeliveryAddress.id,
@@ -150,78 +236,38 @@ class BasketDetailViewModel extends ChangeNotifier {
           "Hour": selectedHour,
           "Date": selectedDate,
           "overTime": DateTime.now().difference(pageCreatedTime).inSeconds
-        }
+        },
+        "PaymentType": selectedPaymentType.code,
       });
-      if (response.success) {
-        NavigationService.navigateToPage(
-            OrderSuccessView(orderId: response.data));
-        NavigationService.context.read<BasketModelCubit>().refresh();
+      if (createOrderResponse.success) {
+        if (selectedPaymentType.code == 3) {
+          // online credit card
+          ResponseModel<String> paymentUrlResponse =
+              await NetworkService.get("orders/getpaymenturl");
+          String paymentUrl =
+              paymentUrlResponse.data! + createOrderResponse.data!;
+          NavigationService.navigateToPage<bool>(
+                  OnlinePaymentView(initialUrl: paymentUrl))
+              .then((value) {
+            if (value == true) {
+              NavigationService.navigateToPageAndRemoveUntil(
+                  OrderSuccessView(orderId: createOrderResponse.data));
+              NavigationService.context.read<BasketModelCubit>().refresh();
+            } else {
+              PopupHelper.showErrorToast("Ödeme tamamlanamadı");
+            }
+          });
+        } else {
+          NavigationService.navigateToPageAndRemoveUntil(
+              OrderSuccessView(orderId: createOrderResponse.data));
+          NavigationService.context.read<BasketModelCubit>().refresh();
+        }
       } else {
-        await PopupHelper.showErrorDialog(errorMessage: response.errorMessage!);
+        await PopupHelper.showErrorDialog(
+            errorMessage: createOrderResponse.errorMessage!);
       }
     } catch (e) {
       PopupHelper.showErrorDialogWithCode(e);
-    }
-  }
-
-  bool _isLoading = false;
-  bool get isLoading => _isLoading;
-  set isLoading(bool value) {
-    _isLoading = value;
-    notifyListeners();
-  }
-
-  Future<void> getData() async {
-    try {
-      isLoading = true;
-      ResponseModelMap<dynamic> basketModelData =
-          await NetworkService.get("orders/getbasket/${AuthService.id}");
-      ResponseModelList timeResponse =
-          await NetworkService.get("orders/deliverySummary/${AuthService.id}");
-      ResponseModelList addressResponse =
-          await NetworkService.get("users/adresses/${AuthService.id}");
-      ResponseModelList promotionResponse = await NetworkService.get(
-          "orders/getapplicablepromotions/${AuthService.id}");
-
-      if (timeResponse.success &&
-          addressResponse.success &&
-          promotionResponse.success &&
-          basketModelData.success) {
-        basketModel.reFillFromJson(basketModelData.data!);
-        times = timeResponse.data!
-            .map<DeliveryTimeModel>((e) => DeliveryTimeModel.fromJson(e))
-            .toList();
-        addresses = addressResponse.data!
-            .map<AddressModel>((e) => AddressModel.fromJson(e))
-            .toList();
-        selectedDeliveryTimeModel = times!.first;
-
-        for (DeliveryTimeModel time in times!) {
-          if (time.dates.length > 1) {
-            selectedDate = time.dates.first.dayDateTime;
-            selectedHour = time.dates.first.hours.first;
-          }
-        }
-        promotions = promotionResponse.data!
-            .map<PromotionModel>((e) => PromotionModel.fromJson(e))
-            .toList();
-      } else {
-        if (timeResponse.success == false) {
-          PopupHelper.showErrorDialog(errorMessage: timeResponse.errorMessage!);
-        }
-        if (addressResponse.success == false) {
-          PopupHelper.showErrorDialog(
-              errorMessage: addressResponse.errorMessage!);
-        }
-        if (promotionResponse.success == false) {
-          PopupHelper.showErrorDialog(
-              errorMessage: promotionResponse.errorMessage!);
-        }
-      }
-    } catch (e) {
-      PopupHelper.showErrorDialogWithCode(e);
-    } finally {
-      isLoading = false;
     }
   }
 }

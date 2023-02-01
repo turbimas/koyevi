@@ -8,6 +8,7 @@ import 'package:koyevi/core/services/theme/custom_fonts.dart';
 import 'package:koyevi/core/services/theme/custom_icons.dart';
 import 'package:koyevi/core/services/theme/custom_images.dart';
 import 'package:koyevi/core/services/theme/custom_theme_data.dart';
+import 'package:koyevi/core/utils/extensions/datetime_extensions.dart';
 import 'package:koyevi/core/utils/extensions/ui_extensions.dart';
 import 'package:koyevi/product/constants/app_constants.dart';
 import 'package:koyevi/product/models/product_detail_model.dart';
@@ -141,7 +142,7 @@ class _ProductQuestionsViewState extends ConsumerState<ProductQuestionsView> {
               CustomText(AuthService.currentUser!.nameSurname,
                   style: CustomFonts.bodyText4(CustomColors.backgroundText))
             ]),
-            CustomText(question.date.toString(),
+            CustomText(question.date.toFormattedString(),
                 style: CustomFonts.bodyText4(CustomColors.backgroundText))
           ]),
           Container(
@@ -164,7 +165,7 @@ class _ProductQuestionsViewState extends ConsumerState<ProductQuestionsView> {
               CustomTextLocale(LocaleKeys.ProductQuestions_seller_response,
                   style: CustomFonts.bodyText4(CustomColors.backgroundText))
             ]),
-            CustomText(question.date.toString(),
+            CustomText(question.date.toFormattedString(),
                 style: CustomFonts.bodyText4(CustomColors.backgroundText))
           ]),
           Container(

@@ -100,6 +100,12 @@ class ValidationViewModel extends ChangeNotifier {
           await AuthService.login(UserModel.fromJson(userInfo.data));
           await NavigationService.navigateToPageAndRemoveUntil(
               const MainView());
+          if (AuthService.currentUser!.hasCard) {
+            Future.delayed(const Duration(seconds: 1), () {
+              PopupHelper.showSuccessDialog(
+                  "Kart no: ${AuthService.currentUser!.cardID}\nTelefon numaranızın üzerine kayıtlı bir Köyevi kartı bulunduğu için, bu hesabınızı kartınız ile ilişkilendirdik. Keyifli alışverişler dileriz !");
+            });
+          }
         } else {
           PopupHelper.showErrorDialog(errorMessage: userInfo.errorMessage!);
         }

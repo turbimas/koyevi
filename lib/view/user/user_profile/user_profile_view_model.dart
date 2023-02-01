@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:koyevi/core/services/auth/authservice.dart';
 import 'package:koyevi/core/utils/helpers/popup_helper.dart';
@@ -23,6 +25,7 @@ class UserProfileViewModel extends ChangeNotifier {
   }
 
   Future<void> save() async {
+    log("saveee");
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
 

@@ -390,10 +390,27 @@ class _BasketDetailState extends ConsumerState<BasketDetailView> {
               ],
             ),
             SizedBox(height: 10.smh),
-            _radioContainer(
-                title: LocaleKeys.BasketDetail_pay_on_door.tr(),
-                isSelected: true,
-                description: LocaleKeys.BasketDetail_pay_on_door_or_card.tr()),
+
+            ...ref
+                .watch(provider)
+                .paymentTypes
+                .map<Widget>((e) => InkWell(
+                      onTap: () {
+                        ref.read(provider).selectedPaymentType = e;
+                      },
+                      child: _radioContainer(
+                          title: e.typeName,
+                          description: e.typeDescription,
+                          isSelected:
+                              ref.watch(provider).selectedPaymentType.code ==
+                                  e.code),
+                    ))
+                .toList(),
+
+            // _radioContainer(
+            //     title: LocaleKeys.BasketDetail_pay_on_door.tr(),
+            //     isSelected: true,
+            //     description: LocaleKeys.BasketDetail_pay_on_door_or_card.tr()),
           ],
         ),
       ),

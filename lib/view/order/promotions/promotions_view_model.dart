@@ -29,6 +29,7 @@ class PromotionsViewModel extends ChangeNotifier {
       if (responseModel.success) {
         promotions.clear();
         promotions.add(PromotionModel(
+            barcodes: [],
             promotionID: 0,
             promotionDescription: LocaleKeys.Promotions_not_use.tr()));
         promotions.addAll((responseModel.data as List)

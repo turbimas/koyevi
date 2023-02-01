@@ -599,6 +599,38 @@ class _UserOrderDetailsViewState extends ConsumerState<UserOrderDetailsView> {
                     ]),
               ],
             ),
+          ),
+          SizedBox(
+            width: 300.smw,
+            child: Divider(color: CustomColors.primary, thickness: 0.5),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 10.smw, vertical: 10.smh),
+            constraints: BoxConstraints(minHeight: 70.smh),
+            width: 340.smw,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CustomText("Ödeme tipi",
+                          style: CustomFonts.bodyText4(
+                              CustomColors.card2TextPale)),
+                      CustomText(widget.orderTitle.paymentTypeName ?? "-",
+                          style: CustomFonts.bodyText4(CustomColors.card2Text)),
+                    ]),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CustomText("Ödeme durumu",
+                          style: CustomFonts.bodyText4(
+                              CustomColors.card2TextPale)),
+                      CustomText(widget.orderTitle.paymentStatusName ?? "-",
+                          style: CustomFonts.bodyText4(CustomColors.card2Text)),
+                    ]),
+              ],
+            ),
           )
         ],
       ),

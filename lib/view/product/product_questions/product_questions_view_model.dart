@@ -65,26 +65,32 @@ class ProductQuestionsViewModel extends ChangeNotifier {
   }
 
   Future<void> addQuestion() async {
-    PopupHelper.actionPopups.showQuestionPopup(
-        productOverViewModel: productOverViewModel,
-        onSubmit: (String value) async {
-          if (value.trim().isNotEmpty) {
-            ResponseModel response =
-                await NetworkService.post("products/questionadd", body: {
-              "Barcode": product.barcode,
-              "CariID": AuthService.id,
-              "ContentValue": value
-            });
-            if (response.success) {
-              PopupHelper.showSuccessDialog(
-                  LocaleKeys.ProductQuestions_question_sent.tr());
-            } else {
-              PopupHelper.showErrorDialog(errorMessage: response.errorMessage!);
-            }
-          } else {
-            PopupHelper.showErrorDialog(
-                errorMessage: LocaleKeys.ProductQuestions_enter_question.tr());
-          }
-        });
+    PopupHelper.actionPopups
+        .showQuestionPopup(
+            productOverViewModel: productOverViewModel,
+            onSubmit: (String value) async {
+              if (value.trim().isNotEmpty) {
+                ResponseModel response =
+                    await NetworkService.post("products/questionadd", body: {
+                  "Barcode": product.barcode,
+                  "CariID": AuthService.id,
+                  "ContentValue": value
+                });
+                if (response.success) {
+                  PopupHelper.showSuccessDialog(
+                      LocaleKeys.ProductQuestions_question_sent.tr());
+                } else {
+                  PopupHelper.showErrorDialog(
+                      errorMessage: response.errorMessage!);
+                }
+              } else {
+                PopupHelper.showErrorDialog(
+                    errorMessage:
+                        LocaleKeys.ProductQuestions_enter_question.tr());
+              }
+            })
+        .then((value) {
+      getQuestions();
+    });
   }
 }

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:koyevi/core/services/navigation/navigation_service.dart';
+import 'package:koyevi/core/services/network/network_service.dart';
+import 'package:koyevi/core/services/network/response_model.dart';
+import 'package:koyevi/core/utils/helpers/popup_helper.dart';
 import 'package:koyevi/view/auth/validation/validation_view.dart';
 
 class RegisterViewModel extends ChangeNotifier {
@@ -22,11 +25,18 @@ class RegisterViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void register() {
+  Future<void> register() async {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
-      NavigationService.navigateToPage(
-          ValidationView(registerData: registerData, isUpdate: false));
+      ResponseModel userResponse = await NetworkService.get(
+          "users/user_info/" + registerData["MobilePhone"]);
+      if (userResponse.success) {
+        PopupHelper.showErrorDialog(
+            errorMessage: "Girilen bilgilere ait bir kullanıcı zaten mevcut.");
+      } else {
+        NavigationService.navigateToPage(
+            ValidationView(registerData: registerData, isUpdate: false));
+      }
     }
   }
 }

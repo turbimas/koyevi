@@ -13,7 +13,7 @@ import 'package:koyevi/product/constants/app_constants.dart';
 abstract class NetworkService {
   static late Dio _dio;
   static const debug = true;
-  static const debugDetailed = false;
+  static const debugDetailed = true;
   static bool notInited = true;
 
   static Future<void> init() async {

@@ -53,7 +53,7 @@ dependencies:
   geolocator: ^9.0.1
   fluttertoast: ^8.0.9
   webview_flutter: ^3.0.4
-  url_launcher: ^6.1.6
+  url_launcher: ^6.1.8
   flutter_easyloading: ^3.0.5
   flutter_gif: ^0.0.4
   flutter_pin_code_fields: ^1.2.0

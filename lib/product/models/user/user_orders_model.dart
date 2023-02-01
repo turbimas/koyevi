@@ -11,6 +11,8 @@ class UserOrdersModel {
   late final DateTime orderDate; // siparişin verildiği tarih
   DateTime? realDeliveryDate; // teslim edildiyse
   late final String statusName;
+  String? paymentStatusName;
+  String? paymentTypeName;
   late final int lineCount;
   late final num total;
   late final String? firstImageUrl;
@@ -39,6 +41,8 @@ class UserOrdersModel {
         ? DateTime.parse(json['RealDeliveryDate'])
         : null;
     statusName = json['StatusName'];
+    paymentStatusName = json['PaymentStatusName'];
+    paymentTypeName = json['PaymentTypeName'];
     lineCount = json['LineCount'];
     total = json['Total'];
     firstImageUrl = json['FirstImageUrl'];
