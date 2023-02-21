@@ -161,7 +161,9 @@ class _UserQuestionsViewState extends ConsumerState<UserQuestionsView> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ProductOverViewHorizontalView(product: questionModel.product),
+          ProductOverViewHorizontalView(
+              product: questionModel.product,
+              navigationCallback: ref.read(provider).getQuestions),
           SizedBox(height: 15.smh),
           Row(children: [
             AuthService.userImage(height: 25.smh, width: 25.smh),
@@ -203,7 +205,9 @@ class _UserQuestionsViewState extends ConsumerState<UserQuestionsView> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ProductOverViewHorizontalView(product: questionModel.product),
+          ProductOverViewHorizontalView(
+              product: questionModel.product,
+              navigationCallback: ref.read(provider).getQuestions),
           SizedBox(height: 15.smh),
           Row(children: [
             AuthService.userImage(height: 25.smh, width: 25.smh),

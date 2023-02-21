@@ -140,6 +140,7 @@ class _ForgotPasswordViewState extends ConsumerState<ForgotPasswordView> {
           ref.read(provider).phone = value;
           ref.read(provider).sendVerificationCode();
         },
+        keyboardType: TextInputType.phone,
         controller: phoneController,
         enabled: !ref.watch(provider).didCodeSent,
         validator: CustomValidators.instance.phoneValidator,

@@ -254,7 +254,8 @@ class BasketDetailViewModel extends ChangeNotifier {
                   OrderSuccessView(orderId: createOrderResponse.data));
               NavigationService.context.read<BasketModelCubit>().refresh();
             } else {
-              PopupHelper.showErrorToast("Ödeme tamamlanamadı");
+              PopupHelper.showErrorToast(
+                  LocaleKeys.BasketDetail_payment_unsuccessful.tr());
             }
           });
         } else {

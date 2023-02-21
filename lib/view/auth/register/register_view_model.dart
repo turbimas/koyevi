@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:koyevi/core/services/localization/locale_keys.g.dart';
 import 'package:koyevi/core/services/navigation/navigation_service.dart';
 import 'package:koyevi/core/services/network/network_service.dart';
 import 'package:koyevi/core/services/network/response_model.dart';
@@ -29,10 +31,10 @@ class RegisterViewModel extends ChangeNotifier {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
       ResponseModel userResponse = await NetworkService.get(
-          "users/user_info/" + registerData["MobilePhone"]);
+          "users/user_info/${registerData["MobilePhone"]}");
       if (userResponse.success) {
         PopupHelper.showErrorDialog(
-            errorMessage: "Girilen bilgilere ait bir kullanıcı zaten mevcut.");
+            errorMessage: LocaleKeys.Register_already_exist.tr());
       } else {
         NavigationService.navigateToPage(
             ValidationView(registerData: registerData, isUpdate: false));

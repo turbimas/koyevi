@@ -29,6 +29,7 @@ abstract class LocaleKeys {
   static const Register_register_button = 'Register.register_button';
   static const Register_term_condition_1 = 'Register.term_condition_1';
   static const Register_term_condition_2 = 'Register.term_condition_2';
+  static const Register_already_exist = 'Register.already_exist';
   static const Register = 'Register';
   static const Splash_password_changed = 'Splash.password_changed';
   static const Splash_user_info_error = 'Splash.user_info_error';
@@ -41,6 +42,7 @@ abstract class LocaleKeys {
   static const Validation_go_back = 'Validation.go_back';
   static const Validation_resend = 'Validation.resend';
   static const Validation_resent = 'Validation.resent';
+  static const Validation_card_found = 'Validation.card_found';
   static const Validation = 'Validation';
   static const Home_search_hint = 'Home.search_hint';
   static const Home_all = 'Home.all';
@@ -112,9 +114,6 @@ abstract class LocaleKeys {
   static const BasketDetail_choice_tax_address =
       'BasketDetail.choice_tax_address';
   static const BasketDetail_choice_time = 'BasketDetail.choice_time';
-  static const BasketDetail_pay_on_door = 'BasketDetail.pay_on_door';
-  static const BasketDetail_pay_on_door_or_card =
-      'BasketDetail.pay_on_door_or_card';
   static const BasketDetail_term_contactless_part_1 =
       'BasketDetail.term_contactless_part_1';
   static const BasketDetail_term_contactless_part_2 =
@@ -153,18 +152,19 @@ abstract class LocaleKeys {
   static const BasketDetail_term_and_conditions =
       'BasketDetail.term_and_conditions';
   static const BasketDetail_ship_time_info = 'BasketDetail.ship_time_info';
+  static const BasketDetail_payment_unsuccessful =
+      'BasketDetail.payment_unsuccessful';
   static const BasketDetail = 'BasketDetail';
-  static const DeliveryTime_appbar_title = 'DeliveryTime.appbar_title';
-  static const DeliveryTime = 'DeliveryTime';
+  static const DeliveryTimes_appbar_title = 'DeliveryTimes.appbar_title';
+  static const DeliveryTimes = 'DeliveryTimes';
+  static const OnlinePayment_appbar_title = 'OnlinePayment.appbar_title';
+  static const OnlinePayment = 'OnlinePayment';
   static const OrderCancelReturn_cancel = 'OrderCancelReturn.cancel';
   static const OrderCancelReturn_return = 'OrderCancelReturn.return';
   static const OrderCancelReturn_count = 'OrderCancelReturn.count';
   static const OrderCancelReturn_state = 'OrderCancelReturn.state';
   static const OrderCancelReturn = 'OrderCancelReturn';
   static const OrderSuccess_success_message = 'OrderSuccess.success_message';
-  static const OrderSuccess_order_number = 'OrderSuccess.order_number';
-  static const OrderSuccess_success_clipboard =
-      'OrderSuccess.success_clipboard';
   static const OrderSuccess_continue = 'OrderSuccess.continue';
   static const OrderSuccess = 'OrderSuccess';
   static const ReturnSuccess_success_message = 'ReturnSuccess.success_message';
@@ -319,6 +319,15 @@ abstract class LocaleKeys {
   static const UserProfile_new_password = 'UserProfile.new_password';
   static const UserProfile_new_password_again =
       'UserProfile.new_password_again';
+  static const UserProfile_wrong_old_password =
+      'UserProfile.wrong_old_password';
+  static const UserProfile_gender_none = 'UserProfile.gender_none';
+  static const UserProfile_gender_male = 'UserProfile.gender_male';
+  static const UserProfile_gender_female = 'UserProfile.gender_female';
+  static const UserProfile_gender = 'UserProfile.gender';
+  static const UserProfile_successfully_updated =
+      'UserProfile.successfully_updated';
+  static const UserProfile_error_updating = 'UserProfile.error_updating';
   static const UserProfile = 'UserProfile';
   static const UserOrderDetails_appbar_title = 'UserOrderDetails.appbar_title';
   static const UserOrderDetails_order_info = 'UserOrderDetails.order_info';
@@ -354,10 +363,31 @@ abstract class LocaleKeys {
       'UserOrderDetails.ship_time_info';
   static const UserOrderDetails_delivery_code =
       'UserOrderDetails.delivery_code';
+  static const UserOrderDetails_payment_type = 'UserOrderDetails.payment_type';
+  static const UserOrderDetails_payment_status =
+      'UserOrderDetails.payment_status';
   static const UserOrderDetails = 'UserOrderDetails';
   static const UserPromotions_appbar_title = 'UserPromotions.appbar_title';
   static const UserPromotions_no_promotion = 'UserPromotions.no_promotion';
   static const UserPromotions = 'UserPromotions';
+  static const UserAddressDetail_appbar_title =
+      'UserAddressDetail.appbar_title';
+  static const UserAddressDetail_full_name_hint =
+      'UserAddressDetail.full_name_hint';
+  static const UserAddressDetail_address_title_hint =
+      'UserAddressDetail.address_title_hint';
+  static const UserAddressDetail_city_hint = 'UserAddressDetail.city_hint';
+  static const UserAddressDetail_district_hint =
+      'UserAddressDetail.district_hint';
+  static const UserAddressDetail_address_hint =
+      'UserAddressDetail.address_hint';
+  static const UserAddressDetail_add_invoice_address =
+      'UserAddressDetail.add_invoice_address';
+  static const UserAddressDetail_personal = 'UserAddressDetail.personal';
+  static const UserAddressDetail_company = 'UserAddressDetail.company';
+  static const UserAddressDetail_tax_no = 'UserAddressDetail.tax_no';
+  static const UserAddressDetail_tax_office = 'UserAddressDetail.tax_office';
+  static const UserAddressDetail = 'UserAddressDetail';
   static const UserCardDetail_appbar_title = 'UserCardDetail.appbar_title';
   static const UserCardDetail_card_title_hint =
       'UserCardDetail.card_title_hint';
@@ -391,9 +421,6 @@ abstract class LocaleKeys {
   static const Validators_tax_no = 'Validators.tax_no';
   static const Validators_tax_office = 'Validators.tax_office';
   static const Validators = 'Validators';
-  static const OkCancelPrompt_ok = 'OkCancelPrompt.ok';
-  static const OkCancelPrompt_cancel = 'OkCancelPrompt.cancel';
-  static const OkCancelPrompt = 'OkCancelPrompt';
   static const PopupHelper_rating_text_optional =
       'PopupHelper.rating_text_optional';
   static const PopupHelper_send_rating = 'PopupHelper.send_rating';
@@ -403,6 +430,9 @@ abstract class LocaleKeys {
   static const PopupHelper = 'PopupHelper';
   static const TryAgainWidget_try_again = 'TryAgainWidget.try_again';
   static const TryAgainWidget = 'TryAgainWidget';
+  static const OkCancelPrompt_ok = 'OkCancelPrompt.ok';
+  static const OkCancelPrompt_cancel = 'OkCancelPrompt.cancel';
+  static const OkCancelPrompt = 'OkCancelPrompt';
   static const MesafeliSatisSozlesmesi_appbar_title =
       'MesafeliSatisSozlesmesi.appbar_title';
   static const MesafeliSatisSozlesmesi = 'MesafeliSatisSozlesmesi';

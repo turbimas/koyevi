@@ -36,7 +36,7 @@ class _DeliveryTimesViewState extends ConsumerState<DeliveryTimesView> {
     return CustomSafeArea(
         child: Scaffold(
       appBar:
-          CustomAppBar.activeBack(LocaleKeys.DeliveryTime_appbar_title.tr()),
+          CustomAppBar.activeBack(LocaleKeys.DeliveryTimes_appbar_title.tr()),
       body: Padding(
         padding: EdgeInsets.only(left: 0, top: 10.smh),
         child: Column(

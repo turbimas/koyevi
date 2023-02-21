@@ -221,6 +221,13 @@ class _LoginViewState extends ConsumerState<LoginView> {
                     validator: CustomValidators.instance.phoneValidator,
                     keyboardType: TextInputType.phone,
                     controller: _loginInfo,
+                    onChanged: (value) {
+                      if (value.length <= 2 && value != "90") {
+                        _loginInfo.text = "90";
+                        _loginInfo.selection = TextSelection.fromPosition(
+                            TextPosition(offset: _loginInfo.text.length));
+                      }
+                    },
                     textInputAction: TextInputAction.next,
                     textAlignVertical: TextAlignVertical.center,
                     style: CustomFonts.defaultField(CustomColors.primaryText),

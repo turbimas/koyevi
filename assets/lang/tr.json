@@ -25,7 +25,8 @@
         "accept_agreement": "Üyelik sözleşmesini okudum ve kabul ediyorum",
         "register_button": "Kayıt ol",
         "term_condition_1":"Üyelik sözleşmesini",
-        "term_condition_2":"Okudum, kabul ediyorum"
+        "term_condition_2":"Okudum, kabul ediyorum",
+        "already_exist":"Bu numaraya ait bir hesap zaten mevcut"
     },
     "Splash": {
         "password_changed":"Şifreniz değiştirilmiş",
@@ -39,7 +40,8 @@
         "wrong_code": "Onay kodu yanlış!",
         "go_back": "Geri dön",
         "resend": "Onay kodunu tekrar gönder",
-        "resent": "Onay kodu tekrar gönderildi"
+        "resent": "Onay kodu tekrar gönderildi",
+        "card_found":"Kart no: {}\nTelefon numaranızın üzerine kayıtlı bir Köyevi kartı bulunduğu için, bu hesabınızı kartınız ile ilişkilendirdik. Keyifli alışverişler dileriz !"
         
     },
     "Home": {
@@ -121,8 +123,6 @@
         "choice_address":"Teslimat adresi seçin",
         "choice_tax_address":"Fatura adresi seçin",
         "choice_time":"Teslimat tarihi seçin",
-        "pay_on_door":"Kapıda ödeme",
-        "pay_on_door_or_card": "Kapıda nakit veya pos cihazı ile ödeme",
         "term_contactless_part_1":"Mesafeli satış sözleşmesini",
         "term_contactless_part_2":"ve",
         "term_contactless_part_3":"Ön Bilgilendirme",
@@ -146,12 +146,16 @@
         "cannot_lower_than":"Sepetinizdeki ürünlerin toplamı {} TL'den az olamaz",
         "continue_shopping":"Hemen alışverişe devam et",
         "term_and_conditions":"Sipariş oluşturabilmek için mesafeli satış sözleşmesini ve ön bilgilendirme formunu okuyup kabul etmelisiniz",
-        "ship_time_info":"Kargo ile gelen ürünlerimiz ortalama 3-5 iş günü içerisinde teslim edilir"
+        "ship_time_info":"Kargo ile gelen ürünlerimiz ortalama 3-5 iş günü içerisinde teslim edilir",
+        "payment_unsuccessful":"Ödeme tamamlanamadı"
     },
     
-    "DeliveryTime":{
+    "DeliveryTimes":{
         "appbar_title":"Teslimat süresi seç"
     },
+    "OnlinePayment": {
+        "appbar_title": "Online Payment"
+      },
     "OrderCancelReturn": {
         "cancel":"İptal et",
         "return":"İade et",
@@ -160,8 +164,6 @@
     },
     "OrderSuccess": {
         "success_message":"Siparişinizi aldık",
-        "order_number":"Sipariş numaranız: {}",
-        "success_clipboard":"Sipariş numaranız panoya kopyalandı",
         "continue":"Devam et"
     },
     "ReturnSuccess": {
@@ -310,7 +312,14 @@
         "change_password": "Şifremi değiştir",
         "old_password": "Eski şifre",
         "new_password": "Yeni şifre",
-        "new_password_again": "Yeni şifre tekrar"
+        "new_password_again": "Yeni şifre tekrar",
+        "wrong_old_password":"Eski şifreniz doğru değil!",
+        "gender_none":"Belirtmek istemiyorum",
+        "gender_male":"Erkek",
+        "gender_female":"Kız",
+        "gender":"Cinsiyet",
+        "successfully_updated":"Profiliniz başarıyla güncellendi",
+        "error_updating":"Profiliniz güncellenirken bir hata oluştu"
     },
 
     "UserOrderDetails":{
@@ -340,7 +349,9 @@
         "return":"İade et",
         "cancel":"İptal et",
         "ship_time_info":"Kargo ile gelen ürünlerimiz ortalama 3-5 iş günü içerisinde teslim edilir",
-        "delivery_code":"Teslimat kodu"
+        "delivery_code":"Teslimat kodu",
+        "payment_type":"Ödeme tipi",
+        "payment_status":"Ödeme durumu"
     },
     "UserPromotions":{
         "appbar_title":"Promosyon ve Kampanyalar",

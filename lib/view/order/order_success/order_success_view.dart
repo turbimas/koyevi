@@ -1,6 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:koyevi/core/services/localization/locale_keys.g.dart';
 import 'package:koyevi/core/services/navigation/navigation_service.dart';
@@ -8,7 +6,6 @@ import 'package:koyevi/core/services/theme/custom_colors.dart';
 import 'package:koyevi/core/services/theme/custom_fonts.dart';
 import 'package:koyevi/core/services/theme/custom_images.dart';
 import 'package:koyevi/core/utils/extensions/ui_extensions.dart';
-import 'package:koyevi/core/utils/helpers/popup_helper.dart';
 import 'package:koyevi/product/widgets/custom_safearea.dart';
 import 'package:koyevi/product/widgets/custom_text.dart';
 import 'package:koyevi/product/widgets/main/main_view.dart';
@@ -52,31 +49,31 @@ class _OrderSuccessViewState extends ConsumerState<OrderSuccessView> {
                 CustomTextLocale(LocaleKeys.OrderSuccess_success_message,
                     style: CustomFonts.bodyText1(CustomColors.backgroundText)),
               ]),
-              SizedBox(height: 40.smh),
-              SizedBox(
-                width: 320.smw,
-                height: 50.smh,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CustomTextLocale(LocaleKeys.OrderSuccess_order_number,
-                        args: [widget.orderId.toString()],
-                        maxLines: 2,
-                        style:
-                            CustomFonts.bodyText2(CustomColors.backgroundText)),
-                    SizedBox(width: 20.smw),
-                    InkWell(
-                        onTap: () {
-                          Clipboard.setData(
-                              ClipboardData(text: widget.orderId));
-                          PopupHelper.showSuccessDialog(
-                              LocaleKeys.OrderSuccess_success_clipboard.tr());
-                        },
-                        child: const Icon(Icons.copy))
-                  ],
-                ),
-              ),
-              SizedBox(height: 10.smh),
+              // SizedBox(height: 40.smh),
+              // SizedBox(
+              //   width: 320.smw,
+              //   height: 50.smh,
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     children: [
+              //       CustomTextLocale(LocaleKeys.OrderSuccess_order_number,
+              //           args: [widget.orderId.toString()],
+              //           maxLines: 2,
+              //           style:
+              //               CustomFonts.bodyText2(CustomColors.backgroundText)),
+              //       SizedBox(width: 20.smw),
+              //       InkWell(
+              //           onTap: () {
+              //             Clipboard.setData(
+              //                 ClipboardData(text: widget.orderId));
+              //             PopupHelper.showSuccessDialog(
+              //                 LocaleKeys.OrderSuccess_success_clipboard.tr());
+              //           },
+              //           child: const Icon(Icons.copy))
+              //     ],
+              //   ),
+              // ),
+              SizedBox(height: 170.smh),
               InkWell(
                 onTap: () {
                   NavigationService.navigateToPageAndRemoveUntil(

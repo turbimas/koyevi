@@ -390,7 +390,6 @@ class _BasketDetailState extends ConsumerState<BasketDetailView> {
               ],
             ),
             SizedBox(height: 10.smh),
-
             ...ref
                 .watch(provider)
                 .paymentTypes
@@ -406,11 +405,6 @@ class _BasketDetailState extends ConsumerState<BasketDetailView> {
                                   e.code),
                     ))
                 .toList(),
-
-            // _radioContainer(
-            //     title: LocaleKeys.BasketDetail_pay_on_door.tr(),
-            //     isSelected: true,
-            //     description: LocaleKeys.BasketDetail_pay_on_door_or_card.tr()),
           ],
         ),
       ),

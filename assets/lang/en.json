@@ -25,7 +25,8 @@
     "accept_agreement": "Üyelik sözleşmesini okudum ve kabul ediyorum",
     "register_button": "Register",
     "term_condition_1": "Üyelik sözleşmesini",
-    "term_condition_2": "Okudum, kabul ediyorum"
+    "term_condition_2": "Okudum, kabul ediyorum",
+    "already_exist": "This phone number already exist in system"
   },
   "Splash": {
     "password_changed": "Your password has been changed!",
@@ -39,7 +40,8 @@
     "wrong_code": "Confirmation code wrong!",
     "go_back": "Back",
     "resend": "Resend confirmation code",
-    "resent": "Confirmation code resent"
+    "resent": "Confirmation code resent",
+    "card_found":"Card number:{}\nBecause you have a Köyevi card registered on this number, we connected your card to your account."
   },
   "Home": {
     "search_hint": "Search product, category",
@@ -119,8 +121,6 @@
     "choice_address": "Choose the Delivery Address",
     "choice_tax_address": "Choose the invoice address",
     "choice_time": "Choose Delivery Date",
-    "pay_on_door": "Pay at the door",
-    "pay_on_door_or_card": "Payment with cash or POS device at the door",
     "term_contactless_part_1": "Mesafeli satış sözleşmesini",
     "term_contactless_part_2": "ve",
     "term_contactless_part_3": "Ön Bilgilendirme",
@@ -144,11 +144,15 @@
     "cannot_lower_than": "Your basket fee can not be lower than {}",
     "continue_shopping": "Continue to shopping",
     "term_and_conditions": "In order to create an order, you should read and accept the distance sales contract and the preliminary information form.",
-    "ship_time_info": "Your products coming by cargo are delivered within 3-5 working days"
+    "ship_time_info": "Your products coming by cargo are delivered within 3-5 working days",
+    "payment_unsuccessful": "Payment unsuccessful"
   },
 
-  "DeliveryTime": {
+  "DeliveryTimes": {
     "appbar_title": "Select Delivery Time"
+  },
+  "OnlinePayment": {
+    "appbar_title": "Online Payment"
   },
   "OrderCancelReturn": {
     "cancel": "Cancel",
@@ -158,8 +162,6 @@
   },
   "OrderSuccess": {
     "success_message": "We received your order",
-    "order_number": "Order number: {}",
-    "success_clipboard": "Order number copied to clipboard",
     "continue": "Continue"
   },
   "ReturnSuccess": {
@@ -307,11 +309,18 @@
     "change_password": "Change password",
     "old_password": "Old password",
     "new_password": "New password",
-    "new_password_again": "New password again"
+    "new_password_again": "New password again",
+    "wrong_old_password": "Wrong old password!",
+    "gender_none":"I do not want to indicate",
+    "gender_male":"Male",
+    "gender_female":"Female",
+    "gender":"Gender",
+    "successfully_updated":"Your profile has successfully updated",
+        "error_updating":"An error occurred when your profile was updated "
   },
   "UserOrderDetails": {
     "appbar_title": "Order details",
-    "order_info": "Order informations",
+    "order_info": "Order information",
     "no": "No",
     "date": "Date",
     "status": "State: {}",
@@ -336,7 +345,9 @@
     "return": "Return order",
     "cancel": "Cancel order",
     "ship_time_info": "Your products coming by cargo are delivered within 3-5 working days",
-    "delivery_code":"Delivery code"
+    "delivery_code":"Delivery code",
+    "payment_type":"Payment type",
+    "payment_status":"Payment status"
   },
   "UserPromotions": {
     "appbar_title": "Promotions",

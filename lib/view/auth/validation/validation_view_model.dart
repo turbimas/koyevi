@@ -102,8 +102,8 @@ class ValidationViewModel extends ChangeNotifier {
               const MainView());
           if (AuthService.currentUser!.hasCard) {
             Future.delayed(const Duration(seconds: 1), () {
-              PopupHelper.showSuccessDialog(
-                  "Kart no: ${AuthService.currentUser!.cardID}\nTelefon numaranızın üzerine kayıtlı bir Köyevi kartı bulunduğu için, bu hesabınızı kartınız ile ilişkilendirdik. Keyifli alışverişler dileriz !");
+              PopupHelper.showSuccessDialog(LocaleKeys.Validation_card_found.tr(
+                  args: [AuthService.currentUser!.cardID.toString()]));
             });
           }
         } else {

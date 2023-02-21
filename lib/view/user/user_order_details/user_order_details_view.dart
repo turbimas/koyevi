@@ -614,7 +614,7 @@ class _UserOrderDetailsViewState extends ConsumerState<UserOrderDetailsView> {
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      CustomText("Ödeme tipi",
+                      CustomTextLocale(LocaleKeys.UserOrderDetails_payment_type,
                           style: CustomFonts.bodyText4(
                               CustomColors.card2TextPale)),
                       CustomText(widget.orderTitle.paymentTypeName ?? "-",
@@ -623,7 +623,8 @@ class _UserOrderDetailsViewState extends ConsumerState<UserOrderDetailsView> {
                 Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      CustomText("Ödeme durumu",
+                      CustomTextLocale(
+                          LocaleKeys.UserOrderDetails_payment_status,
                           style: CustomFonts.bodyText4(
                               CustomColors.card2TextPale)),
                       CustomText(widget.orderTitle.paymentStatusName ?? "-",

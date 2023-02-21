@@ -32,6 +32,9 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
   late final FocusNode _phoneFocusNode;
   late final FocusNode _passwordFocusNode;
 
+  final TextEditingController _phoneController =
+      TextEditingController(text: "90");
+
   @override
   void initState() {
     provider =
@@ -142,9 +145,9 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                   // focusNode: _phoneFocusNode,
                   // nextFocusNode: _passwordFocusNode,
                   key: "MobilePhone",
+                  controller: _phoneController,
                   autofillHints: [AutofillHints.telephoneNumber],
                   validator: CustomValidators.instance.phoneValidator,
-                  initialValue: "90",
                   keyboardType: TextInputType.phone,
                   hint: LocaleKeys.Register_phone_hint.tr(),
                   icon: CustomIcons.field_phone_icon),
@@ -171,8 +174,9 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
 
   Widget _customTextField(
       {required String key,
-      String initialValue = "",
+      String? initialValue,
       required String hint,
+      TextEditingController? controller,
       required List<String> autofillHints,
       required Widget icon,
       String? Function(String?)? validator,
@@ -193,6 +197,14 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
           icon,
           Expanded(
               child: TextFormField(
+            controller: controller,
+            onChanged: (value) {
+              if (key == "MobilePhone" && value.length <= 2 && value != "90") {
+                controller!.text = "90";
+                controller.selection = TextSelection.fromPosition(
+                    TextPosition(offset: controller.text.length));
+              }
+            },
             autofillHints: autofillHints,
             initialValue: initialValue,
             scrollPadding: EdgeInsets.only(
@@ -214,6 +226,10 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                     CryptHelper.toMD5(newValue);
               } else {
                 ref.watch(provider).registerData[key] = newValue;
+                if (newValue != null) {
+                  ref.watch(provider).registerData[key] =
+                      CryptHelper.toMD5(newValue);
+                }
               }
             },
             textAlignVertical: TextAlignVertical.center,

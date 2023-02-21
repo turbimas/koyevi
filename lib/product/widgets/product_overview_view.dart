@@ -393,7 +393,9 @@ class _ProductOverviewViewVerticalState
 
 class ProductOverViewHorizontalView extends StatelessWidget {
   final ProductOverViewModel product;
-  const ProductOverViewHorizontalView({Key? key, required this.product})
+  final Function? navigationCallback;
+  const ProductOverViewHorizontalView(
+      {Key? key, required this.product, this.navigationCallback})
       : super(key: key);
 
   @override
@@ -401,7 +403,10 @@ class ProductOverViewHorizontalView extends StatelessWidget {
     return InkWell(
       onTap: () {
         NavigationService.navigateToPage(
-            ProductDetailView(productOverViewModel: product));
+                ProductDetailView(productOverViewModel: product))
+            .then((value) {
+          navigationCallback?.call();
+        });
       },
       child: Container(
         width: 320.smw,

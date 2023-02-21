@@ -96,6 +96,32 @@ class _UserProfileViewState extends ConsumerState<UserProfileView> {
                     hintText: LocaleKeys.UserProfile_phone,
                     formKey: "MobilePhone",
                     initialValue: AuthService.currentUser!.phone.toString()),
+                DropdownButton<bool?>(
+                    value: ref.watch(provider).gender,
+                    hint: CustomTextLocale(LocaleKeys.UserProfile_gender),
+                    items: [
+                      DropdownMenuItem(
+                          value: true,
+                          child: CustomTextLocale(
+                              LocaleKeys.UserProfile_gender_male)),
+                      DropdownMenuItem(
+                          value: false,
+                          child: CustomTextLocale(
+                              LocaleKeys.UserProfile_gender_female)),
+                      DropdownMenuItem(
+                          value: null,
+                          child: CustomTextLocale(
+                              LocaleKeys.UserProfile_gender_none))
+                    ],
+                    onChanged: (value) {
+                      if (value == true) {
+                        ref.read(provider).gender = true;
+                      } else if (value == false) {
+                        ref.read(provider).gender = false;
+                      } else {
+                        ref.read(provider).gender = null;
+                      }
+                    }),
                 Container(
                     margin: EdgeInsets.symmetric(vertical: 20.smh),
                     child: SwitchListTile(

@@ -12,29 +12,21 @@ class LoginPageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        SizedBox(
-            height: 715.smh,
-            child: Center(
-                child: InkWell(
-              onTap: () {
-                NavigationService.navigateToPage(const LoginView());
-              },
-              child: Container(
-                padding:
-                    EdgeInsets.symmetric(horizontal: 20.smw, vertical: 20.smh),
-                decoration: BoxDecoration(
-                  borderRadius: CustomThemeData.fullInfiniteRounded,
-                  border: Border.all(color: CustomColors.primary),
-                ),
-                child:
-                    CustomTextLocale(LocaleKeys.LoginPageWidget_click_to_login),
-              ),
-            ))),
-        Container(height: 85.smh)
-      ],
-    );
+    return SizedBox(
+        height: 710.smh,
+        child: Center(
+            child: InkWell(
+          onTap: () {
+            NavigationService.navigateToPage(const LoginView());
+          },
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 20.smw, vertical: 20.smh),
+            decoration: BoxDecoration(
+              borderRadius: CustomThemeData.fullInfiniteRounded,
+              border: Border.all(color: CustomColors.primary),
+            ),
+            child: CustomTextLocale(LocaleKeys.LoginPageWidget_click_to_login),
+          ),
+        )));
   }
 }
