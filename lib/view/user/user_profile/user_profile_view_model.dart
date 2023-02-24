@@ -61,6 +61,7 @@ class UserProfileViewModel extends ChangeNotifier {
         formData.remove("oldPassword");
         formData.remove("newPasswordAgain");
         formData.remove("newPassword");
+        formData["Password"] = AuthService.currentUser!.password;
       }
 
       ResponseModel responseModel =
@@ -69,7 +70,7 @@ class UserProfileViewModel extends ChangeNotifier {
         "Name": formData["Name"],
         "BornDate": formData["BornDate"],
         "MobilePhone": formData["MobilePhone"],
-        "Password": formData["newPassword"],
+        "Password": formData["Password"],
         "Cinsiyet": gender
       });
       if (responseModel.success) {

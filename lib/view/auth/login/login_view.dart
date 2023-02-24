@@ -268,6 +268,13 @@ class _LoginViewState extends ConsumerState<LoginView> {
                       textAlignVertical: TextAlignVertical.center,
                       style: CustomFonts.defaultField(CustomColors.primaryText),
                       decoration: InputDecoration(
+                        suffixIcon: InkWell(
+                          onTap: () {
+                            ref.read(provider).isHiding =
+                                !ref.read(provider).isHiding;
+                          },
+                          child: CustomIcons.field_hide_password,
+                        ),
                         isCollapsed: true,
                         border: InputBorder.none,
                         hintStyle:

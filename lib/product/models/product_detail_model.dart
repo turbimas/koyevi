@@ -4,6 +4,7 @@ class ProductDetailModel {
   final String name;
   final String? tradeMark;
   final double unitPrice;
+  final List<ProductCategoryModel> groupsIn;
   final List<ProductPropertyModel> productNutritiveValue;
   final ProductPropertyModel productDetails;
   // final int varyantId;
@@ -44,6 +45,9 @@ class ProductDetailModel {
         name = json['Name'],
         tradeMark = json['TradeMark'],
         unitPrice = json['UnitPrice'],
+        groupsIn = (json['GroupsIn'] as List)
+            .map((e) => ProductCategoryModel.fromJson(e))
+            .toList(),
         productNutritiveValue = (json['ProductNutritiveValue'] as List)
             .map((e) => ProductPropertyModel.fromJson(e))
             .toList(),
@@ -112,6 +116,15 @@ class ProductPropertyModel {
       : itemProperty = json['ItemProperty'],
         value = json['Value'],
         forValue = json['ForValue'];
+}
+
+class ProductCategoryModel {
+  final int id;
+  final String name;
+
+  ProductCategoryModel.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        name = json['name'];
 }
 
 extension DoubleExtension on double {

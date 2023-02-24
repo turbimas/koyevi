@@ -10,6 +10,8 @@ import 'package:koyevi/core/services/network/network_service.dart';
 import 'package:koyevi/core/services/network/response_model.dart';
 import 'package:koyevi/core/utils/helpers/popup_helper.dart';
 import 'package:koyevi/product/models/product_detail_model.dart';
+import 'package:koyevi/product/models/product_over_view_model.dart';
+import 'package:koyevi/view/main/search_result/search_result_view.dart';
 
 import '../../../product/cubits/basket_model_cubit/basket_model_cubit.dart';
 
@@ -153,6 +155,20 @@ class ProductDetailViewModel extends ChangeNotifier {
       }
     } catch (e) {
       PopupHelper.showErrorDialogWithCode(e);
+    }
+  }
+
+  Future<void> masterCategoryNavigate(id) async {
+    ResponseModelList response = await NetworkService.get(
+        "categories/getCategoryMembers/${AuthService.id}/$id");
+    if (response.success) {
+      List<ProductOverViewModel> products = response.data!.map((e) {
+        return ProductOverViewModel.fromJson(e["Product"]);
+      }).toList();
+      NavigationService.navigateToPage(
+          SearchResultView(isSearch: false, products: products));
+    } else {
+      PopupHelper.showErrorDialog(errorMessage: response.errorMessage!);
     }
   }
 }

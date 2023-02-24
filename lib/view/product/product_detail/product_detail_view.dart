@@ -97,6 +97,7 @@ class _ProductDetailViewState extends ConsumerState<ProductDetailView> {
           _productImages(product),
           _imageIndex(product),
           _nameInfo(product),
+          _categoriesInfo(product),
           _chips(product),
           _options(),
           _productDetails(product),
@@ -558,6 +559,32 @@ class _ProductDetailViewState extends ConsumerState<ProductDetailView> {
             ),
           )
         ]),
+      ),
+    );
+  }
+
+  Widget _categoriesInfo(ProductDetailModel product) {
+    return SizedBox(
+      width: 330.smw,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: List.generate(product.groupsIn.length,
+            (index) => _categoryChip(product.groupsIn[index])),
+      ),
+    );
+  }
+
+  Widget _categoryChip(ProductCategoryModel categoryModel) {
+    return InkWell(
+      onTap: () => ref.read(provider).masterCategoryNavigate(categoryModel.id),
+      child: Container(
+        margin: EdgeInsets.only(top: 5.smh, right: 10.smw, bottom: 5.smh),
+        child: CustomText(
+          categoryModel.name.toLowerCase().split(' ').map((String str) {
+            return str[0].toUpperCase() + str.substring(1);
+          }).join(' '),
+          style: CustomFonts.bodyText5(CustomColors.primary),
+        ),
       ),
     );
   }
