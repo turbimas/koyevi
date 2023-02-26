@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:koyevi/core/services/auth/authservice.dart';
 import 'package:koyevi/core/services/localization/locale_keys.g.dart';
 import 'package:koyevi/core/services/navigation/navigation_service.dart';
@@ -183,7 +182,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
       margin: EdgeInsets.only(bottom: 10.smh),
       color: CustomColors.card,
       width: AppConstants.designWidth.smw,
-      padding: EdgeInsets.symmetric(vertical: 5.smh),
+      padding: EdgeInsets.only(top: 5.smh),
       child: Scrollbar(
         trackVisibility: true,
         radius: CustomThemeData.fullInfiniteRounded.topLeft,
@@ -198,11 +197,11 @@ class _HomeViewState extends ConsumerState<HomeView> {
                     masterCategories: ref.watch(provider).categories)),
                 child: Container(
                   margin: EdgeInsets.only(
-                      left: 10.smw,
+                      left: index == 0 ? 5.smw : 0,
                       right: index == ref.watch(provider).categories.length - 1
-                          ? 0
-                          : 10.smw),
-                  width: 60.smw,
+                          ? 5.smw
+                          : 0),
+                  width: 90.smw,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -211,18 +210,18 @@ class _HomeViewState extends ConsumerState<HomeView> {
                             BoxDecoration(boxShadow: CustomThemeData.shadow2),
                         child: ClipRRect(
                             borderRadius: CustomThemeData.fullRounded,
-                            child: category.image(height: 60.h, width: 60.h)),
+                            child:
+                                category.image(height: 75.smh, width: 75.smh)),
                       ),
                       SizedBox(height: 5.smh),
-                      Expanded(
-                        child: SizedBox(
-                          width: 60.smw,
-                          child: CustomText(
-                            category.groupName,
-                            maxLines: 2,
-                            textAlign: TextAlign.center,
-                            style: CustomFonts.bodyText5(CustomColors.cardText),
-                          ),
+                      SizedBox(
+                        width: 75.smw,
+                        child: CustomText(
+                          category.groupName,
+                          maxLines:
+                              category.groupName.split(" ").length == 1 ? 1 : 2,
+                          textAlign: TextAlign.center,
+                          style: CustomFonts.bodyText5(CustomColors.cardText),
                         ),
                       ),
                     ],

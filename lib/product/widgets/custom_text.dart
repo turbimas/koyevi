@@ -12,7 +12,6 @@ class CustomText extends StatelessWidget {
   CustomText(this.data,
       {super.key,
       this.style,
-      // this.minFontSize,
       this.maxLines = 1,
       this.textAlign = TextAlign.start});
 
@@ -23,10 +22,8 @@ class CustomText extends StatelessWidget {
       textScaleFactor: 1.0,
       style: style,
       overflow: TextOverflow.ellipsis,
-      // minFontSize: minFontSize == null
-      //     ? (style != null ? style!.fontSize ?? 10.sp : 10.sp)
-      //     : minFontSize!,
-      // stepGranularity: 1.sp,
+      // minFontSize: 8.sp,
+      // stepGranularity: 2.sp,
       softWrap: true,
       maxLines: maxLines,
       textAlign: textAlign,
