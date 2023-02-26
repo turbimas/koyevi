@@ -37,7 +37,8 @@ abstract class CustomImages {
     en_flag = _image("en_flag");
     ar_flag = _image("ar_flag");
     image_not_found = _image("image_not_found");
-    loading = _image("loading");
+    // loading = _image("loading");
+    loading = Container();
     delete_account = _image("delete_account");
   }
 

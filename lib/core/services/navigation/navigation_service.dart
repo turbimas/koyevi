@@ -25,4 +25,10 @@ abstract class NavigationService {
       await navigatorKey.currentState!.maybePop<T>(data);
     }
   }
+
+  // static Future navigateToMainPage() async {
+  //   await navigatorKey.currentState!.pushAndRemoveUntil(
+  //       MaterialPageRoute(builder: (context) => const MainView()),
+  //       (Route<dynamic> route) => false);
+  // }
 }

@@ -74,7 +74,12 @@ abstract class NetworkService {
     }
     String fullUrl = url;
     try {
+      EasyLoading.instance.backgroundColor = Colors.yellow;
+
+      EasyLoading.instance.indicatorColor = Colors.white;
+      EasyLoading.instance.maskColor = Colors.black.withOpacity(0.7);
       EasyLoading.show(
+          maskType: EasyLoadingMaskType.custom,
           dismissOnTap: true,
           indicator: CircularProgressIndicator(color: CustomColors.primary));
       if (debug) {
@@ -119,8 +124,13 @@ abstract class NetworkService {
 
     String fullUrl = url;
     try {
+      EasyLoading.instance.backgroundColor =
+          CustomColors.primary.withOpacity(0.7);
+      EasyLoading.instance.indicatorColor = Colors.white;
+      EasyLoading.instance.maskColor = Colors.black.withOpacity(0.7);
       EasyLoading.show(
           dismissOnTap: true,
+          maskType: EasyLoadingMaskType.custom,
           indicator: CircularProgressIndicator(color: CustomColors.primary));
       if (debug) {
         log("POST: $fullUrl");
