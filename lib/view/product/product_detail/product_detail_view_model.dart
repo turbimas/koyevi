@@ -9,8 +9,10 @@ import 'package:koyevi/core/services/navigation/navigation_service.dart';
 import 'package:koyevi/core/services/network/network_service.dart';
 import 'package:koyevi/core/services/network/response_model.dart';
 import 'package:koyevi/core/utils/helpers/popup_helper.dart';
+import 'package:koyevi/product/cubits/home_index_cubit/home_index_cubit.dart';
 import 'package:koyevi/product/models/product_detail_model.dart';
 import 'package:koyevi/product/models/product_over_view_model.dart';
+import 'package:koyevi/product/widgets/main/main_view.dart';
 import 'package:koyevi/view/main/search_result/search_result_view.dart';
 
 import '../../../product/cubits/basket_model_cubit/basket_model_cubit.dart';
@@ -158,7 +160,12 @@ class ProductDetailViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> masterCategoryNavigate(id) async {
+  Future<void> masterCategoryNavigate(int id) async {
+    if (id == 0) {
+      NavigationService.navigateToPageAndRemoveUntil(const MainView());
+      NavigationService.context.read<HomeIndexCubit>().set(2);
+      return;
+    }
     ResponseModelList response = await NetworkService.get(
         "categories/getCategoryMembers/${AuthService.id}/$id");
     if (response.success) {
