@@ -555,8 +555,16 @@ class _ProductDetailViewState extends ConsumerState<ProductDetailView> {
       width: 330.smw,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
-        children: List.generate(product.groupsIn.length,
-            (index) => _categoryChip(product.groupsIn[index])),
+        children: List.generate(product.groupsIn.length * 2 - 1, (index) {
+          if (index.isOdd) {
+            return Container(
+                margin: EdgeInsets.only(left: 0, right: 5.smw),
+                child: Icon(Icons.arrow_forward_ios,
+                    color: CustomColors.secondary, size: 15.smh));
+          }
+          final chipIndex = index ~/ 2;
+          return _categoryChip(product.groupsIn[chipIndex]);
+        }),
       ),
     );
   }
@@ -570,7 +578,8 @@ class _ProductDetailViewState extends ConsumerState<ProductDetailView> {
           categoryModel.name.toLowerCase().split(' ').map((String str) {
             return str[0].toUpperCase() + str.substring(1);
           }).join(' '),
-          style: CustomFonts.bodyText5(CustomColors.primary),
+          style: CustomFonts.bodyText4(CustomColors.primary)
+              .copyWith(decoration: TextDecoration.underline),
         ),
       ),
     );
