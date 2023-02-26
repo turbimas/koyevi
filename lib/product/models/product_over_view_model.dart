@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:koyevi/core/services/theme/custom_colors.dart';
 import 'package:koyevi/core/services/theme/custom_images.dart';
 import 'package:koyevi/product/models/product_detail_model.dart';
 
@@ -36,11 +38,16 @@ class ProductOverViewModel {
     if (_thumbnail != null) {
       if (_thumbnail!.isNotEmpty) {
         String url = _thumbnail!.replaceAll("\\", "/");
-        return Image.network(
-          url,
+        return CachedNetworkImage(
+          imageUrl: url,
           height: height,
           width: width,
           fit: BoxFit.fill,
+          progressIndicatorBuilder: (context, url, progress) {
+            return Center(
+              child: CircularProgressIndicator(color: CustomColors.primary),
+            );
+          },
         );
       }
     }

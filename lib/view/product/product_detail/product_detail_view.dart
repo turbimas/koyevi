@@ -203,12 +203,12 @@ class _ProductDetailViewState extends ConsumerState<ProductDetailView> {
         controller: _pageController,
         itemCount: ref.watch(provider).productDetail!.images.length,
         itemBuilder: (context, index) => CachedNetworkImage(
+          filterQuality: FilterQuality.high,
           imageUrl: product.images[index],
           fit: BoxFit.fill,
           height: 360.smw,
           width: AppConstants.designWidth.smw,
           progressIndicatorBuilder: (context, url, progress) {
-            // return a CircularProgressIndicator with the progress value
             return Center(
               child: CircularProgressIndicator(
                 color: CustomColors.primary,

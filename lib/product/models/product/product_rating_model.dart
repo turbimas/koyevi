@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:koyevi/core/services/theme/custom_images.dart';
 
@@ -22,8 +23,8 @@ class ProductRatingCariModel {
   final String? _imageUrl;
   Widget image({required double height, required double width}) =>
       _imageUrl != null && _imageUrl!.isNotEmpty
-          ? Image.network(
-              _imageUrl!.replaceAll("\\", "/"),
+          ? CachedNetworkImage(
+              imageUrl: _imageUrl!.replaceAll("\\", "/"),
               height: height,
               width: width,
               fit: BoxFit.fill,

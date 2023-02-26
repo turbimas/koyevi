@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:koyevi/core/services/theme/custom_colors.dart';
 import 'package:koyevi/core/services/theme/custom_images.dart';
 import 'package:koyevi/product/models/order/basket_total_model.dart';
 import 'package:koyevi/product/models/order/order_delivery_address.dart';
@@ -24,8 +26,13 @@ class UserOrdersModel {
 
   Widget image({required double height, required double width}) {
     if (firstImageUrl != null) {
-      return Image.network(firstImageUrl!.replaceAll("\\", "/"),
-          height: height, width: width, fit: BoxFit.cover);
+      return CachedNetworkImage(
+          imageUrl: firstImageUrl!.replaceAll("\\", "/"),
+          height: height,
+          width: width,
+          fit: BoxFit.cover,
+          progressIndicatorBuilder: (context, url, downloadProgress) =>
+              CircularProgressIndicator(color: CustomColors.primary));
     } else {
       return SizedBox(
           height: height, width: width, child: CustomImages.image_not_found);

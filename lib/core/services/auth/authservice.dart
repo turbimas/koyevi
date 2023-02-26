@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -49,8 +50,8 @@ class AuthService {
 
   static Widget userImage({required double height, required double width}) {
     if (AuthService.currentUser!.imageUrl != null) {
-      return Image.network(
-        AuthService.currentUser!.imageUrl!,
+      return CachedNetworkImage(
+        imageUrl: AuthService.currentUser!.imageUrl!,
         height: height,
         width: width,
       );
