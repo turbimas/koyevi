@@ -248,6 +248,9 @@ class _HomeViewState extends ConsumerState<HomeView> {
   Widget _imageBanner(HomeBannerModel model) {
     return InkWell(
       onTap: () async {
+        if (model.barcodes.isEmpty) {
+          return;
+        }
         List<ProductOverViewModel> products = [];
         ResponseModel response = await NetworkService.post(
             "products/ProductfromBarcodes",
