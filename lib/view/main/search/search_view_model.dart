@@ -96,7 +96,7 @@ class SearchViewModel extends ChangeNotifier {
   Future<void> search(String searchKey) async {
     try {
       ResponseModel searchResults = await NetworkService.get(
-          "products/productsearch/${AuthService.id}/$searchKey");
+          "products/productsearch/${AuthService.id}/${searchKey.trim()}");
 
       if (searchResults.success) {
         var list = searchResults.data
