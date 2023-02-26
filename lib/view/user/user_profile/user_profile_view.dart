@@ -28,11 +28,19 @@ class UserProfileView extends ConsumerStatefulWidget {
 class _UserProfileViewState extends ConsumerState<UserProfileView> {
   late final ChangeNotifierProvider<UserProfileViewModel> provider;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  TextEditingController phoneController =
+      TextEditingController(text: AuthService.currentUser!.phone);
 
   @override
   void initState() {
     provider = ChangeNotifierProvider((ref) => UserProfileViewModel(formKey));
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    phoneController.dispose();
+    super.dispose();
   }
 
   @override
@@ -95,9 +103,17 @@ class _UserProfileViewState extends ConsumerState<UserProfileView> {
                     validator: CustomValidators.instance.phoneValidator,
                     hintText: LocaleKeys.UserProfile_phone,
                     formKey: "MobilePhone",
-                    // TODO: numara 90 ile kesin başlamalı
-                    onChanged: (p0) {},
-                    initialValue: AuthService.currentUser!.phone.toString()),
+                    onChanged: (p0) {
+                      // phone always must start with 90
+                      if (p0.length < 2) {
+                        phoneController.text = "90";
+                      } else if (p0.length == 2 &&
+                          p0[0] != "9" &&
+                          p0[1] != "0") {
+                        phoneController.text = "90";
+                      }
+                    },
+                    controller: phoneController),
                 DropdownButton<bool?>(
                     value: ref.watch(provider).gender,
                     hint: CustomTextLocale(LocaleKeys.UserProfile_gender),
@@ -178,6 +194,7 @@ class _UserProfileViewState extends ConsumerState<UserProfileView> {
   Widget _customTextField(
       {required String hintText,
       required String formKey,
+      TextEditingController? controller,
       String? Function(String?)? validator,
       bool obscureText = false,
       Function(String)? onChanged,
@@ -191,6 +208,7 @@ class _UserProfileViewState extends ConsumerState<UserProfileView> {
           color: CustomColors.primary),
       child: Center(
           child: TextFormField(
+        controller: initialValue == null ? controller : null,
         onChanged: onChanged,
         validator: validator,
         obscureText: obscureText,
