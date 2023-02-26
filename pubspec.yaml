@@ -60,6 +60,7 @@ dependencies:
   app_tracking_transparency: ^2.0.3
   device_info_plus: ^8.0.0
   launch_review: ^3.0.1
+  cached_network_image: ^3.2.3
 
 dev_dependencies:
   flutter_test:

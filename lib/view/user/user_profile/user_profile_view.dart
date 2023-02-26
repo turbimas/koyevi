@@ -95,6 +95,8 @@ class _UserProfileViewState extends ConsumerState<UserProfileView> {
                     validator: CustomValidators.instance.phoneValidator,
                     hintText: LocaleKeys.UserProfile_phone,
                     formKey: "MobilePhone",
+                    // TODO: numara 90 ile kesin başlamalı
+                    onChanged: (p0) {},
                     initialValue: AuthService.currentUser!.phone.toString()),
                 DropdownButton<bool?>(
                     value: ref.watch(provider).gender,
@@ -178,6 +180,7 @@ class _UserProfileViewState extends ConsumerState<UserProfileView> {
       required String formKey,
       String? Function(String?)? validator,
       bool obscureText = false,
+      Function(String)? onChanged,
       String? initialValue}) {
     return Container(
       width: 330.smw,
@@ -188,6 +191,7 @@ class _UserProfileViewState extends ConsumerState<UserProfileView> {
           color: CustomColors.primary),
       child: Center(
           child: TextFormField(
+        onChanged: onChanged,
         validator: validator,
         obscureText: obscureText,
         onSaved: (value) {

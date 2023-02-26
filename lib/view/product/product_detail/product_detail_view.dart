@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -201,34 +202,20 @@ class _ProductDetailViewState extends ConsumerState<ProductDetailView> {
         onPageChanged: _pageListener,
         controller: _pageController,
         itemCount: ref.watch(provider).productDetail!.images.length,
-        itemBuilder: (context, index) => Image.network(
-          product.images[index],
+        itemBuilder: (context, index) => CachedNetworkImage(
+          imageUrl: product.images[index],
           fit: BoxFit.fill,
-          cacheWidth: 360.smw.toInt(),
-          cacheHeight: 360.smw.toInt(),
-          loadingBuilder: (context, child, loadingProgress) {
-            if (loadingProgress == null) return child;
-            return Image.network(product.thumbNails[index],
-                fit: BoxFit.fill,
-                cacheWidth: 360.smw.toInt(),
-                cacheHeight: 360.smw.toInt(),
-                loadingBuilder: (context, child, loadingProgress) {
-              if (loadingProgress == null) return child;
-              return Center(
-                child: CircularProgressIndicator(
-                  backgroundColor: CustomColors.primaryText,
-                  color: CustomColors.primary,
-                  strokeWidth: 5,
-                  value: loadingProgress.expectedTotalBytes != null
-                      ? loadingProgress.cumulativeBytesLoaded /
-                          loadingProgress.expectedTotalBytes!
-                      : null,
-                ),
-              );
-            });
-          },
           height: 360.smw,
           width: AppConstants.designWidth.smw,
+          progressIndicatorBuilder: (context, url, progress) {
+            // return a CircularProgressIndicator with the progress value
+            return Center(
+              child: CircularProgressIndicator(
+                color: CustomColors.primary,
+                strokeWidth: 2,
+              ),
+            );
+          },
         ),
       ),
     );

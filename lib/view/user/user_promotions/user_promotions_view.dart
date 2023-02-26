@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -121,7 +122,8 @@ class _UserPromotionsViewState extends ConsumerState<UserPromotionsView> {
                   promotionModel.imageUrl != null
                       ? ClipRRect(
                           borderRadius: CustomThemeData.fullRounded,
-                          child: Image.network(promotionModel.imageUrl!,
+                          child: CachedNetworkImage(
+                              imageUrl: promotionModel.imageUrl!,
                               height: 100.smh,
                               width: 300.smw,
                               fit: BoxFit.fill),

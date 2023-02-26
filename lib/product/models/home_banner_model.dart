@@ -5,8 +5,8 @@ class HomeBannerModel {
   late final int type;
   late final String typeName;
   late final int order;
-  late final String _bannerUrl;
-  String get bannerUrl => _bannerUrl.replaceAll("\\", "/");
+  late final String? _bannerUrl;
+  String? get bannerUrl => _bannerUrl?.replaceAll("\\", "/");
   List<String> barcodes = [];
   List<ProductOverViewModel> products = [];
 

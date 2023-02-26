@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -282,8 +283,28 @@ class _HomeViewState extends ConsumerState<HomeView> {
                   )),
               ClipRRect(
                 borderRadius: CustomThemeData.fullRounded,
-                child: Image.network(model.bannerUrl,
-                    fit: BoxFit.fill, width: 340.smw, height: 170.smh),
+                child: CachedNetworkImage(
+                  imageUrl: model.bannerUrl!,
+                  fit: BoxFit.fill,
+                  width: 340.smw,
+                  height: 170.smh,
+                  progressIndicatorBuilder: (context, url, progress) {
+                    return SizedBox(
+                      height: 170.smh,
+                      width: 340.smw,
+                      child: Center(
+                        child: SizedBox(
+                          width: 30.smw,
+                          height: 30.smh,
+                          child: CircularProgressIndicator(
+                            color: CustomColors.primary,
+                            strokeWidth: 2,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ),
             ],
           )),

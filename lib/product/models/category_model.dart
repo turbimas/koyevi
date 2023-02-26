@@ -1,6 +1,8 @@
 // ignore_for_file: hash_and_equals
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:koyevi/core/services/theme/custom_colors.dart';
 import 'package:koyevi/core/services/theme/custom_images.dart';
 
 class CategoryModel {
@@ -11,11 +13,19 @@ class CategoryModel {
   late final String? _imageUrl;
   Widget image({required double height, required double width}) =>
       _imageUrl != null
-          ? Image.network(
-              _imageUrl!.replaceAll("\\", "/"),
+          ? CachedNetworkImage(
+              imageUrl: _imageUrl!.replaceAll("\\", "/"),
               height: height,
               width: width,
-              fit: BoxFit.fill,
+              fit: BoxFit.cover,
+              placeholder: (context, url) => Center(
+                child: CircularProgressIndicator(
+                  color: CustomColors.primary,
+                  strokeWidth: 2,
+                ),
+              ),
+              errorWidget: (context, url, error) =>
+                  CustomImages.image_not_found,
             )
           : SizedBox(
               height: height,

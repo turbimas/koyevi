@@ -227,8 +227,7 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
               } else {
                 ref.watch(provider).registerData[key] = newValue;
                 if (newValue != null) {
-                  ref.watch(provider).registerData[key] =
-                      CryptHelper.toMD5(newValue);
+                  ref.watch(provider).registerData[key] = newValue;
                 }
               }
             },
