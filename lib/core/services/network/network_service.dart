@@ -12,7 +12,6 @@ import 'package:koyevi/core/services/network/response_model.dart';
 import 'package:koyevi/core/services/theme/custom_colors.dart';
 import 'package:koyevi/core/utils/helpers/popup_helper.dart';
 import 'package:koyevi/product/constants/app_constants.dart';
-import 'package:koyevi/product/widgets/loading_page.dart';
 
 abstract class NetworkService {
   static late Dio _dio;
@@ -121,8 +120,8 @@ abstract class NetworkService {
     String fullUrl = url;
     try {
       EasyLoading.show(
-        dismissOnTap: true,
-        indicator: CircularProgressIndicator(color: CustomColors.primary))
+          dismissOnTap: true,
+          indicator: CircularProgressIndicator(color: CustomColors.primary));
       if (debug) {
         log("POST: $fullUrl");
         log("POST BODY: $body");
