@@ -23,7 +23,7 @@ class BasketDetailViewModel extends ChangeNotifier {
   late DateTime pageCreatedTime;
 
   List<BasketPaymentTypeModel> paymentTypes = [];
-  late BasketPaymentTypeModel _selectedPaymentType;
+  BasketPaymentTypeModel? _selectedPaymentType;
 
   BasketModel basketModel;
   List<PromotionModel> promotions = [];
@@ -32,7 +32,7 @@ class BasketDetailViewModel extends ChangeNotifier {
 
   bool _isLoading = false;
 
-  late DeliveryTimeModel _selectedDeliveryTimeModel;
+  DeliveryTimeModel? _selectedDeliveryTimeModel;
 
   String? selectedHour;
   String? selectedDate;
@@ -51,7 +51,7 @@ class BasketDetailViewModel extends ChangeNotifier {
 
   // getter setters
 
-  BasketPaymentTypeModel get selectedPaymentType => _selectedPaymentType;
+  BasketPaymentTypeModel get selectedPaymentType => _selectedPaymentType!;
   set selectedPaymentType(BasketPaymentTypeModel value) {
     _selectedPaymentType = value;
     notifyListeners();
@@ -63,7 +63,8 @@ class BasketDetailViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  DeliveryTimeModel get selectedDeliveryTimeModel => _selectedDeliveryTimeModel;
+  DeliveryTimeModel get selectedDeliveryTimeModel =>
+      _selectedDeliveryTimeModel!;
   set selectedDeliveryTimeModel(DeliveryTimeModel value) {
     _selectedDeliveryTimeModel = value;
     notifyListeners();
@@ -145,7 +146,6 @@ class BasketDetailViewModel extends ChangeNotifier {
         addresses = addressResponse.data!
             .map<AddressModel>((e) => AddressModel.fromJson(e))
             .toList();
-        selectedDeliveryTimeModel = times!.first;
 
         for (DeliveryTimeModel time in times!) {
           if (time.dates.length > 1) {
@@ -162,7 +162,9 @@ class BasketDetailViewModel extends ChangeNotifier {
                 (e) => BasketPaymentTypeModel.fromJson(e))
             .toList();
 
-        _selectedPaymentType = paymentTypes.first;
+        // first values init
+        _selectedDeliveryTimeModel ??= times!.first;
+        _selectedPaymentType ??= paymentTypes.first;
       } else {
         if (timeResponse.success == false) {
           PopupHelper.showErrorDialog(errorMessage: timeResponse.errorMessage!);
