@@ -4,11 +4,15 @@ import 'dart:io';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:koyevi/core/services/localization/locale_keys.g.dart';
 import 'package:koyevi/core/services/navigation/navigation_service.dart';
 import 'package:koyevi/core/services/network/response_model.dart';
+import 'package:koyevi/core/services/theme/custom_colors.dart';
 import 'package:koyevi/core/utils/helpers/popup_helper.dart';
 import 'package:koyevi/product/constants/app_constants.dart';
+import 'package:koyevi/product/widgets/loading_page.dart';
 
 abstract class NetworkService {
   static late Dio _dio;
@@ -71,6 +75,9 @@ abstract class NetworkService {
     }
     String fullUrl = url;
     try {
+      EasyLoading.show(
+          dismissOnTap: true,
+          indicator: CircularProgressIndicator(color: CustomColors.primary));
       if (debug) {
         log("GET : $fullUrl");
       }
@@ -100,6 +107,8 @@ abstract class NetworkService {
           });
       return await get<T>(url, queryParameters: queryParameters);
       // return ResponseModel<T>.networkError();
+    } finally {
+      EasyLoading.dismiss();
     }
   }
 
@@ -111,6 +120,9 @@ abstract class NetworkService {
 
     String fullUrl = url;
     try {
+      EasyLoading.show(
+        dismissOnTap: true,
+        indicator: CircularProgressIndicator(color: CustomColors.primary))
       if (debug) {
         log("POST: $fullUrl");
         log("POST BODY: $body");
@@ -144,6 +156,8 @@ abstract class NetworkService {
           });
       return await post<T>(url, queryParameters: queryParameters, body: body);
       // return ResponseModel.networkError();
+    } finally {
+      EasyLoading.dismiss();
     }
   }
 }
