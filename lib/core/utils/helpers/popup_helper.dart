@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -51,7 +52,11 @@ class PopupHelper {
   }
 
   static Future<void> showErrorDialogWithCode(Object e) async {
-    showErrorDialog(errorMessage: "ERROR".tr(), error: e);
+    if (kDebugMode) {
+      showErrorDialog(errorMessage: "ERROR".tr(), error: e);
+    } else {
+      showErrorDialog(errorMessage: "ERROR".tr());
+    }
   }
 
   static Future<T> showSuccessDialog<T>(String message,
