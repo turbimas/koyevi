@@ -97,11 +97,13 @@ class PopupHelper {
         backgroundColor: CustomColors.approve);
   }
 
-  static Future<void> showErrorToast(String message) async {
+  static Future<void> showErrorToast(String message,
+      {bool long = false}) async {
     Fluttertoast.showToast(
         msg: message,
         textColor: CustomColors.cancelText,
-        backgroundColor: CustomColors.cancel);
+        backgroundColor: CustomColors.cancel,
+        toastLength: long ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT);
   }
 }
 
