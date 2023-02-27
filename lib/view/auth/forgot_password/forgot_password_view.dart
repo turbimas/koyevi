@@ -221,7 +221,7 @@ class _ForgotPasswordViewState extends ConsumerState<ForgotPasswordView> {
       return Container();
     }
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 40.smh),
+      margin: EdgeInsets.only(bottom: 40.smh),
       padding: EdgeInsets.symmetric(horizontal: 30.smw),
       decoration: BoxDecoration(
           color: CustomColors.primary,

@@ -154,7 +154,7 @@
         "appbar_title":"Teslimat süresi seç"
     },
     "OnlinePayment": {
-        "appbar_title": "Online Payment"
+        "appbar_title": "Online Ödeme"
       },
     "OrderCancelReturn": {
         "cancel":"İptal et",
@@ -315,8 +315,8 @@
         "new_password_again": "Yeni şifre tekrar",
         "wrong_old_password":"Eski şifreniz doğru değil!",
         "gender_none":"Belirtmek istemiyorum",
-        "gender_male":"Erkek",
-        "gender_female":"Kız",
+        "gender_male":"Bay",
+        "gender_female":"Bayan",
         "gender":"Cinsiyet",
         "successfully_updated":"Profiliniz başarıyla güncellendi",
         "error_updating":"Profiliniz güncellenirken bir hata oluştu"

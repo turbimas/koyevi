@@ -101,7 +101,7 @@ class _SplashViewState extends ConsumerState<SplashView>
           AuthService.login(user);
           context.read<BasketModelCubit>().refresh();
         } else {
-          PopupHelper.showErrorToast(LocaleKeys.Splash_password_changed);
+          PopupHelper.showErrorToast(LocaleKeys.Splash_password_changed.tr());
           AuthService.logout(showSuccessMessage: false);
         }
       } else {
