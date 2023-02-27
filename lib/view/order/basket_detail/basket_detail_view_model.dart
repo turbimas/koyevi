@@ -248,8 +248,8 @@ class BasketDetailViewModel extends ChangeNotifier {
               await NetworkService.get("orders/getpaymenturl");
           String paymentUrl =
               paymentUrlResponse.data! + createOrderResponse.data!;
-          NavigationService.navigateToPage<bool>(
-                  OnlinePaymentView(initialUrl: paymentUrl))
+          NavigationService.navigateToPage<bool>(OnlinePaymentView(
+                  initialUrl: paymentUrl, guid: createOrderResponse.data))
               .then((value) {
             if (value == true) {
               NavigationService.navigateToPageAndRemoveUntil(
@@ -257,7 +257,8 @@ class BasketDetailViewModel extends ChangeNotifier {
               NavigationService.context.read<BasketModelCubit>().refresh();
             } else {
               PopupHelper.showErrorToast(
-                  LocaleKeys.BasketDetail_payment_unsuccessful.tr());
+                  LocaleKeys.BasketDetail_payment_unsuccessful.tr(),
+                  long: true);
             }
           });
         } else {
