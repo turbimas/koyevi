@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:koyevi/core/services/localization/locale_keys.g.dart';
@@ -19,10 +20,16 @@ abstract class NetworkService {
   static const debugDetailed = true;
   static bool notInited = true;
 
+  static int? _requestTime;
+
   static Future<void> init() async {
+    _requestTime ??= kDebugMode ? 5000 : 10000;
+
     try {
       Dio tempDio = Dio(BaseOptions(
-          sendTimeout: 5000, connectTimeout: 5000, receiveTimeout: 5000));
+          sendTimeout: _requestTime,
+          connectTimeout: _requestTime,
+          receiveTimeout: _requestTime));
       (tempDio.httpClientAdapter as DefaultHttpClientAdapter)
           .onHttpClientCreate = (HttpClient client) {
         client.badCertificateCallback =
@@ -68,7 +75,7 @@ abstract class NetworkService {
   }
 
   static Future<ResponseModel<T>> get<T>(String url,
-      {Map<String, dynamic>? queryParameters}) async {
+      {Map<String, dynamic>? queryParameters, bool multi = false}) async {
     while (notInited) {
       await init();
     }
@@ -117,7 +124,9 @@ abstract class NetworkService {
   }
 
   static Future<ResponseModel<T>> post<T>(String url,
-      {Map<String, dynamic>? queryParameters, dynamic body}) async {
+      {Map<String, dynamic>? queryParameters,
+      dynamic body,
+      bool multi = false}) async {
     while (notInited) {
       await init();
     }
@@ -169,4 +178,8 @@ abstract class NetworkService {
       EasyLoading.dismiss();
     }
   }
+
+  // Future<List> gets(List<RequestModel> requestModels) {
+
+  // }
 }
