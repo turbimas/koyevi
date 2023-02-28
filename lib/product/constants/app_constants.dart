@@ -12,7 +12,7 @@ class AppConstants {
   static const PATH_LOCALE = "assets/lang";
 
   static const IOS_Version = "1.0.10";
-  static const ANDROID_Version = "1.0.10";
+  static const ANDROID_Version = "1.0.9";
 
   static const APP_API = "https://koyevidogal.com/api/ecom/";
   // static const APP_API = "https://www.turbim.com/api/ecom/";
