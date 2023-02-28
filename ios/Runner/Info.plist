@@ -50,6 +50,6 @@
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>NSUserTrackingUsageDescription</key>
-	<string>This identifier will be used to storage your personal data and use it on auth service</string>
+	<string>Bu uygulama, kişisel verilerinizi depolamak ve kimlik doğrulama hizmetinde kullanmak için toplayacaktır.</string>
 </dict>
 </plist>
