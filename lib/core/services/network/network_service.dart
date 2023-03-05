@@ -60,8 +60,8 @@ abstract class NetworkService {
     headers["Authorization"] = "Bearer $token";
 
     _dio = Dio(BaseOptions(
-        connectTimeout: 5000,
-        receiveTimeout: 5000,
+        connectTimeout: _requestTime,
+        receiveTimeout: _requestTime,
         headers: headers,
         contentType: Headers.jsonContentType,
         baseUrl: AppConstants.APP_API));
