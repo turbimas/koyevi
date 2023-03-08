@@ -47,6 +47,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
     super.initState();
     Future.delayed(Duration.zero, () {
       ref.read(provider).getHomeData();
+      ref.read(provider).ensureLocation();
     });
   }
 

@@ -1,16 +1,12 @@
 // DO NOT EDIT. This is code generated via package:easy_localization/generate.dart
 
-// ignore_for_file: constant_identifier_names
-
-abstract class LocaleKeys {
+abstract class  LocaleKeys {
   static const ForgotPassword_appbar_title = 'ForgotPassword.appbar_title';
   static const ForgotPassword_prompt_message = 'ForgotPassword.prompt_message';
   static const ForgotPassword_number_hint = 'ForgotPassword.number_hint';
-  static const ForgotPassword_successfully_changed =
-      'ForgotPassword.successfully_changed';
+  static const ForgotPassword_successfully_changed = 'ForgotPassword.successfully_changed';
   static const ForgotPassword_wrong_code = 'ForgotPassword.wrong_code';
-  static const ForgotPassword_new_password_hint =
-      'ForgotPassword.new_password_hint';
+  static const ForgotPassword_new_password_hint = 'ForgotPassword.new_password_hint';
   static const ForgotPassword_enter_phone = 'ForgotPassword.enter_phone';
   static const ForgotPassword = 'ForgotPassword';
   static const Login_appbar_title = 'Login.appbar_title';
@@ -56,6 +52,9 @@ abstract class LocaleKeys {
   static const Home_continue = 'Home.continue';
   static const Home_address_change_warn = 'Home.address_change_warn';
   static const Home_ship_time_info = 'Home.ship_time_info';
+  static const Home_location_denied = 'Home.location_denied';
+  static const Home_open_location_settings = 'Home.open_location_settings';
+  static const Home_open_app_settings = 'Home.open_app_settings';
   static const Home = 'Home';
   static const Favorites_appbar_title = 'Favorites.appbar_title';
   static const Favorites_search_hint = 'Favorites.search_hint';
@@ -111,49 +110,33 @@ abstract class LocaleKeys {
   static const BasketDetail_appbar_title = 'BasketDetail.appbar_title';
   static const BasketDetail_edit = 'BasketDetail.edit';
   static const BasketDetail_choice_address = 'BasketDetail.choice_address';
-  static const BasketDetail_choice_tax_address =
-      'BasketDetail.choice_tax_address';
+  static const BasketDetail_choice_tax_address = 'BasketDetail.choice_tax_address';
   static const BasketDetail_choice_time = 'BasketDetail.choice_time';
-  static const BasketDetail_term_contactless_part_1 =
-      'BasketDetail.term_contactless_part_1';
-  static const BasketDetail_term_contactless_part_2 =
-      'BasketDetail.term_contactless_part_2';
-  static const BasketDetail_term_contactless_part_3 =
-      'BasketDetail.term_contactless_part_3';
-  static const BasketDetail_term_contactless_part_4 =
-      'BasketDetail.term_contactless_part_4';
-  static const BasketDetail_term_contactless_part_5 =
-      'BasketDetail.term_contactless_part_5';
+  static const BasketDetail_term_contactless_part_1 = 'BasketDetail.term_contactless_part_1';
+  static const BasketDetail_term_contactless_part_2 = 'BasketDetail.term_contactless_part_2';
+  static const BasketDetail_term_contactless_part_3 = 'BasketDetail.term_contactless_part_3';
+  static const BasketDetail_term_contactless_part_4 = 'BasketDetail.term_contactless_part_4';
+  static const BasketDetail_term_contactless_part_5 = 'BasketDetail.term_contactless_part_5';
   static const BasketDetail_choice_promotion = 'BasketDetail.choice_promotion';
-  static const BasketDetail_choice_payment_method =
-      'BasketDetail.choice_payment_method';
+  static const BasketDetail_choice_payment_method = 'BasketDetail.choice_payment_method';
   static const BasketDetail_do_not_ring = 'BasketDetail.do_not_ring';
-  static const BasketDetail_contactless_payment =
-      'BasketDetail.contactless_payment';
-  static const BasketDetail_contactless_payment_tip =
-      'BasketDetail.contactless_payment_tip';
+  static const BasketDetail_contactless_payment = 'BasketDetail.contactless_payment';
+  static const BasketDetail_contactless_payment_tip = 'BasketDetail.contactless_payment_tip';
   static const BasketDetail_done_delivery = 'BasketDetail.done_delivery';
   static const BasketDetail_subtotal = 'BasketDetail.subtotal';
   static const BasketDetail_delivery_cost = 'BasketDetail.delivery_cost';
   static const BasketDetail_discount_cost = 'BasketDetail.discount_cost';
   static const BasketDetail_total = 'BasketDetail.total';
   static const BasketDetail_order_note = 'BasketDetail.order_note';
-  static const BasketDetail_estimated_delivery_time =
-      'BasketDetail.estimated_delivery_time';
-  static const BasketDetail_out_off_process_time =
-      'BasketDetail.out_off_process_time';
+  static const BasketDetail_estimated_delivery_time = 'BasketDetail.estimated_delivery_time';
+  static const BasketDetail_out_off_process_time = 'BasketDetail.out_off_process_time';
   static const BasketDetail_non_address = 'BasketDetail.non_address';
-  static const BasketDetail_delivery_tax_separate =
-      'BasketDetail.delivery_tax_separate';
-  static const BasketDetail_cannot_lower_than =
-      'BasketDetail.cannot_lower_than';
-  static const BasketDetail_continue_shopping =
-      'BasketDetail.continue_shopping';
-  static const BasketDetail_term_and_conditions =
-      'BasketDetail.term_and_conditions';
+  static const BasketDetail_delivery_tax_separate = 'BasketDetail.delivery_tax_separate';
+  static const BasketDetail_cannot_lower_than = 'BasketDetail.cannot_lower_than';
+  static const BasketDetail_continue_shopping = 'BasketDetail.continue_shopping';
+  static const BasketDetail_term_and_conditions = 'BasketDetail.term_and_conditions';
   static const BasketDetail_ship_time_info = 'BasketDetail.ship_time_info';
-  static const BasketDetail_payment_unsuccessful =
-      'BasketDetail.payment_unsuccessful';
+  static const BasketDetail_payment_unsuccessful = 'BasketDetail.payment_unsuccessful';
   static const BasketDetail = 'BasketDetail';
   static const DeliveryTimes_appbar_title = 'DeliveryTimes.appbar_title';
   static const DeliveryTimes = 'DeliveryTimes';
@@ -169,8 +152,7 @@ abstract class LocaleKeys {
   static const OrderSuccess = 'OrderSuccess';
   static const ReturnSuccess_success_message = 'ReturnSuccess.success_message';
   static const ReturnSuccess_return_number = 'ReturnSuccess.return_number';
-  static const ReturnSuccess_success_clipboard =
-      'ReturnSuccess.success_clipboard';
+  static const ReturnSuccess_success_clipboard = 'ReturnSuccess.success_clipboard';
   static const ReturnSuccess_continue = 'ReturnSuccess.continue';
   static const ReturnSuccess = 'ReturnSuccess';
   static const Promotions_appbar_title = 'Promotions.appbar_title';
@@ -190,47 +172,34 @@ abstract class LocaleKeys {
   static const ProductDetail_appbar_title = 'ProductDetail.appbar_title';
   static const ProductDetail_product_info = 'ProductDetail.product_info';
   static const ProductDetail_product_details = 'ProductDetail.product_details';
-  static const ProductDetail_product_properties =
-      'ProductDetail.product_properties';
+  static const ProductDetail_product_properties = 'ProductDetail.product_properties';
   static const ProductDetail_show_more = 'ProductDetail.show_more';
   static const ProductDetail_show_less = 'ProductDetail.show_less';
-  static const ProductDetail_show_all_ratings =
-      'ProductDetail.show_all_ratings';
-  static const ProductDetail_show_all_questions =
-      'ProductDetail.show_all_questions';
+  static const ProductDetail_show_all_ratings = 'ProductDetail.show_all_ratings';
+  static const ProductDetail_show_all_questions = 'ProductDetail.show_all_questions';
   static const ProductDetail_add_to_basket = 'ProductDetail.add_to_basket';
-  static const ProductDetail_rating_avg_count =
-      'ProductDetail.rating_avg_count';
+  static const ProductDetail_rating_avg_count = 'ProductDetail.rating_avg_count';
   static const ProductDetail_cant_shipped = 'ProductDetail.cant_shipped';
   static const ProductDetail_not_in_sale = 'ProductDetail.not_in_sale';
   static const ProductDetail_login_to_use = 'ProductDetail.login_to_use';
-  static const ProductDetail_product_added_favorites =
-      'ProductDetail.product_added_favorites';
-  static const ProductDetail_product_removed_favorites =
-      'ProductDetail.product_removed_favorites';
+  static const ProductDetail_product_added_favorites = 'ProductDetail.product_added_favorites';
+  static const ProductDetail_product_removed_favorites = 'ProductDetail.product_removed_favorites';
   static const ProductDetail = 'ProductDetail';
   static const ProductImage_appbar_title = 'ProductImage.appbar_title';
   static const ProductImage = 'ProductImage';
   static const ProductRatings_appbar_title = 'ProductRatings.appbar_title';
-  static const ProductRatings_rating_comment_count =
-      'ProductRatings.rating_comment_count';
-  static const ProductRatings_active_comments =
-      'ProductRatings.active_comments';
+  static const ProductRatings_rating_comment_count = 'ProductRatings.rating_comment_count';
+  static const ProductRatings_active_comments = 'ProductRatings.active_comments';
   static const ProductRatings_search_hint = 'ProductRatings.search_hint';
-  static const ProductRatings_no_rating_found_yet =
-      'ProductRatings.no_rating_found_yet';
+  static const ProductRatings_no_rating_found_yet = 'ProductRatings.no_rating_found_yet';
   static const ProductRatings = 'ProductRatings';
   static const ProductQuestions_appbar_title = 'ProductQuestions.appbar_title';
-  static const ProductQuestions_question_count =
-      'ProductQuestions.question_count';
+  static const ProductQuestions_question_count = 'ProductQuestions.question_count';
   static const ProductQuestions_search_hint = 'ProductQuestions.search_hint';
   static const ProductQuestions_ask_question = 'ProductQuestions.ask_question';
-  static const ProductQuestions_seller_response =
-      'ProductQuestions.seller_response';
-  static const ProductQuestions_question_sent =
-      'ProductQuestions.question_sent';
-  static const ProductQuestions_enter_question =
-      'ProductQuestions.enter_question';
+  static const ProductQuestions_seller_response = 'ProductQuestions.seller_response';
+  static const ProductQuestions_question_sent = 'ProductQuestions.question_sent';
+  static const ProductQuestions_enter_question = 'ProductQuestions.enter_question';
   static const ProductQuestions = 'ProductQuestions';
   static const Profile_appbar_title = 'Profile.appbar_title';
   static const Profile_greeting = 'Profile.greeting';
@@ -252,21 +221,17 @@ abstract class LocaleKeys {
   static const UserQuestions_answered = 'UserQuestions.answered';
   static const UserQuestions_unanswered = 'UserQuestions.unanswered';
   static const UserQuestions_seller_answer = 'UserQuestions.seller_answer';
-  static const UserQuestions_unanswered_question_not_found =
-      'UserQuestions.unanswered_question_not_found';
-  static const UserQuestions_answered_question_not_found =
-      'UserQuestions.answered_question_not_found';
+  static const UserQuestions_unanswered_question_not_found = 'UserQuestions.unanswered_question_not_found';
+  static const UserQuestions_answered_question_not_found = 'UserQuestions.answered_question_not_found';
   static const UserQuestions = 'UserQuestions';
   static const UserRatings_appbar_title = 'UserRatings.appbar_title';
   static const UserRatings_rating = 'UserRatings.rating';
   static const UserRatings_rate_now = 'UserRatings.rate_now';
   static const UserRatings_no_rating_found = 'UserRatings.no_rating_found';
-  static const UserRatings_no_rating_found_for_rate =
-      'UserRatings.no_rating_found_for_rate';
+  static const UserRatings_no_rating_found_for_rate = 'UserRatings.no_rating_found_for_rate';
   static const UserRatings = 'UserRatings';
   static const UserAddressAdd_appbar_title = 'UserAddressAdd.appbar_title';
-  static const UserAddressAdd_use_current_location =
-      'UserAddressAdd.use_current_location';
+  static const UserAddressAdd_use_current_location = 'UserAddressAdd.use_current_location';
   static const UserAddressAdd_open_map = 'UserAddressAdd.open_map';
   static const UserAddressAdd_address_header = 'UserAddressAdd.address_header';
   static const UserAddressAdd_building_no = 'UserAddressAdd.building_no';
@@ -277,22 +242,19 @@ abstract class LocaleKeys {
   static const UserAddressAdd_phone = 'UserAddressAdd.phone';
   static const UserAddressAdd_note = 'UserAddressAdd.note';
   static const UserAddressAdd_add_tax_info = 'UserAddressAdd.add_tax_info';
-  static const UserAddressAdd_location_retrieving =
-      'UserAddressAdd.location_retrieving';
+  static const UserAddressAdd_location_retrieving = 'UserAddressAdd.location_retrieving';
   static const UserAddressAdd_person = 'UserAddressAdd.person';
   static const UserAddressAdd_corporate = 'UserAddressAdd.corporate';
   static const UserAddressAdd_related_person = 'UserAddressAdd.related_person';
   static const UserAddressAdd_identity_no = 'UserAddressAdd.identity_no';
   static const UserAddressAdd_tax_number = 'UserAddressAdd.tax_number';
   static const UserAddressAdd_tax_office = 'UserAddressAdd.tax_office';
-  static const UserAddressAdd_address_header_can_not_be_empty =
-      'UserAddressAdd.address_header_can_not_be_empty';
-  static const UserAddressAdd_address_added_successfully =
-      'UserAddressAdd.address_added_successfully';
-  static const UserAddressAdd_open_location_services =
-      'UserAddressAdd.open_location_services';
-  static const UserAddressAdd_grant_location_permission =
-      'UserAddressAdd.grant_location_permission';
+  static const UserAddressAdd_address_header_can_not_be_empty = 'UserAddressAdd.address_header_can_not_be_empty';
+  static const UserAddressAdd_address_added_successfully = 'UserAddressAdd.address_added_successfully';
+  static const UserAddressAdd_open_location_services = 'UserAddressAdd.open_location_services';
+  static const UserAddressAdd_open_app_settings = 'UserAddressAdd.open_app_settings';
+  static const UserAddressAdd_open_location_settings = 'UserAddressAdd.open_location_settings';
+  static const UserAddressAdd_grant_location_permission = 'UserAddressAdd.grant_location_permission';
   static const UserAddressAdd = 'UserAddressAdd';
   static const UserAddresses_appbar_title = 'UserAddresses.appbar_title';
   static const UserAddresses_add_address = 'UserAddresses.add_address';
@@ -317,16 +279,13 @@ abstract class LocaleKeys {
   static const UserProfile_change_password = 'UserProfile.change_password';
   static const UserProfile_old_password = 'UserProfile.old_password';
   static const UserProfile_new_password = 'UserProfile.new_password';
-  static const UserProfile_new_password_again =
-      'UserProfile.new_password_again';
-  static const UserProfile_wrong_old_password =
-      'UserProfile.wrong_old_password';
+  static const UserProfile_new_password_again = 'UserProfile.new_password_again';
+  static const UserProfile_wrong_old_password = 'UserProfile.wrong_old_password';
   static const UserProfile_gender_none = 'UserProfile.gender_none';
   static const UserProfile_gender_male = 'UserProfile.gender_male';
   static const UserProfile_gender_female = 'UserProfile.gender_female';
   static const UserProfile_gender = 'UserProfile.gender';
-  static const UserProfile_successfully_updated =
-      'UserProfile.successfully_updated';
+  static const UserProfile_successfully_updated = 'UserProfile.successfully_updated';
   static const UserProfile_error_updating = 'UserProfile.error_updating';
   static const UserProfile = 'UserProfile';
   static const UserOrderDetails_appbar_title = 'UserOrderDetails.appbar_title';
@@ -335,67 +294,50 @@ abstract class LocaleKeys {
   static const UserOrderDetails_date = 'UserOrderDetails.date';
   static const UserOrderDetails_status = 'UserOrderDetails.status';
   static const UserOrderDetails_order_total = 'UserOrderDetails.order_total';
-  static const UserOrderDetails_delivery_info =
-      'UserOrderDetails.delivery_info';
+  static const UserOrderDetails_delivery_info = 'UserOrderDetails.delivery_info';
   static const UserOrderDetails_name = 'UserOrderDetails.name';
   static const UserOrderDetails_address = 'UserOrderDetails.address';
   static const UserOrderDetails_phone = 'UserOrderDetails.phone';
   static const UserOrderDetails_payment_info = 'UserOrderDetails.payment_info';
   static const UserOrderDetails_subtotal = 'UserOrderDetails.subtotal';
-  static const UserOrderDetails_delivery_cost =
-      'UserOrderDetails.delivery_cost';
-  static const UserOrderDetails_discount_cost =
-      'UserOrderDetails.discount_cost';
+  static const UserOrderDetails_delivery_cost = 'UserOrderDetails.delivery_cost';
+  static const UserOrderDetails_discount_cost = 'UserOrderDetails.discount_cost';
   static const UserOrderDetails_total = 'UserOrderDetails.total';
   static const UserOrderDetails_products = 'UserOrderDetails.products';
   static const UserOrderDetails_amount = 'UserOrderDetails.amount';
-  static const UserOrderDetails_estimated_delivery_time =
-      'UserOrderDetails.estimated_delivery_time';
-  static const UserOrderDetails_delivery_time =
-      'UserOrderDetails.delivery_time';
+  static const UserOrderDetails_estimated_delivery_time = 'UserOrderDetails.estimated_delivery_time';
+  static const UserOrderDetails_delivery_time = 'UserOrderDetails.delivery_time';
   static const UserOrderDetails_invoice_info = 'UserOrderDetails.invoice_info';
   static const UserOrderDetails_tax_office = 'UserOrderDetails.tax_office';
   static const UserOrderDetails_tax_no = 'UserOrderDetails.tax_no';
   static const UserOrderDetails_identity_no = 'UserOrderDetails.identity_no';
   static const UserOrderDetails_return = 'UserOrderDetails.return';
   static const UserOrderDetails_cancel = 'UserOrderDetails.cancel';
-  static const UserOrderDetails_ship_time_info =
-      'UserOrderDetails.ship_time_info';
-  static const UserOrderDetails_delivery_code =
-      'UserOrderDetails.delivery_code';
+  static const UserOrderDetails_ship_time_info = 'UserOrderDetails.ship_time_info';
+  static const UserOrderDetails_delivery_code = 'UserOrderDetails.delivery_code';
   static const UserOrderDetails_payment_type = 'UserOrderDetails.payment_type';
-  static const UserOrderDetails_payment_status =
-      'UserOrderDetails.payment_status';
+  static const UserOrderDetails_payment_status = 'UserOrderDetails.payment_status';
   static const UserOrderDetails = 'UserOrderDetails';
   static const UserPromotions_appbar_title = 'UserPromotions.appbar_title';
   static const UserPromotions_no_promotion = 'UserPromotions.no_promotion';
   static const UserPromotions = 'UserPromotions';
-  static const UserAddressDetail_appbar_title =
-      'UserAddressDetail.appbar_title';
-  static const UserAddressDetail_full_name_hint =
-      'UserAddressDetail.full_name_hint';
-  static const UserAddressDetail_address_title_hint =
-      'UserAddressDetail.address_title_hint';
+  static const UserAddressDetail_appbar_title = 'UserAddressDetail.appbar_title';
+  static const UserAddressDetail_full_name_hint = 'UserAddressDetail.full_name_hint';
+  static const UserAddressDetail_address_title_hint = 'UserAddressDetail.address_title_hint';
   static const UserAddressDetail_city_hint = 'UserAddressDetail.city_hint';
-  static const UserAddressDetail_district_hint =
-      'UserAddressDetail.district_hint';
-  static const UserAddressDetail_address_hint =
-      'UserAddressDetail.address_hint';
-  static const UserAddressDetail_add_invoice_address =
-      'UserAddressDetail.add_invoice_address';
+  static const UserAddressDetail_district_hint = 'UserAddressDetail.district_hint';
+  static const UserAddressDetail_address_hint = 'UserAddressDetail.address_hint';
+  static const UserAddressDetail_add_invoice_address = 'UserAddressDetail.add_invoice_address';
   static const UserAddressDetail_personal = 'UserAddressDetail.personal';
   static const UserAddressDetail_company = 'UserAddressDetail.company';
   static const UserAddressDetail_tax_no = 'UserAddressDetail.tax_no';
   static const UserAddressDetail_tax_office = 'UserAddressDetail.tax_office';
   static const UserAddressDetail = 'UserAddressDetail';
   static const UserCardDetail_appbar_title = 'UserCardDetail.appbar_title';
-  static const UserCardDetail_card_title_hint =
-      'UserCardDetail.card_title_hint';
+  static const UserCardDetail_card_title_hint = 'UserCardDetail.card_title_hint';
   static const UserCardDetail_card_name_hint = 'UserCardDetail.card_name_hint';
-  static const UserCardDetail_card_number_hint =
-      'UserCardDetail.card_number_hint';
-  static const UserCardDetail_expiration_date_hint =
-      'UserCardDetail.expiration_date_hint';
+  static const UserCardDetail_card_number_hint = 'UserCardDetail.card_number_hint';
+  static const UserCardDetail_expiration_date_hint = 'UserCardDetail.expiration_date_hint';
   static const UserCardDetail_cvc_hint = 'UserCardDetail.cvc_hint';
   static const UserCardDetail_card_type_hint = 'UserCardDetail.card_type_hint';
   static const UserCardDetail = 'UserCardDetail';
@@ -421,11 +363,9 @@ abstract class LocaleKeys {
   static const Validators_tax_no = 'Validators.tax_no';
   static const Validators_tax_office = 'Validators.tax_office';
   static const Validators = 'Validators';
-  static const PopupHelper_rating_text_optional =
-      'PopupHelper.rating_text_optional';
+  static const PopupHelper_rating_text_optional = 'PopupHelper.rating_text_optional';
   static const PopupHelper_send_rating = 'PopupHelper.send_rating';
-  static const PopupHelper_enter_question_text =
-      'PopupHelper.enter_question_text';
+  static const PopupHelper_enter_question_text = 'PopupHelper.enter_question_text';
   static const PopupHelper_ask = 'PopupHelper.ask';
   static const PopupHelper = 'PopupHelper';
   static const TryAgainWidget_try_again = 'TryAgainWidget.try_again';
@@ -433,26 +373,20 @@ abstract class LocaleKeys {
   static const OkCancelPrompt_ok = 'OkCancelPrompt.ok';
   static const OkCancelPrompt_cancel = 'OkCancelPrompt.cancel';
   static const OkCancelPrompt = 'OkCancelPrompt';
-  static const MesafeliSatisSozlesmesi_appbar_title =
-      'MesafeliSatisSozlesmesi.appbar_title';
+  static const MesafeliSatisSozlesmesi_appbar_title = 'MesafeliSatisSozlesmesi.appbar_title';
   static const MesafeliSatisSozlesmesi = 'MesafeliSatisSozlesmesi';
-  static const KayitOnBilgilendirmeFormu_appbar_title =
-      'KayitOnBilgilendirmeFormu.appbar_title';
+  static const KayitOnBilgilendirmeFormu_appbar_title = 'KayitOnBilgilendirmeFormu.appbar_title';
   static const KayitOnBilgilendirmeFormu = 'KayitOnBilgilendirmeFormu';
-  static const OnBilgilendirmeFormu_appbar_title =
-      'OnBilgilendirmeFormu.appbar_title';
+  static const OnBilgilendirmeFormu_appbar_title = 'OnBilgilendirmeFormu.appbar_title';
   static const OnBilgilendirmeFormu = 'OnBilgilendirmeFormu';
-  static const ProductOverView_product_added_favorites =
-      'ProductOverView.product_added_favorites';
-  static const ProductOverView_product_removed_favorites =
-      'ProductOverView.product_removed_favorites';
+  static const ProductOverView_product_added_favorites = 'ProductOverView.product_added_favorites';
+  static const ProductOverView_product_removed_favorites = 'ProductOverView.product_removed_favorites';
   static const ProductOverView_add_to_basket = 'ProductOverView.add_to_basket';
   static const ProductOverView_cant_shipped = 'ProductOverView.cant_shipped';
   static const ProductOverView_not_in_sale = 'ProductOverView.not_in_sale';
   static const ProductOverView_login_to_use = 'ProductOverView.login_to_use';
   static const ProductOverView = 'ProductOverView';
-  static const LoginPageWidget_click_to_login =
-      'LoginPageWidget.click_to_login';
+  static const LoginPageWidget_click_to_login = 'LoginPageWidget.click_to_login';
   static const LoginPageWidget = 'LoginPageWidget';
   static const ERROR = 'ERROR';
   static const NETWORK_ERROR = 'NETWORK_ERROR';
@@ -460,4 +394,5 @@ abstract class LocaleKeys {
   static const TRY_AGAIN = 'TRY_AGAIN';
   static const AuthService_logout_successful = 'AuthService.logout_successful';
   static const AuthService = 'AuthService';
+
 }

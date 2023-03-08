@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:koyevi/core/services/auth/authservice.dart';
 import 'package:koyevi/core/services/localization/locale_keys.g.dart';
 import 'package:koyevi/core/services/navigation/navigation_service.dart';
@@ -12,6 +15,51 @@ import 'package:koyevi/product/models/user/address_model.dart';
 import 'package:koyevi/product/models/user/user_orders_model.dart';
 
 class HomeViewModel extends ChangeNotifier {
+  Future<void> ensureLocation() async {
+    LocationPermission locationPermission = await _askLocationService();
+    log("location permission: $locationPermission");
+    while (locationPermission == LocationPermission.denied) {
+      locationPermission = await _askLocationService();
+      log("waiting for location service");
+    }
+    Future.delayed(const Duration(seconds: 1), () {
+      if (locationPermission == LocationPermission.deniedForever) {
+        PopupHelper.showErrorDialog(
+            errorMessage: LocaleKeys.Home_location_denied.tr(),
+            actions: {
+              LocaleKeys.Home_open_location_settings.tr(): () {
+                Geolocator.openLocationSettings();
+              },
+              LocaleKeys.Home_open_app_settings.tr(): () {
+                Geolocator.openAppSettings();
+              }
+            }).then((value) {
+          _askLocationService();
+        });
+      }
+    });
+  }
+
+  Future<LocationPermission> _askLocationService() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return LocationPermission.denied;
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return LocationPermission.denied;
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      return LocationPermission.deniedForever;
+    }
+    return LocationPermission.whileInUse;
+  }
+
   bool _homeLoading = true;
   bool get homeLoading => _homeLoading;
   set homeLoading(bool value) {

@@ -63,14 +63,15 @@ class _UserAddressAddViewState extends ConsumerState<UserAddressAddView> {
 
     provider = ChangeNotifierProvider((ref) =>
         UserAddressAddViewModel(buildingNoController: buildingNoController));
-    ref.read(provider).goCurrentLocation();
+    Future.delayed(Duration.zero, () {
+      ref.read(provider).goCurrentLocation();
+    });
 
     super.initState();
   }
 
   @override
   void dispose() {
-    ref.read(provider).mapController.dispose();
     addressHeaderController.dispose();
     buildingNameController.dispose();
     floorNoController.dispose();
@@ -164,7 +165,7 @@ class _UserAddressAddViewState extends ConsumerState<UserAddressAddView> {
               ),
               Positioned(
                 top: 10.smh,
-                right: 10.smw,
+                right: 10.smh,
                 child: Container(
                   decoration: BoxDecoration(
                       borderRadius: CustomThemeData.fullRounded,

@@ -160,8 +160,15 @@ class UserAddressAddViewModel extends ChangeNotifier {
         _goCurrentLocation();
       } else {
         PopupHelper.showErrorDialog(
-            errorMessage:
-                LocaleKeys.UserAddressAdd_open_location_services.tr());
+            errorMessage: LocaleKeys.UserAddressAdd_open_location_services.tr(),
+            actions: {
+              LocaleKeys.UserAddressAdd_open_location_services.tr(): () {
+                Geolocator.openLocationSettings();
+              },
+              LocaleKeys.UserAddressAdd_open_app_settings.tr(): () {
+                Geolocator.openAppSettings();
+              }
+            });
       }
     } else {
       permission = await Geolocator.requestPermission();
@@ -172,7 +179,15 @@ class UserAddressAddViewModel extends ChangeNotifier {
         } else {
           PopupHelper.showErrorDialog(
               errorMessage:
-                  LocaleKeys.UserAddressAdd_open_location_services.tr());
+                  LocaleKeys.UserAddressAdd_open_location_services.tr(),
+              actions: {
+                LocaleKeys.UserAddressAdd_open_location_services.tr(): () {
+                  Geolocator.openLocationSettings();
+                },
+                LocaleKeys.UserAddressAdd_open_app_settings.tr(): () {
+                  Geolocator.openAppSettings();
+                }
+              });
         }
       } else {
         PopupHelper.showErrorDialog(

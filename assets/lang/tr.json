@@ -56,7 +56,10 @@
         "order_details":"Detaylar",
         "continue":"Devam et",
         "address_change_warn":"Adres değiştirirseniz sepetiniz temizlenecek!",
-        "ship_time_info":"Ortalama 3-5\niş günü"
+        "ship_time_info":"Ortalama 3-5\niş günü",
+        "location_denied":"Konum servisinin kapalı olduğu tespit edildi. Uygulamayı daha verimli kullanabilmek için lütfen konum servisinizi etkinleştirin.",
+        "open_location_settings":"Konum ayarlarına git",
+        "open_app_settings":"Köyevi ayarlarına git"
     },
     "Favorites": {
         "appbar_title": "Favorileri ürünlerim",
@@ -283,6 +286,8 @@
     "address_header_can_not_be_empty":"Adres başlığı boş olamaz",
     "address_added_successfully":"Adres başarıyla eklendi",
     "open_location_services":"Lütfen konum servislerini açın",
+    "open_app_settings":"Köyevi ayarlarına git",
+    "open_location_settings":"Konum ayarlarına git",
     "grant_location_permission":"Lütfen konum iznini verin"
     },
     "UserAddresses":{
