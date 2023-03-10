@@ -76,9 +76,11 @@ class UserAddressAddViewModel extends ChangeNotifier {
         googleAddressModel = GoogleAddressModel.fromJson(response.data);
       } else {
         PopupHelper.showErrorToast(response.errorMessage!);
+        isExpanded = true;
       }
     } catch (e) {
       PopupHelper.showErrorDialogWithCode(e);
+      isExpanded = true;
     }
   }
 
@@ -153,51 +155,6 @@ class UserAddressAddViewModel extends ChangeNotifier {
   }
 
   Future<void> goCurrentLocation() async {
-    LocationPermission permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.always ||
-        permission == LocationPermission.whileInUse) {
-      if (await Geolocator.isLocationServiceEnabled()) {
-        _goCurrentLocation();
-      } else {
-        PopupHelper.showErrorDialog(
-            errorMessage: LocaleKeys.UserAddressAdd_open_location_services.tr(),
-            actions: {
-              LocaleKeys.UserAddressAdd_open_location_services.tr(): () {
-                Geolocator.openLocationSettings();
-              },
-              LocaleKeys.UserAddressAdd_open_app_settings.tr(): () {
-                Geolocator.openAppSettings();
-              }
-            });
-      }
-    } else {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.always ||
-          permission == LocationPermission.whileInUse) {
-        if (await Geolocator.isLocationServiceEnabled()) {
-          _goCurrentLocation();
-        } else {
-          PopupHelper.showErrorDialog(
-              errorMessage:
-                  LocaleKeys.UserAddressAdd_open_location_services.tr(),
-              actions: {
-                LocaleKeys.UserAddressAdd_open_location_services.tr(): () {
-                  Geolocator.openLocationSettings();
-                },
-                LocaleKeys.UserAddressAdd_open_app_settings.tr(): () {
-                  Geolocator.openAppSettings();
-                }
-              });
-        }
-      } else {
-        PopupHelper.showErrorDialog(
-            errorMessage:
-                LocaleKeys.UserAddressAdd_grant_location_permission.tr());
-      }
-    }
-  }
-
-  Future<void> _goCurrentLocation() async {
     try {
       Position position = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.high);
@@ -208,8 +165,7 @@ class UserAddressAddViewModel extends ChangeNotifier {
       mapController.animateCamera(
         CameraUpdate.newCameraPosition(
           CameraPosition(
-              zoom: await mapController.getZoomLevel(),
-              target: LatLng(position.latitude, position.longitude)),
+              zoom: 17, target: LatLng(position.latitude, position.longitude)),
         ),
       );
     } catch (e) {

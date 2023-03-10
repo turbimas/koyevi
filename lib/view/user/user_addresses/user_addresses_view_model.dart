@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:koyevi/core/services/auth/authservice.dart';
 import 'package:koyevi/core/services/network/network_service.dart';
 import 'package:koyevi/core/services/network/response_model.dart';
@@ -46,5 +47,14 @@ class UserAddressesViewModel extends ChangeNotifier {
     } finally {
       isLoading = false;
     }
+  }
+
+  Future<bool> checkPermission() async {
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied ||
+        permission == LocationPermission.deniedForever) {
+      return false;
+    }
+    return await Geolocator.isLocationServiceEnabled();
   }
 }

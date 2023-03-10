@@ -28,7 +28,7 @@ import 'package:koyevi/view/main/home/home_view_model.dart';
 import 'package:koyevi/view/main/search/search_view.dart';
 import 'package:koyevi/view/main/search_result/search_result_view.dart';
 import 'package:koyevi/view/main/sub_categories/sub_categories_view.dart';
-import 'package:koyevi/view/user/user_address_add/user_address_add_view.dart';
+import 'package:koyevi/view/user/user_addresses/user_addresses_view.dart';
 import 'package:koyevi/view/user/user_order_details/user_order_details_view.dart';
 
 class HomeView extends ConsumerStatefulWidget {
@@ -47,7 +47,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
     super.initState();
     Future.delayed(Duration.zero, () {
       ref.read(provider).getHomeData();
-      ref.read(provider).ensureLocation();
+      // ref.read(provider).ensureLocation();
     });
   }
 
@@ -478,7 +478,7 @@ class _AddressSelectionWidget extends ConsumerWidget {
             if (index == ref.watch(provider).addresses.length) {
               return InkWell(
                 onTap: () {
-                  NavigationService.navigateToPage(const UserAddressAddView())
+                  NavigationService.navigateToPage(const UserAddressesView())
                       .then((value) {
                     ref.read(provider).getHomeData();
                   });

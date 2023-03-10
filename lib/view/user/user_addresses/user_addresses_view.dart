@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:koyevi/core/services/localization/locale_keys.g.dart';
 import 'package:koyevi/core/services/navigation/navigation_service.dart';
 import 'package:koyevi/core/services/theme/custom_colors.dart';
@@ -8,6 +9,7 @@ import 'package:koyevi/core/services/theme/custom_fonts.dart';
 import 'package:koyevi/core/services/theme/custom_icons.dart';
 import 'package:koyevi/core/services/theme/custom_images.dart';
 import 'package:koyevi/core/utils/extensions/ui_extensions.dart';
+import 'package:koyevi/core/utils/helpers/popup_helper.dart';
 import 'package:koyevi/product/models/user/address_model.dart';
 import 'package:koyevi/product/widgets/custom_appbar.dart';
 import 'package:koyevi/product/widgets/custom_safearea.dart';
@@ -82,11 +84,24 @@ class _UserAddressesViewState extends ConsumerState<UserAddressesView> {
 
   InkWell _fab(BuildContext context) {
     return InkWell(
-      onTap: () {
-        NavigationService.navigateToPage(const UserAddressAddView())
-            .then((value) {
-          ref.read(provider).getAddresses();
-        });
+      onTap: () async {
+        bool isPermissionGranted = await ref.read(provider).checkPermission();
+        if (!isPermissionGranted) {
+          PopupHelper.showErrorDialog(
+              errorMessage:
+                  LocaleKeys.UserAddresses_be_sure_location_permission.tr(),
+              actions: {
+                LocaleKeys.UserAddresses_go_settings.tr(): () {
+                  Geolocator.openLocationSettings();
+                }
+              });
+          Geolocator.requestPermission();
+        } else {
+          NavigationService.navigateToPage(const UserAddressAddView())
+              .then((value) {
+            ref.read(provider).getAddresses();
+          });
+        }
       },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 10.smw, vertical: 10.smh),
