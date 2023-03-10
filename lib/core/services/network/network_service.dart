@@ -23,7 +23,7 @@ abstract class NetworkService {
   static int? _requestTime;
 
   static Future<void> init() async {
-    _requestTime ??= kDebugMode ? 5000 : 10000;
+    _requestTime ??= kDebugMode ? 15000 : 30000;
 
     try {
       Dio tempDio = Dio(BaseOptions(
@@ -82,7 +82,6 @@ abstract class NetworkService {
     String fullUrl = url;
     try {
       EasyLoading.instance.backgroundColor = Colors.yellow;
-
       EasyLoading.instance.indicatorColor = Colors.white;
       EasyLoading.instance.maskColor = Colors.black.withOpacity(0.7);
       EasyLoading.show(
@@ -103,6 +102,7 @@ abstract class NetworkService {
       }
       return ResponseModel<T>.fromJson(data.data!);
     } catch (e) {
+      log("Hata: $e", name: "NetworkService");
       int? statusCode = (e as DioError).response!.statusCode;
       if (statusCode == 401) {
         notInited = true;
