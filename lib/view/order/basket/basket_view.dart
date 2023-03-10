@@ -32,24 +32,10 @@ class BasketView extends ConsumerStatefulWidget {
 
 class _BasketViewState extends ConsumerState<BasketView>
     with SingleTickerProviderStateMixin {
-  final ScrollController _scrollController = ScrollController();
-  late AnimationController _animationController;
-  bool isExpanded = true;
-  double last = 10;
-
   late final ChangeNotifierProvider<BasketViewModel> provider;
 
   @override
   void initState() {
-    _animationController = AnimationController(vsync: this, value: 1);
-    _scrollController.addListener(() {
-      if (_scrollController.offset < last) {
-        _expand();
-      } else {
-        _nonExpand();
-      }
-      last = _scrollController.offset;
-    });
     provider = ChangeNotifierProvider((ref) => BasketViewModel());
     super.initState();
     if (AuthService.isLoggedIn) {
@@ -139,17 +125,23 @@ class _BasketViewState extends ConsumerState<BasketView>
             SizedBox(
               height: 580.smh,
               child: DynamicHeightGridView(
-                  controller: _scrollController,
                   shrinkWrap: true,
                   mainAxisSpacing: 10.smh,
                   crossAxisSpacing: 10.smw,
-                  builder: (context, index) => Center(
+                  builder: (context, index) {
+                    // en sona 2 satır boşluk bırakıyoruz
+                    if (index >= ref.watch(provider).filteredProducts.length) {
+                      return SizedBox(height: 175.smh, width: double.maxFinite);
+                    } else {
+                      return Center(
                         child: ProductOverviewVerticalView(
                           product: ref.watch(provider).filteredProducts[index],
                           onBasketChanged: ref.read(provider).getBasket,
                         ),
-                      ),
-                  itemCount: ref.watch(provider).filteredProducts.length,
+                      );
+                    }
+                  },
+                  itemCount: ref.watch(provider).filteredProducts.length + 2,
                   crossAxisCount: 2),
             ),
           ]),
@@ -192,198 +184,174 @@ class _BasketViewState extends ConsumerState<BasketView>
   }
 
   Widget _detailExpanded() {
-    return AnimatedBuilder(
-      animation: _animationController,
-      builder: (context, child) => Positioned(
-        bottom: (-150 + _animationController.value * 225).smh,
-        child: Column(
-          children: [
-            SizedBox(
-                height: 25.smh,
-                width: 300.smw,
-                child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10.smw),
-                    decoration: BoxDecoration(
-                        color: CustomColors.card2,
-                        borderRadius: CustomThemeData.topInfiniteRounded),
-                    child: Center(
-                        child: ref.watch(provider).basketModel!.lineTotals >
-                                ref
-                                    .watch(provider)
-                                    .basketModel!
-                                    .minFreeDeliveryTotals
-                            ? CustomTextLocale(LocaleKeys.Basket_free_delivery,
-                                style: CustomFonts.bodyText4(
-                                    CustomColors.card2TextPale))
-                            : CustomTextLocale(
-                                LocaleKeys.Basket_for_free_delivery,
-                                args: [
-                                  (ref
-                                              .watch(provider)
-                                              .basketModel!
-                                              .minFreeDeliveryTotals -
-                                          ref
-                                              .watch(provider)
-                                              .basketModel!
-                                              .lineTotals)
-                                      .toStringAsFixed(2)
-                                ],
-                                style: CustomFonts.bodyText4(
-                                    CustomColors.card2TextPale))))),
-            Container(
-              height: 180.smh,
-              width: AppConstants.designWidth.smw,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: CustomColors.paymentCard,
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                      color: const Color(0xFF50745C).withOpacity(0.5),
-                      blurRadius: 25,
-                      blurStyle: BlurStyle.inner)
-                ],
-                borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30)),
+    return Positioned(
+      bottom: 75.smh,
+      child: Column(
+        children: [
+          SizedBox(
+              height: 25.smh,
+              width: 300.smw,
+              child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 10.smw),
+                  decoration: BoxDecoration(
+                      color: CustomColors.card2,
+                      borderRadius: CustomThemeData.topInfiniteRounded),
+                  child: Center(
+                      child: ref.watch(provider).basketModel!.lineTotals >
+                              ref
+                                  .watch(provider)
+                                  .basketModel!
+                                  .minFreeDeliveryTotals
+                          ? CustomTextLocale(LocaleKeys.Basket_free_delivery,
+                              style: CustomFonts.bodyText4(
+                                  CustomColors.card2TextPale))
+                          : CustomTextLocale(
+                              LocaleKeys.Basket_for_free_delivery,
+                              args: [
+                                (ref
+                                            .watch(provider)
+                                            .basketModel!
+                                            .minFreeDeliveryTotals -
+                                        ref
+                                            .watch(provider)
+                                            .basketModel!
+                                            .lineTotals)
+                                    .toStringAsFixed(2)
+                              ],
+                              style: CustomFonts.bodyText4(
+                                  CustomColors.card2TextPale))))),
+          Container(
+            height: 180.smh,
+            width: AppConstants.designWidth.smw,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: CustomColors.paymentCard,
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  InkWell(
-                    onTap: ref.read(provider).goBasketDetail,
-                    child: Container(
-                      height: 50.smh,
-                      width: 300.smw,
-                      decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.only(
-                              bottomLeft: Radius.circular(30),
-                              bottomRight: Radius.circular(30)),
-                          gradient: LinearGradient(
-                            colors: CustomColors.paymentCard,
-                            begin: Alignment.bottomCenter,
-                            end: Alignment.topCenter,
-                          )),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          CustomIcons.credit_card_icon_dark,
-                          CustomTextLocale(LocaleKeys.Basket_continue_basket,
-                              style:
-                                  CustomFonts.bodyText2(CustomColors.cardText))
-                        ],
-                      ),
-                    ),
-                  ),
-                  Container(
-                    color: Colors.transparent,
-                    margin: EdgeInsets.symmetric(
-                        horizontal: 25.smw, vertical: 10.smh),
-                    height: 60.smh,
-                    width: AppConstants.designWidth.smw,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              boxShadow: [
+                BoxShadow(
+                    color: const Color(0xFF50745C).withOpacity(0.5),
+                    blurRadius: 25,
+                    blurStyle: BlurStyle.inner)
+              ],
+              borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                InkWell(
+                  onTap: ref.read(provider).goBasketDetail,
+                  child: Container(
+                    height: 50.smh,
+                    width: 300.smw,
+                    decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.only(
+                            bottomLeft: Radius.circular(30),
+                            bottomRight: Radius.circular(30)),
+                        gradient: LinearGradient(
+                          colors: CustomColors.paymentCard,
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                        )),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            CustomTextLocale(LocaleKeys.Basket_subtotal,
-                                style: CustomFonts.bodyText4(
-                                    CustomColors.cardText)),
-                            CustomText(
-                                ref
-                                    .watch(provider)
-                                    .basketModel!
-                                    .lineTotals
-                                    .toStringAsFixed(2),
-                                style: CustomFonts.bodyText4(
-                                    CustomColors.cardText))
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            CustomTextLocale(LocaleKeys.Basket_delivery_cost,
-                                style: CustomFonts.bodyText4(
-                                    CustomColors.cardText)),
-                            CustomText(
-                                ref
-                                    .watch(provider)
-                                    .basketModel!
-                                    .deliveryTotals
-                                    .toStringAsFixed(2),
-                                style: CustomFonts.bodyText4(
-                                    CustomColors.cardText))
-                          ],
-                        ),
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //   children: [
-                        //     CustomTextLocale(LocaleKeys.Basket_discount_cost,
-                        //         style: CustomFonts.bodyText4(
-                        //             CustomColors.cardText)),
-                        //     CustomText(
-                        //         ref
-                        //             .watch(provider)
-                        //             .basketModel!
-                        //             .promotionTotals
-                        //             .toStringAsFixed(2),
-                        //         style: CustomFonts.bodyText4(
-                        //             CustomColors.cardText))
-                        //   ],
-                        // )
+                        CustomIcons.credit_card_icon_dark,
+                        CustomTextLocale(LocaleKeys.Basket_continue_basket,
+                            style: CustomFonts.bodyText2(CustomColors.cardText))
                       ],
                     ),
                   ),
-                  Divider(thickness: 1.smh, height: 1.smh),
-                  Container(
-                      padding: EdgeInsets.symmetric(horizontal: 25.smw),
-                      color: Colors.transparent,
-                      height: 49.smh,
-                      width: AppConstants.designWidth.smw,
-                      child: Row(
+                ),
+                Container(
+                  color: Colors.transparent,
+                  margin: EdgeInsets.symmetric(
+                      horizontal: 25.smw, vertical: 10.smh),
+                  height: 60.smh,
+                  width: AppConstants.designWidth.smw,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          CustomTextLocale(LocaleKeys.Basket_total,
+                          CustomTextLocale(LocaleKeys.Basket_subtotal,
                               style:
-                                  CustomFonts.bodyText2(CustomColors.cardText)),
+                                  CustomFonts.bodyText4(CustomColors.cardText)),
                           CustomText(
                               ref
                                   .watch(provider)
                                   .basketModel!
-                                  .generalTotals
+                                  .lineTotals
                                   .toStringAsFixed(2),
                               style:
                                   CustomFonts.bodyText4(CustomColors.cardText))
                         ],
-                      ))
-                ],
-              ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CustomTextLocale(LocaleKeys.Basket_delivery_cost,
+                              style:
+                                  CustomFonts.bodyText4(CustomColors.cardText)),
+                          CustomText(
+                              ref
+                                  .watch(provider)
+                                  .basketModel!
+                                  .deliveryTotals
+                                  .toStringAsFixed(2),
+                              style:
+                                  CustomFonts.bodyText4(CustomColors.cardText))
+                        ],
+                      ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //   children: [
+                      //     CustomTextLocale(LocaleKeys.Basket_discount_cost,
+                      //         style: CustomFonts.bodyText4(
+                      //             CustomColors.cardText)),
+                      //     CustomText(
+                      //         ref
+                      //             .watch(provider)
+                      //             .basketModel!
+                      //             .promotionTotals
+                      //             .toStringAsFixed(2),
+                      //         style: CustomFonts.bodyText4(
+                      //             CustomColors.cardText))
+                      //   ],
+                      // )
+                    ],
+                  ),
+                ),
+                Divider(thickness: 1.smh, height: 1.smh),
+                Container(
+                    padding: EdgeInsets.symmetric(horizontal: 25.smw),
+                    color: Colors.transparent,
+                    height: 49.smh,
+                    width: AppConstants.designWidth.smw,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CustomTextLocale(LocaleKeys.Basket_total,
+                            style:
+                                CustomFonts.bodyText2(CustomColors.cardText)),
+                        CustomText(
+                            ref
+                                .watch(provider)
+                                .basketModel!
+                                .generalTotals
+                                .toStringAsFixed(2),
+                            style: CustomFonts.bodyText4(CustomColors.cardText))
+                      ],
+                    ))
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
-  }
-
-  void _expand() {
-    if (isExpanded) {
-      _animationController.animateTo(1,
-          duration: const Duration(milliseconds: 800),
-          curve: Curves.linearToEaseOut);
-      isExpanded = false;
-    }
-  }
-
-  void _nonExpand() {
-    if (!isExpanded) {
-      _animationController.animateTo(0,
-          duration: const Duration(milliseconds: 800),
-          curve: Curves.linearToEaseOut);
-      isExpanded = true;
-    }
   }
 
   Future<void> _clearBasket() async {

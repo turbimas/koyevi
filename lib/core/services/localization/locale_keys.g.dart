@@ -52,9 +52,6 @@ abstract class  LocaleKeys {
   static const Home_continue = 'Home.continue';
   static const Home_address_change_warn = 'Home.address_change_warn';
   static const Home_ship_time_info = 'Home.ship_time_info';
-  static const Home_location_denied = 'Home.location_denied';
-  static const Home_open_location_settings = 'Home.open_location_settings';
-  static const Home_open_app_settings = 'Home.open_app_settings';
   static const Home = 'Home';
   static const Favorites_appbar_title = 'Favorites.appbar_title';
   static const Favorites_search_hint = 'Favorites.search_hint';
@@ -251,14 +248,13 @@ abstract class  LocaleKeys {
   static const UserAddressAdd_tax_office = 'UserAddressAdd.tax_office';
   static const UserAddressAdd_address_header_can_not_be_empty = 'UserAddressAdd.address_header_can_not_be_empty';
   static const UserAddressAdd_address_added_successfully = 'UserAddressAdd.address_added_successfully';
-  static const UserAddressAdd_open_location_services = 'UserAddressAdd.open_location_services';
-  static const UserAddressAdd_open_app_settings = 'UserAddressAdd.open_app_settings';
-  static const UserAddressAdd_open_location_settings = 'UserAddressAdd.open_location_settings';
   static const UserAddressAdd_grant_location_permission = 'UserAddressAdd.grant_location_permission';
   static const UserAddressAdd = 'UserAddressAdd';
   static const UserAddresses_appbar_title = 'UserAddresses.appbar_title';
   static const UserAddresses_add_address = 'UserAddresses.add_address';
   static const UserAddresses_no_address = 'UserAddresses.no_address';
+  static const UserAddresses_be_sure_location_permission = 'UserAddresses.be_sure_location_permission';
+  static const UserAddresses_go_settings = 'UserAddresses.go_settings';
   static const UserAddresses = 'UserAddresses';
   static const UserCards_appbar_title = 'UserCards.appbar_title';
   static const UserCards_add_card = 'UserCards.add_card';

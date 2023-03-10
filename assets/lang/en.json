@@ -55,10 +55,7 @@
     "order_details": "Details",
     "continue": "Continue",
     "address_change_warn": "If you change the address, your basket will be cleaned!",
-    "ship_time_info": "Approximately 3-5\nworking days",
-    "location_denied":"It was found that the location service was closed.Please enable your location service to use the application more efficiently.",
-        "open_location_settings":"Open location settings",
-        "open_app_settings":"Open köyevi settings"
+    "ship_time_info": "Approximately 3-5\nworking days"
   },
   "Favorites": {
     "appbar_title": "My favorite products",
@@ -282,15 +279,14 @@
     "tax_office": "Tax Office",
     "address_header_can_not_be_empty": "Address header can not be empty",
     "address_added_successfully": "Address added successfully",
-    "open_location_services": "Open location services",
-    "open_app_settings": "Open köyevi settings",
-    "open_location_settings": "Open location settings",
     "grant_location_permission": "Please grant location permission"
   },
   "UserAddresses": {
     "appbar_title": "My addresses",
     "add_address": "Add new address",
-    "no_address": "You have no address yet"
+    "no_address": "You have no address yet",
+    "be_sure_location_permission":"Please be sure that location permission is granted and location services are open",
+    "go_settings":"Go to settings"
   },
   "UserCards": {
     "appbar_title": "My cards",

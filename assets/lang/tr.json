@@ -56,10 +56,7 @@
         "order_details":"Detaylar",
         "continue":"Devam et",
         "address_change_warn":"Adres değiştirirseniz sepetiniz temizlenecek!",
-        "ship_time_info":"Ortalama 3-5\niş günü",
-        "location_denied":"Konum servisinin kapalı olduğu tespit edildi. Uygulamayı daha verimli kullanabilmek için lütfen konum servisinizi etkinleştirin.",
-        "open_location_settings":"Konum ayarlarına git",
-        "open_app_settings":"Köyevi ayarlarına git"
+        "ship_time_info":"Ortalama 3-5\niş günü"
     },
     "Favorites": {
         "appbar_title": "Favorileri ürünlerim",
@@ -285,15 +282,14 @@
     "tax_office": "Vergi dairesi",
     "address_header_can_not_be_empty":"Adres başlığı boş olamaz",
     "address_added_successfully":"Adres başarıyla eklendi",
-    "open_location_services":"Lütfen konum servislerini açın",
-    "open_app_settings":"Köyevi ayarlarına git",
-    "open_location_settings":"Konum ayarlarına git",
     "grant_location_permission":"Lütfen konum iznini verin"
     },
     "UserAddresses":{
         "appbar_title":"Adreslerim",
         "add_address":"Yeni Adres ekle",
-        "no_address":"Henüz adresiniz yok"
+        "no_address":"Henüz adresiniz yok",
+        "be_sure_location_permission":"Konum iznini verdiğinizden ve konum hizmetlerinin aktif olduğundan emin olun",
+        "go_settings":"Ayarlara git"
     },
     "UserCards":{
         "appbar_title":"Kartlarım",
