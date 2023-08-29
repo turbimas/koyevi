@@ -64,6 +64,13 @@ class UserAddressAddViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool _isGoLocationTapped = false;
+  bool get isGoLocationTapped => _isGoLocationTapped;
+  set isGoLocationTapped(bool value) {
+    _isGoLocationTapped = value;
+    notifyListeners();
+  }
+
   Future<void> getLocationData() async {
     try {
       isExpanded = false;

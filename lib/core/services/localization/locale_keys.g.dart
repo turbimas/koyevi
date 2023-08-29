@@ -228,7 +228,7 @@ abstract class  LocaleKeys {
   static const UserRatings_no_rating_found_for_rate = 'UserRatings.no_rating_found_for_rate';
   static const UserRatings = 'UserRatings';
   static const UserAddressAdd_appbar_title = 'UserAddressAdd.appbar_title';
-  static const UserAddressAdd_use_current_location = 'UserAddressAdd.use_current_location';
+  static const UserAddressAdd_use_that_location = 'UserAddressAdd.use_that_location';
   static const UserAddressAdd_open_map = 'UserAddressAdd.open_map';
   static const UserAddressAdd_address_header = 'UserAddressAdd.address_header';
   static const UserAddressAdd_building_no = 'UserAddressAdd.building_no';
@@ -249,6 +249,7 @@ abstract class  LocaleKeys {
   static const UserAddressAdd_address_header_can_not_be_empty = 'UserAddressAdd.address_header_can_not_be_empty';
   static const UserAddressAdd_address_added_successfully = 'UserAddressAdd.address_added_successfully';
   static const UserAddressAdd_grant_location_permission = 'UserAddressAdd.grant_location_permission';
+  static const UserAddressAdd_go_to_my_location = 'UserAddressAdd.go_to_my_location';
   static const UserAddressAdd = 'UserAddressAdd';
   static const UserAddresses_appbar_title = 'UserAddresses.appbar_title';
   static const UserAddresses_add_address = 'UserAddresses.add_address';

@@ -259,7 +259,7 @@
   },
   "UserAddressAdd": {
     "appbar_title": "Add new address",
-    "use_current_location": "Use current location",
+    "use_that_location": "Use that location",
     "open_map": "Open the map",
     "address_header": "Address header",
     "building_no": "Building no",
@@ -279,7 +279,8 @@
     "tax_office": "Tax Office",
     "address_header_can_not_be_empty": "Address header can not be empty",
     "address_added_successfully": "Address added successfully",
-    "grant_location_permission": "Please grant location permission"
+    "grant_location_permission": "Please grant location permission",
+    "go_to_my_location": "Go to my location"
   },
   "UserAddresses": {
     "appbar_title": "My addresses",

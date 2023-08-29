@@ -25,7 +25,8 @@ class UserAddressAddView extends ConsumerStatefulWidget {
       _UserAddressAddViewState();
 }
 
-class _UserAddressAddViewState extends ConsumerState<UserAddressAddView> {
+class _UserAddressAddViewState extends ConsumerState<UserAddressAddView>
+    with SingleTickerProviderStateMixin {
   late final ChangeNotifierProvider<UserAddressAddViewModel> provider;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   GlobalKey<FormState> invoiceFormKey = GlobalKey<FormState>();
@@ -112,8 +113,9 @@ class _UserAddressAddViewState extends ConsumerState<UserAddressAddView> {
               Positioned.fill(
                   child: GoogleMap(
                 compassEnabled: true,
-                mapToolbarEnabled: true,
-                myLocationEnabled: false,
+                myLocationButtonEnabled: false,
+                mapToolbarEnabled: false,
+                myLocationEnabled: true,
                 trafficEnabled: false,
                 onCameraMove: (position) {
                   ref.read(provider).marker = Marker(
@@ -129,7 +131,7 @@ class _UserAddressAddViewState extends ConsumerState<UserAddressAddView> {
                   controller.animateCamera(
                     CameraUpdate.newCameraPosition(
                       const CameraPosition(
-                        target: LatLng(40, 40),
+                        target: LatLng(41.015137, 28.979530),
                         zoom: 15,
                       ),
                     ),
@@ -155,8 +157,7 @@ class _UserAddressAddViewState extends ConsumerState<UserAddressAddView> {
                             width: 200.smw,
                             child: Center(
                               child: CustomTextLocale(
-                                  LocaleKeys
-                                      .UserAddressAdd_use_current_location,
+                                  LocaleKeys.UserAddressAdd_use_that_location,
                                   style: CustomFonts.bodyText2(
                                       CustomColors.primaryText)),
                             )),
@@ -166,14 +167,31 @@ class _UserAddressAddViewState extends ConsumerState<UserAddressAddView> {
               Positioned(
                 top: 10.smh,
                 right: 10.smh,
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: CustomThemeData.fullRounded,
-                      color: Colors.white),
-                  padding: const EdgeInsets.all(2),
-                  child: IconButton(
-                    icon: const Icon(Icons.location_on_outlined),
-                    onPressed: ref.read(provider).goCurrentLocation,
+                child: InkWell(
+                  onTap: () {
+                    ref.read(provider).goCurrentLocation();
+                    ref.read(provider).isGoLocationTapped = true;
+                  },
+                  child: AnimatedContainer(
+                    duration: CustomThemeData.animationDurationMedium,
+                    decoration: BoxDecoration(
+                        borderRadius: CustomThemeData.fullRounded,
+                        color: Colors.white,
+                        boxShadow: ref.read(provider).isGoLocationTapped
+                            ? CustomThemeData.shadow3
+                            : CustomThemeData.shadow1),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 15.smw, vertical: 15.smh),
+                    child: ref.watch(provider).isGoLocationTapped
+                        ? const Icon(Icons.location_on_outlined)
+                        : Row(
+                            children: [
+                              CustomTextLocale(
+                                  LocaleKeys.UserAddressAdd_go_to_my_location),
+                              SizedBox(width: 10.smw),
+                              const Icon(Icons.location_on_outlined),
+                            ],
+                          ),
                   ),
                 ),
               )

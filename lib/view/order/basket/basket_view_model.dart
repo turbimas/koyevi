@@ -15,7 +15,7 @@ import 'package:koyevi/product/models/order/basket_model.dart';
 import 'package:koyevi/product/models/product_over_view_model.dart';
 import 'package:koyevi/product/models/user/address_model.dart';
 import 'package:koyevi/view/order/basket_detail/basket_detail_view.dart';
-import 'package:koyevi/view/user/user_address_add/user_address_add_view.dart';
+import 'package:koyevi/view/user/user_addresses/user_addresses_view.dart';
 
 class BasketViewModel extends ChangeNotifier {
   BasketViewModel();
@@ -90,8 +90,7 @@ class BasketViewModel extends ChangeNotifier {
               actions: {
                 LocaleKeys.Basket_add_address_now.tr(): () {
                   NavigationService.back().then((value) {
-                    NavigationService.navigateToPage(
-                        const UserAddressAddView());
+                    NavigationService.navigateToPage(const UserAddressesView());
                   });
                 }
               });

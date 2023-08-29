@@ -262,7 +262,7 @@
     },
     "UserAddressAdd": {
     "appbar_title":"Yeni adres ekle",
-    "use_current_location":"Mevcut konumu kullan",
+    "use_that_location":"Bu konumu kullan",
     "open_map":"Haritayı aç",
     "address_header":"Adres başlığı",
     "building_no":"Bina no",
@@ -282,7 +282,8 @@
     "tax_office": "Vergi dairesi",
     "address_header_can_not_be_empty":"Adres başlığı boş olamaz",
     "address_added_successfully":"Adres başarıyla eklendi",
-    "grant_location_permission":"Lütfen konum iznini verin"
+    "grant_location_permission":"Lütfen konum iznini verin",
+    "go_to_my_location":"Konumuma git"
     },
     "UserAddresses":{
         "appbar_title":"Adreslerim",
